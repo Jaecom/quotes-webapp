@@ -1,0 +1,6 @@
+.quote-container {
+	display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(27rem, 1fr));  
+	gap: 3rem;
+	padding: 5rem;
+}
