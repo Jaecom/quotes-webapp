@@ -1,4 +1,27 @@
+@use "../../assets/styles/main.scss" as *;
+
 .header {
-  height: 8rem;
-  background-color: greenyellow;
+	background-color: white;
+	border-bottom: 1px solid $color-grey-light;
+}
+
+.logo {
+	font-size: 1.7rem;
+	font-weight: 600;
+}
+
+.nav {
+	padding: 0rem 10rem;
+	height: 8rem;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+
+	ul {
+		display: flex;
+	}
+
+	li:not(:last-of-type) {
+		padding-right: 2rem;
+	}
 }

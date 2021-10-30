@@ -1,13 +1,32 @@
 import classes from "./MainNavigation.module.scss";
-import { NavLink } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
+import "../../assets/styles/main.scss";
+import SearchBar from "./SearchBar";
 
 const MainNavigation = () => {
 	return (
 		<header className={classes.header}>
-			<div className={classes.logo}>Main Navigation</div>
 			<nav className={classes.nav}>
+				<Link to="/">
+					<div className={`${classes.logo} heading-nav`}>Quotes</div>
+				</Link>
 				<SearchBar />
 				<ul>
+					<li>
+						<NavLink to="/" className="heading-nav">
+							One
+						</NavLink>
+					</li>
+					<li>
+						<NavLink to="/" className="heading-nav">
+							Two
+						</NavLink>
+					</li>
+					<li>
+						<NavLink to="/" className="heading-nav">
+							Three
+						</NavLink>
+					</li>
 				</ul>
 			</nav>
 		</header>
