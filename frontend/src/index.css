@@ -6,6 +6,24 @@
 	box-sizing: inherit;
 }
 
+a,
+a:hover,
+a:focus,
+a:active {
+	text-decoration: none;
+	color: inherit;
+	display: block;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+ul,
+li {
+	list-style: none;
+}
+
 html {
 	font-size: 62.5%;
 }
