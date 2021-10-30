@@ -1,4 +1,4 @@
-import { useRef, useCallback, useEffect, useReducer } from "react";
+import { useRef, useCallback, useEffect, useReducer, useState } from "react";
 import { useHistory } from "react-router-dom";
 
 import useHttp from "../../hooks/useHttp";
@@ -28,7 +28,7 @@ const quoteReducer = (state, action) => {
 		case "SHOW_QUOTE":
 			const { quotes: newQuotes, isLastPage: lastPage } = action.payload;
 
-			if (state.page === 1) {
+			if (state.page === initialState.page) {
 				return { ...state, quotes: newQuotes, isLastPage: lastPage };
 			}
 
@@ -42,8 +42,8 @@ const quoteReducer = (state, action) => {
 const QuoteListContainer = () => {
 	const history = useHistory();
 	const searchWord = new URLSearchParams(history.location.search).get("search");
-	const quoteBottomRef = useRef();
 
+	const quoteBottomRef = useRef();
 	const [sendRequest, isLoading, error] = useHttp();
 
 	const [state, dispatch] = useReducer(quoteReducer, initialState);
@@ -58,7 +58,7 @@ const QuoteListContainer = () => {
 	useEffect(() => {
 		const unlisten = history.listen((location, action) => {
 			if (action === "PUSH" && location.search !== "") {
-				//on query change reset
+				//on query change reset quote data
 				dispatch({ type: "RESET" });
 			}
 		});
@@ -71,6 +71,12 @@ const QuoteListContainer = () => {
 	}, [attachObserver, detachObserver, history]);
 
 	useEffect(() => {
+		if (history.location.state) {
+			//location.state is set when user clicks quoteItem
+			//don't request data for background
+			return;
+		}
+
 		sendRequest(
 			{
 				url: `http://localhost:5000/api/quotes?${
@@ -81,7 +87,7 @@ const QuoteListContainer = () => {
 				dispatch({ type: "SHOW_QUOTE", payload: { ...data } });
 			}
 		);
-	}, [page, sendRequest, searchWord]);
+	}, [page, sendRequest, searchWord, history]);
 
 	return (
 		<>
