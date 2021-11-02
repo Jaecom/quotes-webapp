@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router";
 import useHttp from "../../hooks/useHttp";
+import LoadingSpinner from "../UI/LoadingSpinner";
 import QuoteDetail from "./QuoteDetail";
 
 const QuoteDetailContainer = () => {
@@ -20,6 +21,7 @@ const QuoteDetailContainer = () => {
 		<>
 			{isLoading && <div>Loading...</div>}
 			{error && <div>Error...</div>}
+			{isLoading && <LoadingSpinner />}
 			{quote && <QuoteDetail quote={quote} />}
 		</>
 	);

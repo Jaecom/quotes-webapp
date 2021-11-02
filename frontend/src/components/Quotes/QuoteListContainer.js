@@ -4,6 +4,7 @@ import { useHistory } from "react-router-dom";
 import useHttp from "../../hooks/useHttp";
 import useObserver from "../../hooks/useObserver";
 import QuoteList from "./QuoteList";
+import LoadingSpinner from "../UI/LoadingSpinner";
 
 const initialState = {
 	quotes: [],
@@ -92,6 +93,7 @@ const QuoteListContainer = () => {
 	return (
 		<>
 			<QuoteList quotes={quotes} />
+			{isLoading && <LoadingSpinner />}
 			{error && <div>Error</div>}
 			{isLoading && <div>Loading...</div>}
 			{<div ref={quoteBottomRef}></div>}
