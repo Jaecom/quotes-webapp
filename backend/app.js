@@ -14,8 +14,8 @@ app.get("/", (req, res) => {
 });
 
 app.get("/api/quotes", async (req, res) => {
-	const { page, search } = req.query;
-
+	const { search } = req.query;
+	const page = req.query.page || 1;
 	let quotes = [];
 	let isLastPage = false;
 
@@ -41,7 +41,6 @@ app.get("/api/quotes/:quoteId", async (req, res) => {
 	const quotes = await Quote.findById(quoteId);
 	res.json(quotes);
 });
-
 
 const port = 5000;
 
