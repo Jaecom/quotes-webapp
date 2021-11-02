@@ -1,16 +1,16 @@
 import "./App.css";
-import React from "react";
 import { Route, Switch } from "react-router-dom";
-import Main from "./pages/Main";
+import HomePage from "./pages/HomePage";
 import MainNavigation from "./components/Layout/MainNavigation";
 import MainFooter from "./components/Layout/MainFooter";
-import QuoteDetail from "./components/Quotes/QuoteDetail";
 import { useLocation } from "react-router";
 import QuoteDetailModal from "./components/Quotes/QuoteDetailModal";
+import QuoteDetailPage from "./pages/QuoteDetailPage";
+import QuoteDetailContainer from "./components/Quotes/QuoteDetailContainer";
 
 function App() {
 	let location = useLocation();
-	let background = location.state && location.state.background;
+	let background = location.state?.background;
 
 	return (
 		<div className="App">
@@ -18,11 +18,11 @@ function App() {
 
 			<Switch location={background || location}>
 				<Route path="/" exact>
-					<Main />
+					<HomePage />
 				</Route>
 
 				<Route path="/quotes/:quoteId">
-					<QuoteDetail />
+					<QuoteDetailPage />
 				</Route>
 
 				<Route path="/author/:authorId">
@@ -45,12 +45,12 @@ function App() {
 			{background && (
 				<Route path="/quotes/:quoteId">
 					<QuoteDetailModal>
-						<QuoteDetail />
+						<QuoteDetailContainer />
 					</QuoteDetailModal>
-				</Route>	
+				</Route>
 			)}
 
-			<MainFooter />
+			{/* <MainFooter /> */}
 		</div>
 	);
 }
