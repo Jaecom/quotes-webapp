@@ -1,4 +1,4 @@
-import { useRef, useCallback, useEffect, useReducer, useState } from "react";
+import { useRef, useCallback, useEffect, useReducer } from "react";
 import { useHistory } from "react-router-dom";
 
 import useHttp from "../../hooks/useHttp";
@@ -14,33 +14,22 @@ const initialState = {
 
 const quoteReducer = (state, action) => {
 	switch (action.type) {
-		case "NEXT_PAGE":
-			const isLastPage = action.payload;
+		case "LOAD_INITIAL_QUOTES": {
+			const { quotes, isLastPage } = action.payload;
+			return { ...initialState, quotes, isLastPage };
+		}
 
-			if (!isLastPage) {
-				return { ...state, page: state.page + 1 };
-			}
-
-			return state;
-
-		case "RESET":
-			return initialState;
-
-		case "SHOW_QUOTE":
-			const { quotes: newQuotes, isLastPage: lastPage } = action.payload;
-
-			if (state.page === initialState.page) {
-				return { ...state, quotes: newQuotes, isLastPage: lastPage };
-			}
-
-			return { ...state, quotes: state.quotes.concat(newQuotes), isLastPage: lastPage };
+		case "LOAD_NEXT_QUOTES": {
+			const { quotes: newQuotes, isLastPage } = action.payload;
+			return { ...state, quotes: state.quotes.concat(newQuotes), page: state.page + 1, isLastPage };
+		}
 
 		default:
 			return state;
 	}
 };
 
-const QuoteListContainer = () => {
+const QuoteListContainer = (props) => {
 	const history = useHistory();
 	const searchWord = new URLSearchParams(history.location.search).get("search");
 
@@ -50,53 +39,64 @@ const QuoteListContainer = () => {
 	const [state, dispatch] = useReducer(quoteReducer, initialState);
 	const { quotes, page, isLastPage } = state;
 
-	const observerCallback = useCallback(() => {
-		dispatch({ type: "NEXT_PAGE", payload: isLastPage });
-	}, [isLastPage]);
+	const onScrolledBottom = useCallback(() => {
+		if (isLastPage) {
+			return;
+		}
 
-	const [attachObserver, detachObserver] = useObserver(quoteBottomRef, observerCallback);
+		const url = new URL("http://localhost:5000/api/quotes");
+		searchWord && url.searchParams.append("search", searchWord);
+		page && url.searchParams.append("page", page + 1);
+
+		sendRequest(
+			{
+				url,
+			},
+			(data) => {
+				dispatch({ type: "LOAD_NEXT_QUOTES", payload: { ...data } });
+			}
+		);
+	}, [searchWord, page, sendRequest, isLastPage]);
+
+	const [attachObserver, detachObserver] = useObserver(quoteBottomRef, onScrolledBottom);
 
 	useEffect(() => {
-		const unlisten = history.listen((location, action) => {
-			if (action === "PUSH" && location.search !== "") {
-				//on query change reset quote data
-				dispatch({ type: "RESET" });
-			}
-		});
-		attachObserver();
+		if (quotes && quotes.length !== 0) {
+			attachObserver();
+		}
 
 		return () => {
 			detachObserver();
-			unlisten();
 		};
-	}, [attachObserver, detachObserver, history]);
+	}, [attachObserver, detachObserver, quotes]);
 
 	useEffect(() => {
-		if (history.location.state) {
+		const isQuoteItemClicked = !!history.location.state?.background;
+		if (isQuoteItemClicked) {
 			//location.state is set when user clicks quoteItem
 			//don't request data for background
 			return;
 		}
 
+		const url = new URL("http://localhost:5000/api/quotes");
+		searchWord && url.searchParams.append("search", searchWord);
+
 		sendRequest(
 			{
-				url: `http://localhost:5000/api/quotes?${
-					searchWord ? `search=${searchWord}` : ""
-				}&page=${page}`,
+				url,
 			},
 			(data) => {
-				dispatch({ type: "SHOW_QUOTE", payload: { ...data } });
+				dispatch({ type: "LOAD_INITIAL_QUOTES", payload: { ...data } });
 			}
 		);
-	}, [page, sendRequest, searchWord, history]);
+	}, [sendRequest, searchWord, history]);
 
 	return (
 		<>
-			<QuoteList quotes={quotes} />
 			{isLoading && <LoadingSpinner />}
 			{error && <div>Error</div>}
-			{isLoading && <div>Loading...</div>}
-			{<div ref={quoteBottomRef}></div>}
+			{quotes && quotes.length !== 0 && <QuoteList quotes={quotes} ref={quoteBottomRef} />}
+			{!isLoading && (!quotes || quotes.length === 0) && <div>No quotes found</div>}
 		</>
 	);
 };
