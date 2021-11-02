@@ -1,6 +1,18 @@
-.quote-container {
-	display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(27rem, 1fr));  
-	gap: 3rem;
+.wrapper {
 	padding: 5rem;
+	position: relative;
+}
+
+.container {
+	min-height: 100vh;
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(27rem, 1fr));
+	grid-template-rows: min-content;
+	gap: 3rem;
+	align-content: flex-start;
+}
+
+.bottom {
+	position: absolute;
+	bottom: 15rem;
 }

@@ -8,9 +8,14 @@
 .searchbar {
 	height: 100%;
 	width: 100%;
-	border-radius: 1rem;
+	border-radius: 2rem;
 	padding: 0rem 1.5rem;
 	border: 1px solid $color-grey-dark;
+	font-family: $font-display;
+	
+	&::placeholder {
+		font-family: $font-display;
+	}
 }
 
 input[type="search"]::-webkit-search-decoration,
