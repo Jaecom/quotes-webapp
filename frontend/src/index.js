@@ -4,6 +4,8 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
+//reset history.state when refresh
+window.history.replaceState({}, null);
 
 ReactDOM.render(
 	<React.StrictMode>
