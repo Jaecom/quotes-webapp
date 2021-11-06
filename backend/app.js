@@ -3,9 +3,17 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const app = express();
 const Quote = require("./models/quote");
+const Author = require("./models/author");
 const QUOTE_PER_LOAD = 24;
 
 mongoose.connect("mongodb://localhost:27017/quoteWebsite");
+
+const db = mongoose.connection;
+db.once("open", () => {
+	console.log("Database connected");
+});
+
+db.on("error", console.error.bind(console, "connection error:"));
 
 app.use(cors());
 
@@ -38,8 +46,18 @@ app.get("/api/quotes", async (req, res) => {
 
 app.get("/api/quotes/:quoteId", async (req, res) => {
 	const { quoteId } = req.params;
-	const quotes = await Quote.findById(quoteId);
-	res.json(quotes);
+	const quote = await Quote.findById(quoteId).populate({
+		path: "author.authorObject",
+		populate: {
+			path: "quotes",
+		},
+	});
+
+	const recommended = await Quote.aggregate([{ $sample: { size: 3 } }]).then((docs) =>
+		docs.map((doc) => Quote.hydrate(doc))
+	);
+
+	res.json({ quote, recommended });
 });
 
 const port = 5000;
