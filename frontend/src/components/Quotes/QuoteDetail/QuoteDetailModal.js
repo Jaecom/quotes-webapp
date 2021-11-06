@@ -12,7 +12,7 @@ const QuoteDetailModal = (props) => {
 	});
 
 	const modalCloseHander = () => {
-		history.goBack();
+		history.push("/");
 	};
 
 	return (
