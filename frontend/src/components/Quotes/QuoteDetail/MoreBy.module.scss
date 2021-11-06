@@ -1,0 +1,21 @@
+@use "../../../assets/styles/color.scss" as *;
+
+.wrapper {
+	background-color: $color-grey-light;
+	padding: 5rem 0;
+}
+
+.container {
+	margin: 0rem auto;
+	width: 60%;
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(23rem, 1fr));
+	grid-template-rows: min-content;
+	gap: 3rem;
+	align-content: flex-start;
+	justify-content: center;
+}
+
+.header {
+	grid-column: 1 / -1;
+}
