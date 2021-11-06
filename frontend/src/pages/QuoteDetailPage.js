@@ -1,4 +1,4 @@
-import QuoteDetailContainer from "../components/Quotes/QuoteDetailContainer";
+import QuoteDetailContainer from "../components/Quotes/QuoteDetail/QuoteDetailContainer";
 
 const QuoteDetailPage = (props) => {
 	return (
