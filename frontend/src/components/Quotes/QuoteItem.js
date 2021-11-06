@@ -12,24 +12,35 @@ const QuoteItem = (props) => {
 		<div>
 			<Link
 				key={quote.id}
-				to={{ pathname: `/quotes/${quote.id}`, state: { background: location } }}
+				to={{
+					pathname: `/quotes/${quote.id}`,
+					state:
+						location.pathname === "/"
+							? { background: location }
+							: location.state?.background
+							? location.state
+							: null,
+				}}
 			>
 				<Card>
 					<div className={classes.wrapper}>
 						<div className={classes.main}>
 							<div className={classes.content}></div>
 							<div className={classes.image}>
-								<img src={quote.image} />
+								<img src={quote.image} alt="quote" />
 							</div>
 						</div>
 					</div>
 				</Card>
-				
 			</Link>
 			<div className={`${classes.details}`}>
 				<div className={classes.source}>
-					<Link className="heading-4--bold" to={`/title/${quote.title}`}>{quote.title}</Link>
-					<Link className="heading-5" to={`/author/${quote.author}`}>{quote.author}</Link>
+					<Link className="heading-4--bold" to={`/title/${quote.source}`}>
+						{quote.source}
+					</Link>
+					<Link className="heading-5" to={`/author/${quote.author.authorObject}`}>
+						{quote.author.name}
+					</Link>
 				</div>
 
 				<div className="heading-5">+4</div>
