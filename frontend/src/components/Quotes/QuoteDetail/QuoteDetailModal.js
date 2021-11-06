@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useHistory } from "react-router";
-import Modal from "../UI/Modal";
+import Modal from "../../UI/Modal";
 import classes from "./QuoteDetailModal.module.scss";
 
 const QuoteDetailModal = (props) => {

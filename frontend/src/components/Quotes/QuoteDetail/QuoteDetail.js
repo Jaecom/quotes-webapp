@@ -8,7 +8,7 @@ const QuoteDetail = (props) => {
 			<div className={classes.content}>
 				<div className={classes.info}>
 					<h3 className="heading-4--bold">{quote.source}</h3>
-					<h3 className="heading-4">{quote.author}</h3>
+					<h3 className="heading-4">{quote.author.name}</h3>
 				</div>
 
 				<div className={classes.key}>
@@ -21,8 +21,6 @@ const QuoteDetail = (props) => {
 					<img className={classes.image} src={quote.image} alt={"quote"} />
 					<h2 className={`${classes.source} heading-2--cap`}>{quote.source}</h2>
 				</div>
-
-				{/* <div className={classes.break}></div> */}
 
 				<h3 className={`${classes.label} heading-3`}>Full Quote</h3>
 
