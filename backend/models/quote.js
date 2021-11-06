@@ -18,8 +18,8 @@ const quoteSchema = new Schema(
 			required: true,
 		},
 		author: {
-			type: String,
-			required: true,
+			authorObject: { type: Schema.Types.ObjectId, ref: "Author" },
+			name: { type: String, required: true },
 		},
 		source: {
 			type: String,
@@ -44,15 +44,13 @@ function extractKeywords(string, wordCount) {
 }
 
 quoteSchema.virtual("keywords").get(function () {
-	return extractKeywords(this.quoteShort, 3)[0];	
+	return extractKeywords(this.quoteShort, 3)[0];
 });
 
 quoteSchema.virtual("excludeKeywords").get(function () {
 	return extractKeywords(this.quoteShort, 3)[1];
 });
 
-quoteSchema.index({ author: "text", quoteShort: "text", source: "text" });
+quoteSchema.index({ source: "text", quoteFull: "text", "author.name": "text" });
 
-const Quote = mongoose.model("Quote", quoteSchema);
-
-module.exports = Quote;
+module.exports = mongoose.model("Quote", quoteSchema);
