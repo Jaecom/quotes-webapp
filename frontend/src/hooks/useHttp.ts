@@ -17,9 +17,7 @@ const useHttp = () => {
 		async (requestObject: RequestObject, processData: (data: any) => {}) => {
 			try {
 				const { url, body, method, headers } = requestObject;
-
 				setIsLoading(true);
-
 				const res = await fetch(url, {
 					body: body ? JSON.stringify(body) : null,
 					method: method ?? "GET",
@@ -31,7 +29,7 @@ const useHttp = () => {
 				}
 
 				const data = await res.json();
-
+				console.log(data);
 				processData(data);
 
 				setIsLoading(false);
