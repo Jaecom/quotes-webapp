@@ -1,0 +1,48 @@
+@use "../../assets/styles/main.scss" as *;
+
+.wrapper {
+	height: 100%;
+	width: 100%;
+
+	display: flex;
+	flex-direction: column;
+
+	justify-content: center;
+	align-items: center;
+
+	text-align: center;
+
+	font-size: 1.5rem;
+}
+
+$width: 14rem;
+
+.icon-wrapper {
+	margin: 0 auto;
+	margin-top: 2rem;
+	width: $width * 1.3;
+
+	padding: 3rem 0 0rem 0;
+	border-bottom: solid 1px $color-grey-dark;
+}
+
+.icon {
+	display: flex;
+	width: $width;
+	margin: 0 auto;
+	.book {
+		border-radius: $width * 0.25 * 0.1;
+		height: $width * 0.25 * 3;
+		width: $width * 0.25;
+		background-color: rgba($color-grey-dark, 0.4);
+
+		&:not(:last-of-type) {
+			margin-right: $width * 0.25 * 0.2;
+		}
+
+		&:nth-of-type(3) {
+			background-color: transparent;
+			border: solid 0.5px rgba($color-grey-dark, 0.6);
+		}
+	}
+}
