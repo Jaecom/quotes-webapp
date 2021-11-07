@@ -24,7 +24,14 @@ const QuoteDetailModal = (props) => {
 	}, [history]);
 
 	const modalCloseHander = () => {
-		history.push("/");
+		const background = history.location.state.background;
+
+		if (background.search !== "") {
+			const backgroundLocation = background.pathname + background.search;
+			return history.push(backgroundLocation);
+		}
+
+		return history.push("/");
 	};
 
 	return (
