@@ -20,7 +20,9 @@ const SearchBar = () => {
 	const submitHandler = (event) => {
 		event.preventDefault();
 		const searchTerm = searchRef.current.value;
-		return history.push(`/?search=${searchTerm}`);
+		
+		history.push(`/?search=${searchTerm}`);
+		window.scrollTo(0, 0);
 	};
 
 	return (
