@@ -8,6 +8,11 @@ const QuoteItem = (props) => {
 	const location = useLocation();
 	const quote = props.quote;
 
+	const previewQuote = quote.quoteShort
+		.split(" ")
+		.filter((element, index) => index < 15)
+		.join(" ");
+
 	return (
 		<div>
 			<Link
@@ -25,7 +30,9 @@ const QuoteItem = (props) => {
 				<Card>
 					<div className={classes.wrapper}>
 						<div className={classes.main}>
-							<div className={classes.content}></div>
+							<div className={classes.content}>
+								<p className={`${classes.text} paragraph--small`}>{previewQuote}&hellip;</p>
+							</div>
 							<div className={classes.image}>
 								<img src={quote.image} alt="quote" />
 							</div>
