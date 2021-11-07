@@ -15,7 +15,7 @@ const QuoteDetailModal = (props) => {
 
 	useEffect(() => {
 		const unlisten = history.listen(() => {
-			quoteModalRef.current.scrollTo(0, 0);
+			quoteModalRef.current?.scrollTo(0, 0);
 		});
 
 		return () => {
