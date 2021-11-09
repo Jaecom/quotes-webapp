@@ -18,16 +18,20 @@
 
 .nav {
 	height: 7rem;
-	padding: 0rem 10rem;
+	padding: 0rem 5rem;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
 
 	ul {
 		display: flex;
+		column-gap: 4rem;
 	}
 
-	li:not(:last-of-type) {
-		padding-right: 2rem;
+	li {
+		margin: auto 0;
+		a:hover {
+			text-decoration: none;
+		}
 	}
 }

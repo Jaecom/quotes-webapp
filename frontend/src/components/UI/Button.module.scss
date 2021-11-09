@@ -1,0 +1,12 @@
+@use "../../assets/styles/color" as *;
+
+.btn {
+	background: $color-primary;
+	padding: 1rem 2rem;
+  color: $color-white;
+  border-radius: 1rem;
+
+  &:hover {
+    background-color: rgba($color-primary, .8);
+  }
+}

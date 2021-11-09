@@ -2,6 +2,7 @@ import classes from "./MainNavigation.module.scss";
 import { NavLink, Link } from "react-router-dom";
 import "../../assets/styles/main.scss";
 import SearchBar from "./SearchBar";
+import Button from "../UI/Button";
 
 const MainNavigation = () => {
 	return (
@@ -13,18 +14,13 @@ const MainNavigation = () => {
 				<SearchBar />
 				<ul>
 					<li>
-						<NavLink to="/" className="heading-nav">
-							One
+						<NavLink to="/login" className="heading-nav">
+							Login
 						</NavLink>
 					</li>
 					<li>
-						<NavLink to="/" className="heading-nav">
-							Two
-						</NavLink>
-					</li>
-					<li>
-						<NavLink to="/" className="heading-nav">
-							Three
+						<NavLink to="/signup" className="heading-nav">
+							<Button>Signup</Button>
 						</NavLink>
 					</li>
 				</ul>
