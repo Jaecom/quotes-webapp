@@ -4,6 +4,7 @@
 	margin: 0;
 	padding: 0;
 	box-sizing: inherit;
+	font-family: inherit;
 }
 
 a,
@@ -17,6 +18,11 @@ a:active {
 
 a:hover {
 	text-decoration: underline;
+}
+
+button {
+	background: none;
+	border: none;
 }
 
 ul,
