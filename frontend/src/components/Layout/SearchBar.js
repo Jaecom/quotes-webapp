@@ -23,7 +23,6 @@ const SearchBar = () => {
 		const searchTerm = searchRef.current.value;
 
 		history.push(`/?search=${searchTerm}`);
-		window.scrollTo(0, 0);
 	};
 
 	return (
