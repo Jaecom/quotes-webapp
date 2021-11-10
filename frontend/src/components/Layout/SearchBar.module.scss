@@ -1,21 +1,37 @@
 @use "../../assets/styles/main.scss" as *;
 
-.search-form {
+.form {
 	width: 50%;
+
+	&:focus-within {
+		.container {
+			border-color: $color-primary;
+		}
+	}
+}
+
+.container {
 	height: 4rem;
+	display: flex;
+	align-items: center;
+	border-bottom: solid 1px $color-grey-dark;
+	column-gap: 1rem;
 }
 
 .searchbar {
-	height: 100%;
 	width: 100%;
-	border-radius: 2rem;
-	padding: 0rem 1.5rem;
-	border: 1px solid $color-grey-dark;
+	border: none;
 	font-family: $font-display;
-	
-	&::placeholder {
-		font-family: $font-display;
+
+	&:focus {
+		outline: none;
 	}
+}
+
+.icon {
+	width: 1.5rem;
+	height: 1.5rem;
+	fill: $color-grey-dark;
 }
 
 input[type="search"]::-webkit-search-decoration,

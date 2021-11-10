@@ -2,6 +2,7 @@ import classes from "./SearchBar.module.scss";
 import { useEffect, useRef } from "react";
 import { useLocation } from "react-router";
 import { useHistory } from "react-router-dom";
+import sprite from "../../assets/sprite.svg";
 
 const SearchBar = () => {
 	const searchRef = useRef();
@@ -20,15 +21,22 @@ const SearchBar = () => {
 	const submitHandler = (event) => {
 		event.preventDefault();
 		const searchTerm = searchRef.current.value;
-		
+
 		history.push(`/?search=${searchTerm}`);
 		window.scrollTo(0, 0);
 	};
 
 	return (
-		<form className={classes["search-form"]} onSubmit={submitHandler}>
-			<input type="search" className={classes.searchbar} placeholder="Search" ref={searchRef} />
-		</form>
+		<>
+			<form className={classes.form} onSubmit={submitHandler}>
+				<div className={classes.container}>
+					<svg className={classes.icon}>
+						<use href={sprite + "#icon-magnifying-glass"} />
+					</svg>
+					<input type="search" className={classes.searchbar} placeholder="Search" ref={searchRef} />
+				</div>
+			</form>
+		</>
 	);
 };
 
