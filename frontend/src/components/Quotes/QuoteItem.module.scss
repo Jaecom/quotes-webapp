@@ -3,12 +3,6 @@
 .wrapper {
 	position: relative;
 
-	&::before {
-		content: "";
-		display: block;
-		padding-bottom: 0.75 * 100%;
-	}
-
 	&:hover {
 		cursor: pointer;
 
@@ -16,9 +10,17 @@
 			background-color: rgba($color-black, 0.5);
 		}
 
-		.text {
+		.quote {
 			opacity: 1;
 		}
+	}
+}
+
+.container {
+	&::before {
+		content: "";
+		display: block;
+		padding-bottom: 0.75 * 100%;
 	}
 }
 
@@ -40,15 +42,14 @@
 	transition: background-color 0.4s ease;
 }
 
-.text {
+.quote {
 	text-align: center;
-
 	color: white;
 	opacity: 0;
 	transition: opacity 0.4s ease;
 }
 
-.image {
+.image-wrapper {
 	position: absolute;
 	width: 100%;
 	inset: 0;
@@ -65,8 +66,32 @@
 	justify-content: space-between;
 	padding: 0rem 0.5rem;
 	padding-top: 1rem;
+	align-items: flex-start;
+	column-gap: 3rem;
 }
 
 .source {
 	text-align: left;
+}
+
+.extra {
+	display: flex;
+	align-items: center;
+	color: $color-grey-dark;
+	margin-top: 2px;
+
+	&:hover {
+		cursor: pointer;
+	}
+}
+
+.bookmark {
+	margin-right: -1px;
+	width: 1.5rem;
+	height: 1.5rem;
+	fill: rgba($color-grey-dark, 0.4);
+}
+
+.bookmark--filled {
+	fill: $color-grey-dark;
 }

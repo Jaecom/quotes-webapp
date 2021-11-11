@@ -3,6 +3,7 @@ import classes from "./QuoteItem.module.scss";
 import "../../assets/styles/main.scss";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router";
+import sprite from "../../assets/sprite.svg";
 
 const QuoteItem = (props) => {
 	const location = useLocation();
@@ -10,7 +11,7 @@ const QuoteItem = (props) => {
 
 	const previewQuote = quote.quoteShort
 		.split(" ")
-		.filter((element, index) => index < 15)
+		.filter((element, index) => index < 18)
 		.join(" ");
 
 	return (
@@ -29,17 +30,20 @@ const QuoteItem = (props) => {
 			>
 				<Card>
 					<div className={classes.wrapper}>
-						<div className={classes.main}>
-							<div className={classes.content}>
-								<p className={`${classes.text} paragraph--small`}>{previewQuote}&hellip;</p>
-							</div>
-							<div className={classes.image}>
-								<img src={quote.image} alt="quote" />
+						<div className={classes.container}>
+							<div className={classes.main}>
+								<div className={classes.content}>
+									<p className={`${classes.quote} paragraph--small`}>{previewQuote}&hellip;</p>
+								</div>
+								<div className={classes["image-wrapper"]}>
+									<img src={quote.image} alt="quote" />
+								</div>
 							</div>
 						</div>
 					</div>
 				</Card>
 			</Link>
+
 			<div className={`${classes.details}`}>
 				<div className={classes.source}>
 					<Link className="heading-4--bold" to={`/title/${quote.source}`}>
@@ -49,8 +53,12 @@ const QuoteItem = (props) => {
 						{quote.author.name}
 					</Link>
 				</div>
-
-				<div className="heading-5">+4</div>
+				<div className={classes.extra}>
+					<svg className={classes.bookmark}>
+						<use href={sprite + "#icon-bookmark"} />
+					</svg>
+					<div className="heading-5">5</div>
+				</div>
 			</div>
 		</div>
 	);
