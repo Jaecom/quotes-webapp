@@ -23,6 +23,7 @@ const SearchBar = () => {
 		const searchTerm = searchRef.current.value;
 
 		history.push(`/?search=${searchTerm}`);
+		searchRef.current.blur();
 	};
 
 	return (
