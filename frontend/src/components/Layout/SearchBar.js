@@ -27,16 +27,14 @@ const SearchBar = () => {
 	};
 
 	return (
-		<>
-			<form className={classes.form} onSubmit={submitHandler}>
-				<div className={classes.container}>
-					<svg className={classes.icon}>
-						<use href={sprite + "#icon-magnifying-glass"} />
-					</svg>
-					<input type="search" className={classes.searchbar} placeholder="Search" ref={searchRef} />
-				</div>
-			</form>
-		</>
+		<form className={classes.form} onSubmit={submitHandler}>
+			<div className={classes.container}>
+				<svg className={classes.icon}>
+					<use href={sprite + "#icon-magnifying-glass"} />
+				</svg>
+				<input type="search" className={classes.searchbar} placeholder="Search" ref={searchRef} />
+			</div>
+		</form>
 	);
 };
 
