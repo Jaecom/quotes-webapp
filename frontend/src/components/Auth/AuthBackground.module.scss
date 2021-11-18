@@ -1,0 +1,29 @@
+@use "../../assets/styles/color" as *;
+
+.wrapper {
+	height: 100vh;
+	background: $color-grey-dark;
+	position: relative;
+}
+
+.background {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+}
+
+.card {
+	height: 60rem;
+	max-width: 50rem;
+	min-width: 40rem;
+	padding: 4em;
+
+	background-color: $color-white;
+
+	position: absolute;
+	right: 10%;
+	top: 50%;
+	transform: translateY(-50%);
+
+	border-radius: 0.5rem;
+}

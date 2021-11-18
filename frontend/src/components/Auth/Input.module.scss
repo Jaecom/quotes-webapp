@@ -1,0 +1,35 @@
+@use "../../assets/styles/color" as *;
+@use "../../assets/styles/typography" as *;
+
+fieldset {
+	border-style: none;
+	font-family: $font-display;
+	flex: 1;
+	min-width: 200px;
+
+	label {
+		display: block;
+		width: 100%;
+		font-weight: 600;
+		font-size: 1.3rem;
+		margin-bottom: 1rem;
+	}
+
+	input {
+		width: 100%;
+		display: block;
+
+		padding: 1rem 1.5rem;
+		border-radius: 0.5rem;
+		background-color: $color-grey-light-2;
+    border: solid 1px $color-grey-light-2;
+		transition: all 0.2s ease;
+
+		&:focus {
+			background-color: $color-white;
+			box-shadow: 0 0 1rem rgba($color-black, 0.15);
+			outline: none;
+      border: solid 1px $color-primary;
+		}
+	}
+}

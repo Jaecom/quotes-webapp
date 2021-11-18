@@ -1,0 +1,45 @@
+@use "../../assets/styles/main" as *;
+
+.heading {
+	font-size: 3rem;
+	font-family: inherit;
+}
+
+form {
+	display: flex;
+	flex-direction: column;
+	row-gap: 1.5rem;
+	align-self: center;
+
+	button {
+		padding: 1.2rem 2.5rem;
+		background-color: $color-primary;
+		font-family: $font-display;
+		color: $color-white;
+		align-self: flex-start;
+		border-radius: 0.5rem;
+		font-weight: 500;
+	}
+}
+
+.input-group {
+	width: 100%;
+	display: flex;
+	column-gap: 2rem;
+	row-gap: 1rem;
+	flex-wrap: wrap;
+}
+
+.redirect {
+	font-size: 1.2rem;
+	margin-top: -1rem;
+	margin-bottom: 2rem;
+
+	a,
+	a:hover,
+	a:focus,
+	a:active {
+		display: inline-block;
+		color: $color-primary;
+	}
+}
