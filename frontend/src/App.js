@@ -2,39 +2,51 @@ import "./App.css";
 import { Route, Switch } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import MainNavigation from "./components/Layout/MainNavigation";
-import MainFooter from "./components/Layout/MainFooter";
 import { useLocation } from "react-router";
-import QuoteDetailModal from "./components/Quotes/QuoteDetailModal";
+import QuoteDetailModal from "./components/Quotes/QuoteDetail/QuoteDetailModal";
 import QuoteDetailPage from "./pages/QuoteDetailPage";
-import QuoteDetailContainer from "./components/Quotes/QuoteDetailContainer";
+import QuoteDetailContainer from "./components/Quotes/QuoteDetail/QuoteDetailContainer";
+import LoginPage from "./pages/LoginPage";
+import SignupPage from "./pages/SignupPage";
 
 function App() {
-	let location = useLocation();
-	let background = location.state?.background;
+	const location = useLocation();
+	const background = location.state?.background;
 
 	return (
 		<div className="App">
-			<MainNavigation />
-
 			<Switch location={background || location}>
 				<Route path="/" exact>
+					<MainNavigation />
 					<HomePage />
 				</Route>
 
 				<Route path="/quotes/:quoteId">
+					<MainNavigation />
 					<QuoteDetailPage />
 				</Route>
 
 				<Route path="/author/:authorId">
+					<MainNavigation />
 					<div>AuthorId</div>
 				</Route>
 
 				<Route path="/title/:titleId">
+					<MainNavigation />
 					<div>TitleId</div>
 				</Route>
 
 				<Route path="/user/:userId">
+					<MainNavigation />
 					<div>UserId</div>
+				</Route>
+
+				<Route path="/signup">
+					<SignupPage />
+				</Route>
+
+				<Route path="/login">
+					<LoginPage />
 				</Route>
 
 				<Route path="*">
@@ -49,8 +61,6 @@ function App() {
 					</QuoteDetailModal>
 				</Route>
 			)}
-
-			{/* <MainFooter /> */}
 		</div>
 	);
 }
