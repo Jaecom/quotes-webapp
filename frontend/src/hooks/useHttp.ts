@@ -29,7 +29,7 @@ const useHttp = () => {
 				}
 
 				const data = await res.json();
-				console.log(data);
+				// console.log(data);
 				processData(data);
 
 				setIsLoading(false);

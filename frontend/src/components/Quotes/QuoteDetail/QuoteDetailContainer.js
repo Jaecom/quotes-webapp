@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router";
 import useHttp from "../../../hooks/useHttp";
 import LoadingSpinner from "../../UI/LoadingSpinner";
@@ -15,7 +15,6 @@ const QuoteDetailContainer = () => {
 	const [recommendQuotes, setReommmenedQuotes] = useState();
 
 	const processData = (data) => {
-		console.log(data.quote);
 		setQuote(data.quote);
 		setReommmenedQuotes(data.recommended);
 	};

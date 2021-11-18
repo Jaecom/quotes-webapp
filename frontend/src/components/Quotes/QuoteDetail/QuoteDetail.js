@@ -1,4 +1,5 @@
 import classes from "./QuoteDetail.module.scss";
+import React from "react";
 
 const QuoteDetail = (props) => {
 	const quote = props.quote;
