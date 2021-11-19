@@ -1,6 +1,5 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const cors = require("cors");
 const app = express();
 const Quote = require("./models/quote");
 const Author = require("./models/author");
@@ -15,7 +14,15 @@ db.once("open", () => {
 
 db.on("error", console.error.bind(console, "connection error:"));
 
-app.use(cors());
+app.use((req, res, next) => {
+	res.setHeader("Access-Control-Allow-Origin", "*");
+	res.setHeader(
+		"Access-Control-Allow-Headers",
+		"Origin, X-Requested-With, Content-Type, Accept, Authorization"
+	);
+	res.setHeader("Access-Control-Allow-Methods", "GET, POST, PATCH, DELETE");
+	next();
+});
 
 app.get("/", (req, res) => {
 	res.send("Home");
