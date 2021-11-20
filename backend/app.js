@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const app = express();
 const quoteRoutes = require("./routes/quotes-routes");
 mongoose.connect("mongodb://localhost:27017/quoteWebsite");
+const HttpError = require("./utils/HttpError");
 
 const db = mongoose.connection;
 db.once("open", () => {
@@ -26,6 +27,10 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/quotes", quoteRoutes);
+
+app.all("*", (req, res, next) => {
+	next(new HttpError("Route Not Found", 404));
+});
 
 const port = 5000;
 
