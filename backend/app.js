@@ -1,9 +1,11 @@
 const express = require("express");
-const mongoose = require("mongoose");
 const app = express();
+const mongoose = require("mongoose");
 const quoteRoutes = require("./routes/quotes-routes");
-mongoose.connect("mongodb://localhost:27017/quoteWebsite");
+const userRoutes = require("./routes/users-routes");
 const HttpError = require("./utils/HttpError");
+
+mongoose.connect("mongodb://localhost:27017/quoteWebsite");
 
 const db = mongoose.connection;
 db.once("open", () => {
@@ -27,6 +29,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/quotes", quoteRoutes);
+app.use("/api/users", userRoutes);
 
 app.all("*", (req, res, next) => {
 	next(new HttpError("Route Not Found", 404));
