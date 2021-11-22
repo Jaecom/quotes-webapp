@@ -23,15 +23,14 @@ const useHttp = () => {
 					method: method ?? "GET",
 					headers: headers ?? { "Content-Type": "application/json" },
 				});
+				
+				const data = await res.json();
 
 				if (!res.ok) {
-					throw new Error("Something went wrong");
+					throw new Error(data);
 				}
 
-				const data = await res.json();
-				// console.log(data);
 				processData(data);
-
 				setIsLoading(false);
 			} catch (e: any) {
 				setError(e.message);
