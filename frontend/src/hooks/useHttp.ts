@@ -19,7 +19,7 @@ const useHttp = () => {
 				const { url, body, method, headers } = requestObject;
 				setIsLoading(true);
 				const res = await fetch(url, {
-					body: body ? JSON.stringify(body) : null,
+					body: body ?? null,
 					method: method ?? "GET",
 					headers: headers ?? { "Content-Type": "application/json" },
 				});

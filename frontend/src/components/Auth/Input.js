@@ -6,7 +6,13 @@ const Input = (props) => {
 			<label className={classes.label} htmlFor={props.id}>
 				{props.label}
 			</label>
-			<input className={classes.input} id={props.id} {...props.attribute} autoComplete="off" />
+			<input
+				className={classes.input}
+				id={props.id}
+				name={props.name}
+				{...props.attribute}
+				autoComplete="off"
+			/>
 		</fieldset>
 	);
 };
