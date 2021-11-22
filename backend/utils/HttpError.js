@@ -1,8 +1,7 @@
 class HttpError extends Error {
-	constructor(message, statusCode) {
-		super();
-		this.message = message;
-		this.statusCode = statusCode;
+	constructor(message, status) {
+		super(message);
+		this.status = status;
 	}
 }
 

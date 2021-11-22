@@ -37,6 +37,11 @@ app.all("*", (req, res, next) => {
 	next(new HttpError("Route Not Found", 404));
 });
 
+//process all errors by sending response to frontend with statuscode & message
+app.use((error, req, res, next) => {
+	res.status(error.status || 500).json(error.message || "Something went wrong");
+});
+
 const port = 5000;
 
 app.listen(port, () => {
