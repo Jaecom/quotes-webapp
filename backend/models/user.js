@@ -3,11 +3,15 @@ const { Schema } = mongoose;
 
 const userSchema = new Schema({
 	email: {
-		type: string,
+		type: String,
+		required: true,
+	},
+	username: {
+		type: String,
 		required: true,
 	},
 	hash: {
-		type: string,
+		type: String,
 		required: true,
 	},
 	likeQuotes: {
