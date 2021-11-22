@@ -15,14 +15,19 @@ const SignupForm = () => {
 		const formData = new FormData(formRef.current);
 		const formObject = Object.fromEntries(formData);
 
-		sendRequest({
-			url: "http://localhost:5000/api/users",
-			method: "POST",
-			body: new URLSearchParams(formObject),
-			headers: {
-				"Content-Type": "application/x-www-form-urlencoded",
+		sendRequest(
+			{
+				url: "http://localhost:5000/api/users/signup",
+				method: "POST",
+				body: new URLSearchParams(formObject),
+				headers: {
+					"Content-Type": "application/x-www-form-urlencoded",
+				},
 			},
-		});
+			(data) => {
+				console.log(data);
+			}
+		);
 	};
 
 	return (
