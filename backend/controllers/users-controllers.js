@@ -1,6 +1,7 @@
 const User = require("../models/user");
 const HttpError = require("../utils/HttpError");
 const bcrypt = require("bcrypt");
+const SALT_ROUNDS = 10;
 
 module.exports.signin = async (req, res, next) => {
 	const { name, password, email, username } = req.body;
@@ -13,8 +14,8 @@ module.exports.signin = async (req, res, next) => {
 		return next(new HttpError("User exists already, please sign in", 422));
 	}
 
-	const hashedPassword = await bcrypt.hash(password, 10).catch(() => {
-		return next(new HttpError("Cannot creDate user. Pleases try again", 500));
+	const hashedPassword = await bcrypt.hash(password, SALT_ROUNDS).catch(() => {
+		return next(new HttpError("Cannot create user. Pleases try again", 500));
 	});
 
 	const newUser = new User({ name, email, username, hash: hashedPassword });
