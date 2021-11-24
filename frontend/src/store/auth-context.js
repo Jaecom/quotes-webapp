@@ -1,8 +1,8 @@
 import React from "react";
 
 const AuthContext = React.createContext({
-	login: (email, password) => {},
-	signIn: (name, email, password) => {},
+	login: (token, expirationDate) => {},
+	signIn: (token, expirationDate) => {},
 });
 
 export default AuthContext;
