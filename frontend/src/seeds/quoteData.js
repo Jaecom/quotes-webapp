@@ -10,16 +10,6 @@ const rawData = [
 			"https://images.unsplash.com/photo-1533279443086-d1c19a186416?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
 	},
 	{
-		id: "q2",
-		quote:
-			"It's a shame, Kath, because we've loved each other all our lives. But in the end, we can't stay together forever.",
-		title: "Never Let Me Go",
-		author: "Kazuo Ishiguro",
-		genre: ["novel"],
-		image:
-			"https://images.unsplash.com/photo-1437482078695-73f5ca6c96e2?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1650&q=80",
-	},
-	{
 		id: "q3",
 		quote:
 			"It would be many years before I would understand leaving that day had cost him, and how little he had understood about where he was going. Tony and Shawn had left the mountain, but he’d left to do what my father had taught them to do: drive semis, weld, scrap. \n\n <Tyler stepped into a void. I don’t know why he did it and neither does he. He can’t explain where the conviction came from, or how it burned brightly enough to shine through the black uncertainty.>\n\n But I’ve always supposed it was the music in his head, some hopefully tune the rest of us couldn’t hear, the same secret melody he’d been humming when he bought that trigonometry book, or saved all those pencil shavings.",
@@ -93,7 +83,7 @@ const getShortQuote = (quote) => {
 const quotes = rawData.map((element) => {
 	const quoteShort = getShortQuote(element.quote);
 
-	const [keywords, exlcudeKeywords] = extractKeywords(quoteShort, 5);
+	const [keywords, exlcudeKeywords] = extractKeywords(quoteShort, 3);
 
 	return {
 		...element,
