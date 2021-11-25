@@ -1,17 +1,18 @@
 import classes from "./AuthForm.module.scss";
 import Input from "./Input";
 import { Link } from "react-router-dom";
-import { useRef } from "react";
+import { useContext, useRef } from "react";
 import useHttp from "../../hooks/useHttp";
+import AuthContext from "../../store/auth-context";
 
 const LoginForm = () => {
 	const formRef = useRef();
 	const [sendRequest, isLoading, error] = useHttp();
+	const authCtx = useContext(AuthContext);
 
 	const submitHandler = async (event) => {
 		event.preventDefault();
 
-		console.log(formRef.current);
 		const formData = new FormData(formRef.current);
 		const formObject = Object.fromEntries(formData);
 
@@ -25,7 +26,7 @@ const LoginForm = () => {
 				},
 			},
 			(data) => {
-				console.log(data);
+				authCtx.login(data.token, data.expirationDate);
 			}
 		);
 	};
