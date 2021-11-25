@@ -1,8 +1,11 @@
 const User = require("../models/user");
 const HttpError = require("../utils/HttpError");
+
 const bcrypt = require("bcrypt");
 const SALT_ROUNDS = 10;
+
 const jwt = require("jsonwebtoken");
+const TOKEN_EXPIRATION = "1 day";
 
 module.exports.signin = async (req, res, next) => {
 	const { name, password, email, username } = req.body;
@@ -27,7 +30,7 @@ module.exports.signin = async (req, res, next) => {
 
 	let token;
 	try {
-		token = jwt.sign({ userId: newUser.id }, "secret", { expiresIn: "1d" });
+		token = jwt.sign({ userId: newUser.id }, "secret", { expiresIn: TOKEN_EXPIRATION });
 	} catch {
 		next(new HttpError("Cannot create token. Please try again", 500));
 	}
@@ -58,7 +61,7 @@ module.exports.login = async (req, res, next) => {
 
 	let token;
 	try {
-		token = jwt.sign({ userId: existingUser.id }, "secret", { expiresIn: "1 day" });
+		token = jwt.sign({ userId: existingUser.id }, "secret", { expiresIn: TOKEN_EXPIRATION });
 	} catch {
 		next(new HttpError("Cannot create token. Please try again", 500));
 	}
