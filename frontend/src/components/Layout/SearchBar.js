@@ -3,7 +3,6 @@ import { useEffect, useRef } from "react";
 import { useLocation } from "react-router";
 import { useHistory } from "react-router-dom";
 import sprite from "../../assets/sprite.svg";
-import ScrollToTop from "../Utils/ScrollToTop";
 
 const SearchBar = () => {
 	const searchRef = useRef();
@@ -25,20 +24,18 @@ const SearchBar = () => {
 
 		history.push(`/?search=${searchTerm}`);
 		searchRef.current.blur();
+		window.scroll(0, 0);
 	};
 
 	return (
-		<>
-			<ScrollToTop />
-			<form className={classes.form} onSubmit={submitHandler}>
-				<div className={classes.container}>
-					<svg className={classes.icon}>
-						<use href={sprite + "#icon-magnifying-glass"} />
-					</svg>
-					<input type="search" className={classes.searchbar} placeholder="Search" ref={searchRef} />
-				</div>
-			</form>
-		</>
+		<form className={classes.form} onSubmit={submitHandler}>
+			<div className={classes.container}>
+				<svg className={classes.icon}>
+					<use href={sprite + "#icon-magnifying-glass"} />
+				</svg>
+				<input type="search" className={classes.searchbar} placeholder="Search" ref={searchRef} />
+			</div>
+		</form>
 	);
 };
 
