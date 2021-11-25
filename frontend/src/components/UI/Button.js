@@ -1,7 +1,7 @@
 import classes from "./Button.module.scss";
 
 const Button = (props) => {
-	return <div className={classes.btn}>{props.children}</div>;
+	return <button className={classes.btn}>{props.children}</button>;
 };
 
 export default Button;
