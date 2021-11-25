@@ -1,7 +1,12 @@
 import classes from "./Button.module.scss";
 
 const Button = (props) => {
-	return <button className={classes.btn}>{props.children}</button>;
+	const btnClass = classes.btn + (props.highlight && ` ${classes.highlight}`);
+	return (
+		<button className={btnClass} onClick={props.onClick}>
+			{props.children}
+		</button>
+	);
 };
 
 export default Button;

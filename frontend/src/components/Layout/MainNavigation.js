@@ -28,16 +28,14 @@ const MainNavigation = () => {
 					{!authCtx.isLoggedIn && (
 						<li>
 							<NavLink to="/signup" className="heading-nav">
-								<Button>Signup</Button>
+								<Button highlight>Signup</Button>
 							</NavLink>
 						</li>
 					)}
 
 					{authCtx.isLoggedIn && (
-						<li>
-							<NavLink to="/signup" className="heading-nav">
-								Signout
-							</NavLink>
+						<li className="heading-nav">
+							<Button onClick={authCtx.logout}>Signout</Button>
 						</li>
 					)}
 				</ul>
