@@ -16,7 +16,7 @@ const QuoteItem = (props) => {
 				to={{
 					pathname: `/quotes/${quote.id}`,
 					//set or pass on background location
-					state: location.pathname === "/" ? { background: location } : location.state?.background,
+					state: location.pathname === "/" ? { background: location } : location.state,
 				}}
 			>
 				<Card>
