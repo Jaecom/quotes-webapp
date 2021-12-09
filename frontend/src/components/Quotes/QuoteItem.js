@@ -20,12 +20,8 @@ const QuoteItem = (props) => {
 				key={quote.id}
 				to={{
 					pathname: `/quotes/${quote.id}`,
-					state:
-						location.pathname === "/"
-							? { background: location }
-							: location.state?.background
-							? location.state
-							: null,
+					//set or pass on background location
+					state: location.pathname === "/" ? { background: location } : location.state?.background,
 				}}
 			>
 				<Card>
