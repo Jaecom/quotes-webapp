@@ -51,6 +51,15 @@ quoteSchema.virtual("excludeKeywords").get(function () {
 	return extractKeywords(this.quoteShort, 3)[1];
 });
 
+quoteSchema.virtual("previewQuote").get(function () {
+	const previewQuote = this.quoteShort
+		.split(" ")
+		.filter((element, index) => index < 18)
+		.join(" ");
+
+	return previewQuote;
+});
+
 quoteSchema.index({ source: "text", quoteFull: "text", "author.name": "text" });
 
 module.exports = mongoose.model("Quote", quoteSchema);
