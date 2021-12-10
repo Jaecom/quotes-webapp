@@ -31,7 +31,12 @@ const quoteSchema = new Schema(
 		},
 		image: {
 			type: String,
-			require: true,
+			required: true,
+		},
+		bookmarks: {
+			type: Number,
+			required: true,
+			default: 0,
 		},
 	},
 	schemaOptions
