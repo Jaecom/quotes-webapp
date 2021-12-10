@@ -49,7 +49,7 @@ const AuthProvider = (props) => {
 
 	return (
 		<AuthContext.Provider
-			value={{ login: loginHandler, logout: logoutHandler, isLoggedIn: !!token }}
+			value={{ login: loginHandler, logout: logoutHandler, isLoggedIn: !!token, token }}
 		>
 			{props.children}
 		</AuthContext.Provider>
