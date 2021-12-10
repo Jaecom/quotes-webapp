@@ -33,10 +33,16 @@ const quoteSchema = new Schema(
 			type: String,
 			required: true,
 		},
-		bookmarks: {
-			type: Number,
-			required: true,
-			default: 0,
+		userBookmarks: {
+			users: {
+				type: [{ type: Schema.Types.ObjectId, ref: "Quote" }],
+				required: true
+			},
+			total: {
+				type: Number,
+				required: true,
+				default: 0,
+			},
 		},
 	},
 	schemaOptions

@@ -40,3 +40,12 @@ module.exports.getQuote = async (req, res) => {
 
 	res.json({ quote, recommended });
 };
+
+module.exports.likeQuote = async (req, res) => {
+	const { quoteId } = req.body;
+	const quote = await Quote.findById(quoteId);
+	quote.userBookmarks.users.push();
+	quote.userBookmarks.total++;
+	await quote.save();
+	res.json("OK");
+};

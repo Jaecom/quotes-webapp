@@ -47,10 +47,12 @@ const QuoteItem = (props) => {
 					</Link>
 				</div>
 				<div className={classes.extra}>
-					<svg className={classes.bookmark}>
-						<use href={sprite + "#icon-bookmark"} />
-					</svg>
-					<div className="heading-5">5</div>
+					<div onClick={props.onQuoteLike}>
+						<svg className={classes.bookmark}>
+							<use href={sprite + "#icon-bookmark"} />
+						</svg>
+					</div>
+					<div className="heading-5">{quote.userBookmarks.total}</div>
 				</div>
 			</div>
 		</div>

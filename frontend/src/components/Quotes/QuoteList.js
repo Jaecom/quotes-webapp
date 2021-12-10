@@ -8,7 +8,7 @@ const QuoteList = React.forwardRef((props, ref) => {
 			<div className={classes.wrapper}>
 				<div className={classes.container}>
 					{props.quotes?.map((quote) => (
-						<QuoteItem key={quote.id} quote={quote} />
+						<QuoteItem key={quote.id} quote={quote} onQuoteLike={props.onQuoteLike.bind(null, quote.id)} />
 					))}
 				</div>
 				<div className={classes.bottom} ref={ref}></div>
