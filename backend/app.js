@@ -6,7 +6,7 @@ const quoteRoutes = require("./routes/quotes-routes");
 const userRoutes = require("./routes/users-routes");
 const HttpError = require("./utils/HttpError");
 
-mongoose.connect("mongodb://localhost:27017/quoteWebsite");
+mongoose.connect("mongodb://Jaecom:27017/quoteWebsite?replicaSet=rs");
 
 const db = mongoose.connection;
 db.once("open", () => {
