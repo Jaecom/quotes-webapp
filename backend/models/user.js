@@ -14,7 +14,7 @@ const userSchema = new Schema({
 		type: String,
 		required: true,
 	},
-	likeQuotes: {
+	bookmarkedQuotes: {
 		type: [{ type: Schema.Types.ObjectId, ref: "Quote" }],
 		required: true,
 	},
