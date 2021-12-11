@@ -1,4 +1,4 @@
-import { useRef, useCallback, useEffect, useReducer } from "react";
+import { useRef, useCallback, useEffect, useReducer, useContext } from "react";
 import { useHistory } from "react-router-dom";
 
 import useHttp from "../../hooks/useHttp";
@@ -6,6 +6,7 @@ import useObserver from "../../hooks/useObserver";
 import QuoteList from "./QuoteList";
 import LoadingSpinner from "../UI/LoadingSpinner";
 import QuoteSearchNotFound from "./QuoteSearchNotFound";
+import AuthContext from "../../store/auth-context";
 
 const initialState = {
 	quotes: [],
@@ -47,6 +48,8 @@ const quoteReducer = (state, action) => {
 const QuoteListContainer = (props) => {
 	const history = useHistory();
 	const searchWord = new URLSearchParams(history.location.search).get("search");
+
+	const authCtx = useContext(AuthContext);
 
 	const quoteBottomRef = useRef();
 	const [sendRequest, isLoading, error] = useHttp();
@@ -114,6 +117,7 @@ const QuoteListContainer = (props) => {
 				body: JSON.stringify({ quoteId }),
 				headers: {
 					"Content-Type": "application/json",
+					Authorization: "Bearer " + authCtx.token,
 				},
 			},
 			(data) => {
