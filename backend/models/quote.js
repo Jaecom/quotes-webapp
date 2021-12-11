@@ -35,7 +35,7 @@ const quoteSchema = new Schema(
 		},
 		userBookmarks: {
 			users: {
-				type: [{ type: Schema.Types.ObjectId, ref: "Quote" }],
+				type: [{ type: Schema.Types.ObjectId, ref: "User" }],
 				required: true
 			},
 			total: {
