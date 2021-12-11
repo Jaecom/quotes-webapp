@@ -30,7 +30,9 @@ module.exports.signin = async (req, res, next) => {
 
 	let token;
 	try {
-		token = jwt.sign({ userId: newUser.id }, "secret", { expiresIn: TOKEN_EXPIRATION });
+		token = jwt.sign({ userId: newUser.id }, process.env.JWT_SECRET, {
+			expiresIn: TOKEN_EXPIRATION,
+		});
 	} catch {
 		next(new HttpError("Cannot create token. Please try again", 500));
 	}
@@ -61,7 +63,9 @@ module.exports.login = async (req, res, next) => {
 
 	let token;
 	try {
-		token = jwt.sign({ userId: existingUser.id }, "secret", { expiresIn: TOKEN_EXPIRATION });
+		token = jwt.sign({ userId: existingUser.id }, process.env.JWT_SECRET, {
+			expiresIn: TOKEN_EXPIRATION,
+		});
 	} catch {
 		next(new HttpError("Cannot create token. Please try again", 500));
 	}
