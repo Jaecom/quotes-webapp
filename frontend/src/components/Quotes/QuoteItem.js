@@ -7,7 +7,7 @@ import sprite from "../../assets/sprite.svg";
 
 const QuoteItem = (props) => {
 	const location = useLocation();
-	const quote = props.quote;
+	const { quote, totalBookmarks, isBookmarked, onQuoteLike } = props;
 
 	return (
 		<div>
@@ -47,12 +47,12 @@ const QuoteItem = (props) => {
 					</Link>
 				</div>
 				<div className={classes.extra}>
-					<div onClick={props.onQuoteLike}>
-						<svg className={classes.bookmark}>
+					<div onClick={onQuoteLike.bind(null, quote.id)}>
+						<svg className={`${classes.bookmark} ${isBookmarked && classes["bookmark--filled"]}`}>
 							<use href={sprite + "#icon-bookmark"} />
 						</svg>
 					</div>
-					<div className="heading-5">{quote.userBookmarks.total}</div>
+					<div className="heading-5">{totalBookmarks}</div>
 				</div>
 			</div>
 		</div>

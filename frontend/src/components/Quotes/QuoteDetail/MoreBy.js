@@ -1,5 +1,5 @@
 import classes from "./MoreBy.module.scss";
-import QuoteItem from "../QuoteItem";
+import QuoteItemContainer from "../QuoteItemContainer";
 
 const MoreBy = (props) => {
 	const quotes = props.quotes;
@@ -9,7 +9,7 @@ const MoreBy = (props) => {
 			<div className={classes.container}>
 				<h3 className={`${classes.header} heading-3`}>{props.text}</h3>
 				{quotes.map((quote) => (
-					<QuoteItem key={quote.id} quote={quote} />
+					<QuoteItemContainer key={quote.id} quote={quote} />
 				))}
 			</div>
 		</div>

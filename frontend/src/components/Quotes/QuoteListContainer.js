@@ -26,20 +26,6 @@ const quoteReducer = (state, action) => {
 			return { ...state, quotes: state.quotes.concat(newQuotes), page: state.page + 1, isLastPage };
 		}
 
-		case "LIKE_QUOTE": {
-			const { quoteId } = action.payload;
-
-			const updatedQuotes = state.quotes.map((element) => {
-				if (element.id === quoteId) {
-					return { ...element, userBookmarks: { total: element.userBookmarks.total + 1 } };
-				}
-
-				return element;
-			});
-
-			return { ...state, quotes: updatedQuotes };
-		}
-
 		default:
 			return state;
 	}
@@ -48,8 +34,6 @@ const quoteReducer = (state, action) => {
 const QuoteListContainer = (props) => {
 	const history = useHistory();
 	const searchWord = new URLSearchParams(history.location.search).get("search");
-
-	const authCtx = useContext(AuthContext);
 
 	const quoteBottomRef = useRef();
 	const [sendRequest, isLoading, error] = useHttp();
@@ -109,30 +93,11 @@ const QuoteListContainer = (props) => {
 		);
 	}, [sendRequest, searchWord, history]);
 
-	const quoteLikeHandler = (quoteId) => {
-		sendRequest(
-			{
-				url: `http://localhost:5000/api/quotes/${quoteId}/like`,
-				method: "PATCH",
-				body: JSON.stringify({ quoteId }),
-				headers: {
-					"Content-Type": "application/json",
-					Authorization: "Bearer " + authCtx.token,
-				},
-			},
-			(data) => {
-				dispatch({ type: "LIKE_QUOTE", payload: { quoteId } });
-			}
-		);
-	};
-
 	return (
 		<>
 			{isLoading && <LoadingSpinner />}
 			{error && <div>Error</div>}
-			{quotes && quotes.length !== 0 && (
-				<QuoteList quotes={quotes} ref={quoteBottomRef} onQuoteLike={quoteLikeHandler} />
-			)}
+			{quotes && quotes.length !== 0 && <QuoteList quotes={quotes} ref={quoteBottomRef} />}
 			{!isLoading && !error && (!quotes || quotes.length === 0) && (
 				<QuoteSearchNotFound searchWord={searchWord} />
 			)}
