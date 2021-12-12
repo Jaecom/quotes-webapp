@@ -3,13 +3,15 @@ import { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 const LOCAL_TOKEN_KEY = "token";
 const LOCAL_TOKEN_EXPIRATION_KEY = "expiration";
+const LOCAL_USER_ID_KEY = "userId";
 let logoutTimer;
 
 //initially retrieve token
 const retrieveToken = () => {
 	const token = localStorage.getItem(LOCAL_TOKEN_KEY);
 	const expiration = localStorage.getItem(LOCAL_TOKEN_EXPIRATION_KEY);
-	return { token, expiration };
+	const userId = localStorage.getItem(LOCAL_USER_ID_KEY);
+	return { token, expiration, userId };
 };
 
 const AuthProvider = (props) => {
@@ -17,21 +19,26 @@ const AuthProvider = (props) => {
 
 	const [token, setToken] = useState(tokenData.token);
 	const [expiration, setExpiration] = useState(tokenData.expiration);
+	const [userId, setUserId] = useState(tokenData.userId);
 	const history = useHistory();
 
-	const loginHandler = (token, expiration) => {
+	const loginHandler = (token, expiration, userId) => {
 		setToken(token);
 		setExpiration(expiration);
+		setUserId(userId);
 		localStorage.setItem(LOCAL_TOKEN_KEY, token);
 		localStorage.setItem(LOCAL_TOKEN_EXPIRATION_KEY, expiration);
+		localStorage.setItem(LOCAL_USER_ID_KEY, userId);
 		history.goBack();
 	};
 
 	const logoutHandler = () => {
 		setToken(null);
 		setExpiration(null);
+		setUserId(null);
 		localStorage.removeItem(LOCAL_TOKEN_KEY);
 		localStorage.removeItem(LOCAL_TOKEN_EXPIRATION_KEY);
+		localStorage.removeItem(LOCAL_USER_ID_KEY);
 	};
 
 	//autoLogout
@@ -49,7 +56,7 @@ const AuthProvider = (props) => {
 
 	return (
 		<AuthContext.Provider
-			value={{ login: loginHandler, logout: logoutHandler, isLoggedIn: !!token, token }}
+			value={{ login: loginHandler, logout: logoutHandler, isLoggedIn: !!token, token, userId }}
 		>
 			{props.children}
 		</AuthContext.Provider>

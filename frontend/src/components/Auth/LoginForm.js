@@ -26,7 +26,7 @@ const LoginForm = () => {
 				},
 			},
 			(data) => {
-				authCtx.login(data.token, data.expirationDate);
+				authCtx.login(data.token, data.expirationDate, data.userId);
 			}
 		);
 	};
