@@ -39,7 +39,7 @@ module.exports.signin = async (req, res, next) => {
 
 	const expirationDate = jwt.decode(token).exp;
 
-	res.json({ userId: existingUser.id, token, expirationDate });
+	res.json({ userId: newUser.id, token, expirationDate });
 };
 
 module.exports.login = async (req, res, next) => {
