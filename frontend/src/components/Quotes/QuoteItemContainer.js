@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import QuoteItem from "./QuoteItem";
 import AuthContext from "../../store/auth-context";
 import useHttp from "../../hooks/useHttp";
@@ -12,7 +12,11 @@ const QuoteItemContainer = (props) => {
 	const [totalLikes, setTotalLikes] = useState(quote.likes.total);
 	const [isLiked, setIsLiked] = useState(quote.likes.users.includes(userId));
 
-	const [isLiked, setIsLiked] = useState(quote.likes.users.includes(authCtx.userId));
+	useEffect(() => {
+		if (!isLoggedIn) {
+			setIsLiked(false);
+		}
+	}, [isLoggedIn]);
 
 	const quoteLikeHandler = (quoteId) => {
 		sendRequest(
