@@ -8,6 +8,6 @@ router.get("/", catchAsync(quoteController.index));
 
 router.get("/:quoteId", catchAsync(quoteController.getQuote));
 
-router.patch("/:quoteId/like", isAuthenticated, catchAsync(quoteController.likeQuote));
+router.patch("/:quoteId/toggleLike", isAuthenticated, catchAsync(quoteController.likeQuote));
 
 module.exports = router;

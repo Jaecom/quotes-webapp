@@ -13,7 +13,28 @@ const QuoteItemContainer = (props) => {
 	const [isLiked, setIsLiked] = useState(quote.likes.users.includes(authCtx.userId));
 
 	const quoteLikeHandler = (quoteId) => {
-		console.log(quoteId);
+		sendRequest(
+			{
+				url: `http://localhost:5000/api/quotes/${quoteId}/toggleLike`,
+				method: "PATCH",
+				body: JSON.stringify({ quoteId }),
+				headers: {
+					"Content-Type": "application/json",
+					Authorization: "Bearer " + authCtx.token,
+				},
+			},
+			(data) => {
+				setTotalLikes((previousTotal) => {
+					if (isLiked) {
+						return previousTotal - 1;
+					}
+
+					return previousTotal + 1;
+				});
+
+				setIsLiked((isLiked) => !isLiked);
+			}
+		);
 	};
 
 	return (
