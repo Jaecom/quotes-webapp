@@ -8,11 +8,9 @@ const QuoteItemContainer = (props) => {
 	const [sendRequest, isLoading, error] = useHttp();
 
 	const authCtx = useContext(AuthContext);
-	const [totalBookmarks, setTotalBookmarks] = useState(quote.userBookmarks.total);
+	const [totalLikes, setTotalLikes] = useState(quote.likes.total);
 
-	const [isBookmarked, setIsBookmarked] = useState(
-		quote.userBookmarks.users.includes(authCtx.userId)
-	);
+	const [isLiked, setIsLiked] = useState(quote.likes.users.includes(authCtx.userId));
 
 	const quoteLikeHandler = (quoteId) => {
 		console.log(quoteId);
@@ -23,8 +21,8 @@ const QuoteItemContainer = (props) => {
 			key={quote.id}
 			quote={quote}
 			onQuoteLike={quoteLikeHandler}
-			totalBookmarks={totalBookmarks}
-			isBookmarked={isBookmarked}
+			totalLikes={totalLikes}
+			isLiked={isLiked}
 		/>
 	);
 };
