@@ -4,11 +4,13 @@ import AuthContext from "../../store/auth-context";
 import useHttp from "../../hooks/useHttp";
 
 const QuoteItemContainer = (props) => {
+	console.log("QuoteItemContainer");
 	const { quote } = props;
 	const [sendRequest, isLoading, error] = useHttp();
 
-	const authCtx = useContext(AuthContext);
+	const { userId, isLoggedIn, token } = useContext(AuthContext);
 	const [totalLikes, setTotalLikes] = useState(quote.likes.total);
+	const [isLiked, setIsLiked] = useState(quote.likes.users.includes(userId));
 
 	const [isLiked, setIsLiked] = useState(quote.likes.users.includes(authCtx.userId));
 
@@ -20,7 +22,7 @@ const QuoteItemContainer = (props) => {
 				body: JSON.stringify({ quoteId }),
 				headers: {
 					"Content-Type": "application/json",
-					Authorization: "Bearer " + authCtx.token,
+					Authorization: "Bearer " + token,
 				},
 			},
 			(data) => {
