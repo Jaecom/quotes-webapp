@@ -4,13 +4,12 @@ import AuthContext from "../../store/auth-context";
 import useHttp from "../../hooks/useHttp";
 
 const QuoteItemContainer = (props) => {
-	console.log("QuoteItemContainer");
 	const { quote } = props;
 	const [sendRequest, isLoading, error] = useHttp();
 
 	const { userId, isLoggedIn, token } = useContext(AuthContext);
 	const [totalLikes, setTotalLikes] = useState(quote.likes.total);
-	const [isLiked, setIsLiked] = useState(quote.likes.users.includes(userId));
+	const [isLiked, setIsLiked] = useState(!!quote.likes.users.includes(userId));
 
 	useEffect(() => {
 		if (!isLoggedIn) {
@@ -30,14 +29,7 @@ const QuoteItemContainer = (props) => {
 				},
 			},
 			(data) => {
-				setTotalLikes((previousTotal) => {
-					if (isLiked) {
-						return previousTotal - 1;
-					}
-
-					return previousTotal + 1;
-				});
-
+				setTotalLikes((previousTotal) => (isLiked ? previousTotal - 1 : previousTotal + 1));
 				setIsLiked((isLiked) => !isLiked);
 			}
 		);
