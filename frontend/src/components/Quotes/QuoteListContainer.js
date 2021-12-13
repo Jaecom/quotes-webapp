@@ -1,6 +1,5 @@
 import { useRef, useCallback, useEffect, useReducer } from "react";
 import { useHistory } from "react-router-dom";
-
 import useHttp from "../../hooks/useHttp";
 import useObserver from "../../hooks/useObserver";
 import QuoteList from "./QuoteList";
