@@ -1,5 +1,11 @@
+const { startSession } = require("mongoose");
+const { ObjectId } = require("mongoose").Types;
+
 const Quote = require("../models/quote");
 const Author = require("../models/author");
+const User = require("../models/user");
+
+const HttpError = require("../utils/HttpError");
 const QUOTE_PER_LOAD = 24;
 
 module.exports.index = async (req, res, next) => {
@@ -41,11 +47,58 @@ module.exports.getQuote = async (req, res) => {
 	res.json({ quote, recommended });
 };
 
-module.exports.likeQuote = async (req, res) => {
+module.exports.likeQuote = async (req, res, next) => {
 	const { quoteId } = req.body;
-	const quote = await Quote.findById(quoteId);
-	quote.userBookmarks.users.push();
-	quote.userBookmarks.total++;
-	await quote.save();
+	const userId = res.locals.userId;
+
+	//check if quote bookmarked
+	const isQuoteLiked = await Quote.findOne({
+		_id: quoteId,
+		"likes.users": userId,
+	}).catch(() => {
+		next(new HttpError("Something went wrong", 500));
+	});
+
+	//mongoose transaction
+	const session = await startSession();
+
+	try {
+		session.startTransaction();
+
+		// push/pull quote to user quote list
+		const addUserLike = { $push: { likedQuotes: ObjectId(quoteId) } };
+		const removeUserLike = { $pull: { likedQuotes: ObjectId(quoteId) } };
+		const userBookmarkUpdate = isQuoteLiked ? removeUserLike : addUserLike;
+
+		const updatedUser = await User.findOneAndUpdate({ _id: ObjectId(userId) }, userBookmarkUpdate, {
+			session,
+		});
+
+		// push/pull user to quote user like list
+		const addUserToQuote = {
+			$push: {
+				"likes.users": ObjectId(userId),
+			},
+			$inc: { "likes.total": 1 },
+		};
+
+		const removeUserFromQuote = {
+			$pull: { "likes.users": ObjectId(userId) },
+			$inc: { "likes.total": -1 },
+		};
+
+		const updateQuoteUser = isQuoteLiked ? removeUserFromQuote : addUserToQuote;
+
+		const updatedQuote = await Quote.findOneAndUpdate({ _id: ObjectId(quoteId) }, updateQuoteUser, {
+			session,
+		});
+
+		await session.commitTransaction();
+	} catch (e) {
+		console.log(e);
+		await session.abortTransaction();
+	}
+
+	session.endSession();
 	res.json("OK");
 };
