@@ -2,6 +2,7 @@ import { useState, useContext, useEffect } from "react";
 import QuoteItem from "./QuoteItem";
 import AuthContext from "../../store/auth-context";
 import useHttp from "../../hooks/useHttp";
+import { useHistory } from "react-router-dom";
 
 const QuoteItemContainer = (props) => {
 	const { quote } = props;
@@ -11,6 +12,8 @@ const QuoteItemContainer = (props) => {
 	const [totalLikes, setTotalLikes] = useState(quote.likes.total);
 	const [isLiked, setIsLiked] = useState(!!quote.likes.users.includes(userId));
 
+	const history = useHistory();
+
 	useEffect(() => {
 		if (!isLoggedIn) {
 			setIsLiked(false);
@@ -18,6 +21,11 @@ const QuoteItemContainer = (props) => {
 	}, [isLoggedIn]);
 
 	const quoteLikeHandler = (quoteId) => {
+		if (!isLoggedIn) {
+			history.push({ pathname: "/login" });
+			return;
+		}
+
 		sendRequest(
 			{
 				url: `http://localhost:5000/api/quotes/${quoteId}/toggleLike`,
