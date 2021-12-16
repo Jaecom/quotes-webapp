@@ -71,10 +71,11 @@ const QuoteListContainer = (props) => {
 	}, [attachObserver, detachObserver, quotes]);
 
 	useEffect(() => {
-		const isQuoteItemClicked = !!history.location.state?.background;
-		if (isQuoteItemClicked) {
-			//location.state is set when user clicks quoteItem
-			//don't request data for background
+		const isSearchResultBackground = history.location.state?.background?.search;
+		if (isSearchResultBackground) {
+			console.log("Preventing http request");
+			//don't request new data for background
+			// when clicking quote item on search result
 			return;
 		}
 
