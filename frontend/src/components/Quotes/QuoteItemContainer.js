@@ -1,24 +1,27 @@
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext } from "react";
 import QuoteItem from "./QuoteItem";
 import AuthContext from "../../store/auth-context";
 import useHttp from "../../hooks/useHttp";
 import { useHistory } from "react-router-dom";
+import React from "react";
+
+import { useDispatch } from "react-redux";
+import { likeQuote, dislikeQuote } from "../../store/quoteSlice";
 
 const QuoteItemContainer = (props) => {
 	const { quote } = props;
-	const [sendRequest, isLoading, error] = useHttp();
-
-	const { userId, isLoggedIn, token } = useContext(AuthContext);
-	const [totalLikes, setTotalLikes] = useState(quote.likes.total);
-	const [isLiked, setIsLiked] = useState(!!quote.likes.users.includes(userId));
 
 	const history = useHistory();
+	const dispatch = useDispatch();
+	const { userId, isLoggedIn, token } = useContext(AuthContext);
 
-	useEffect(() => {
-		if (!isLoggedIn) {
-			setIsLiked(false);
-		}
-	}, [isLoggedIn]);
+	const isLikedGlobal = quote.likes.users.includes(userId);
+	const isLocationHome = history.location.pathname === "/";
+
+	const [sendRequest, isLoading, error] = useHttp();
+
+	const [isLikedLocal, setIsLikedLocal] = useState(!!quote.likes.users.includes(userId));
+	const [totalLikesLocal, setTotalLikesLocal] = useState(quote.likes.total);
 
 	const quoteLikeHandler = (quoteId) => {
 		if (!isLoggedIn) {
@@ -37,8 +40,15 @@ const QuoteItemContainer = (props) => {
 				},
 			},
 			(data) => {
-				setTotalLikes((previousTotal) => (isLiked ? previousTotal - 1 : previousTotal + 1));
-				setIsLiked((isLiked) => !isLiked);
+				isLikedLocal
+					? setTotalLikesLocal((total) => total - 1)
+					: setTotalLikesLocal((total) => total + 1);
+
+				setIsLikedLocal((isLocalLiked) => !isLocalLiked);
+
+				isLikedGlobal
+					? dispatch(dislikeQuote({ quoteId, userId }))
+					: dispatch(likeQuote({ quoteId, userId }));
 			}
 		);
 	};
@@ -48,10 +58,10 @@ const QuoteItemContainer = (props) => {
 			key={quote.id}
 			quote={quote}
 			onQuoteLike={quoteLikeHandler}
-			totalLikes={totalLikes}
-			isLiked={isLiked}
+			totalLikes={isLocationHome ? quote.likes.total : totalLikesLocal}
+			isLiked={isLocationHome ? isLikedGlobal : isLikedLocal}
 		/>
 	);
 };
 
-export default QuoteItemContainer;
+export default React.memo(QuoteItemContainer);
