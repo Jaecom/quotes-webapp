@@ -40,12 +40,15 @@ const QuoteItemContainer = (props) => {
 				},
 			},
 			(data) => {
+				//update local state in to update local UI
+				//not managed with redux
 				isLikedLocal
 					? setTotalLikesLocal((total) => total - 1)
 					: setTotalLikesLocal((total) => total + 1);
 
 				setIsLikedLocal((isLocalLiked) => !isLocalLiked);
 
+				//update global state managed by redux
 				isLikedGlobal
 					? dispatch(dislikeQuote({ quoteId, userId }))
 					: dispatch(likeQuote({ quoteId, userId }));

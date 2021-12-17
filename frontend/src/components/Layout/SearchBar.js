@@ -11,6 +11,7 @@ const SearchBar = () => {
 	const searchWord = new URLSearchParams(search).get("search");
 
 	useEffect(() => {
+		//fill searchbar with searchword
 		searchRef.current.value = searchWord;
 	}, [searchWord, history]);
 
