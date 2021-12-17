@@ -5,6 +5,8 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
 import AuthProvider from "./store/AuthProvider";
+import { store } from "./store/redux-store";
+import { Provider } from "react-redux";
 
 //reset history.state when refresh
 window.history.replaceState({}, null);
@@ -13,7 +15,9 @@ ReactDOM.render(
 	<React.StrictMode>
 		<BrowserRouter>
 			<AuthProvider>
-				<App />
+				<Provider store={store}>
+					<App />
+				</Provider>
 			</AuthProvider>
 		</BrowserRouter>
 	</React.StrictMode>,

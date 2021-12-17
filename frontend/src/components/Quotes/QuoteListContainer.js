@@ -1,33 +1,12 @@
-import { useRef, useCallback, useEffect, useReducer } from "react";
+import { useRef, useCallback, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import useHttp from "../../hooks/useHttp";
 import useObserver from "../../hooks/useObserver";
 import QuoteList from "./QuoteList";
 import LoadingSpinner from "../UI/LoadingSpinner";
 import QuoteSearchNotFound from "./QuoteSearchNotFound";
-
-const initialState = {
-	quotes: [],
-	page: 1,
-	isLastPage: false,
-};
-
-const quoteReducer = (state, action) => {
-	switch (action.type) {
-		case "LOAD_INITIAL_QUOTES": {
-			const { quotes, isLastPage } = action.payload;
-			return { ...initialState, quotes, isLastPage };
-		}
-
-		case "LOAD_NEXT_QUOTES": {
-			const { quotes: newQuotes, isLastPage } = action.payload;
-			return { ...state, quotes: state.quotes.concat(newQuotes), page: state.page + 1, isLastPage };
-		}
-
-		default:
-			return state;
-	}
-};
+import { useSelector, useDispatch } from "react-redux";
+import { setInitialQuotes, addNextQuotes } from "../../store/quoteSlice";
 
 const QuoteListContainer = (props) => {
 	const history = useHistory();
@@ -36,8 +15,8 @@ const QuoteListContainer = (props) => {
 	const quoteBottomRef = useRef();
 	const [sendRequest, isLoading, error] = useHttp();
 
-	const [state, dispatch] = useReducer(quoteReducer, initialState);
-	const { quotes, page, isLastPage } = state;
+	const { quotes, isLastPage, page } = useSelector((state) => state.quote);
+	const dispatch = useDispatch();
 
 	const onScrolledBottom = useCallback(() => {
 		if (isLastPage) {
@@ -53,10 +32,10 @@ const QuoteListContainer = (props) => {
 				url,
 			},
 			(data) => {
-				dispatch({ type: "LOAD_NEXT_QUOTES", payload: { ...data } });
+				dispatch(addNextQuotes({ ...data }));
 			}
 		);
-	}, [searchWord, page, sendRequest, isLastPage]);
+	}, [searchWord, page, sendRequest, isLastPage, dispatch]);
 
 	const [attachObserver, detachObserver] = useObserver(quoteBottomRef, onScrolledBottom);
 
@@ -87,10 +66,10 @@ const QuoteListContainer = (props) => {
 				url,
 			},
 			(data) => {
-				dispatch({ type: "LOAD_INITIAL_QUOTES", payload: { ...data } });
+				dispatch(setInitialQuotes({ ...data }));
 			}
 		);
-	}, [sendRequest, searchWord, history]);
+	}, [sendRequest, searchWord, history, dispatch]);
 
 	return (
 		<>
