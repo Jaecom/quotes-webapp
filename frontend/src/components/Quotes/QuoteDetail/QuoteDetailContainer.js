@@ -14,13 +14,11 @@ const QuoteDetailContainer = () => {
 	const [otherQuotesByAuthor, setOtherQuotesByAuthor] = useState();
 	const [recommendQuotes, setReommmenedQuotes] = useState();
 
-	const processData = (data) => {
-		setQuote(data.quote);
-		setReommmenedQuotes(data.recommended);
-	};
-
 	useEffect(() => {
-		sendRequest({ url: `http://localhost:5000/api/quotes/${quoteId}` }, processData);
+		sendRequest({ url: `http://localhost:5000/api/quotes/${quoteId}` }, (data) => {
+			setQuote(data.quote);
+			setReommmenedQuotes(data.recommended);
+		});
 	}, [sendRequest, quoteId]);
 
 	useEffect(() => {
