@@ -1,15 +1,16 @@
-import classes from "./AuthForm.module.scss";
-import Input from "./Input";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { useContext, useRef } from "react";
 import useHttp from "../../hooks/useHttp";
 import AuthContext from "../../store/auth-context";
+import LoginForm from "./Form/LoginForm";
+import SignupForm from "./Form/SignupForm";
 
-const LoginForm = () => {
+const AuthContainer = (props) => {
 	const formRef = useRef();
 	const [sendRequest, isLoading, error] = useHttp();
 	const authCtx = useContext(AuthContext);
 	const history = useHistory();
+	const flag = props.login ? "login" : "signup";
 
 	const submitHandler = async (event) => {
 		event.preventDefault();
@@ -19,7 +20,7 @@ const LoginForm = () => {
 
 		sendRequest(
 			{
-				url: "http://localhost:5000/api/users/login",
+				url: `http://localhost:5000/api/users/${flag}`,
 				method: "POST",
 				body: new URLSearchParams(formObject),
 				headers: {
@@ -29,7 +30,8 @@ const LoginForm = () => {
 			(data) => {
 				authCtx.login(data.token, data.expirationDate, data.userId);
 
-				if (history.location.pathname !== "/login") {
+				if (history.location.pathname !== `/${flag}`) {
+					console.log("reloading");
 					window.location.reload();
 				} else {
 					history.goBack();
@@ -39,17 +41,11 @@ const LoginForm = () => {
 	};
 
 	return (
-		<form className={classes.form} onSubmit={submitHandler} ref={formRef}>
-			<h2 className={`${classes.heading}`}>Login</h2>
-			<p className={classes.redirect}>
-				Don't have an account?&nbsp;
-				<Link to="/signup">Sign Up</Link>
-			</p>
-			<Input id="email" attribute={{ type: "email" }} label="Email" name="email" />
-			<Input id="password" attribute={{ type: "password" }} label="Password" name="password" />
-			<button type="submit">Login</button>
-		</form>
+		<>
+			{flag === "login" && <LoginForm ref={formRef} onSubmit={submitHandler} />}
+			{flag === "signup" && <SignupForm ref={formRef} onSubmit={submitHandler} />}
+		</>
 	);
 };
 
-export default LoginForm;
+export default AuthContainer;
