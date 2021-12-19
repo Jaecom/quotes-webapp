@@ -4,7 +4,7 @@
 	position: fixed;
 	inset: 0;
 	z-index: 100;
-	
+
 	background-color: rgba($color-black, 0.7);
 
 	cursor: pointer;
@@ -13,4 +13,13 @@
 .overlay {
 	position: fixed;
 	z-index: 200;
+}
+
+.overlayTop {
+	z-index: 400;
+}
+
+.backdropTop {
+	background-color: rgba($color-black, 0.5);
+	z-index: 300;
 }

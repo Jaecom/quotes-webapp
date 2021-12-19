@@ -6,7 +6,7 @@ import classes from "./LoginModal.module.scss";
 
 const LoginModal = (props) => {
 	return (
-		<Modal onClose={props.onClose}>
+		<Modal onClose={props.onClose} top>
 			<div className={classes.wrapper}>
 				<Card>
 					<div className={classes.container}>
