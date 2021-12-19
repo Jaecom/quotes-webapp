@@ -1,8 +1,8 @@
 import Modal from "../UI/Modal";
 import Card from "../UI/Card";
-import LoginForm from "./LoginForm";
 
 import classes from "./LoginModal.module.scss";
+import AuthContainer from "./AuthContainer";
 
 const LoginModal = (props) => {
 	return (
@@ -10,7 +10,7 @@ const LoginModal = (props) => {
 			<div className={classes.wrapper}>
 				<Card>
 					<div className={classes.container}>
-						<LoginForm />
+						<AuthContainer login />
 					</div>
 				</Card>
 			</div>
