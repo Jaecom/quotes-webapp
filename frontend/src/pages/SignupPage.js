@@ -1,11 +1,11 @@
 import AuthBackground from "../components/Auth/AuthBackground";
-import SignupForm from "../components/Auth/SignupForm";
+import AuthContainer from "../components/Auth/AuthContainer";
 
 const SignupPage = () => {
 	return (
 		<>
 			<AuthBackground>
-				<SignupForm />
+				<AuthContainer signup />
 			</AuthBackground>
 		</>
 	);
