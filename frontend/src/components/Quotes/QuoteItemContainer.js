@@ -1,5 +1,4 @@
-import React from "react";
-import { useContext } from "react";
+import React, { useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
@@ -8,6 +7,8 @@ import useHttp from "../../hooks/useHttp";
 
 import { likeQuote, dislikeQuote } from "../../store/quoteSlice";
 import QuoteItem from "./QuoteItem";
+import LoginModal from "../Auth/LoginModal";
+import useModal from "../../hooks/useModal";
 
 const QuoteItemContainer = (props) => {
 	const { quote, localLikeData } = props;
@@ -19,10 +20,11 @@ const QuoteItemContainer = (props) => {
 	const isLikedGlobal = quote.likes.users.includes(userId);
 	const [sendRequest, isLoading, error] = useHttp();
 
+	const [isLoginModalOpen, openModal, closeModal] = useModal(false);
+
 	const quoteLikeHandler = (quoteId) => {
 		if (!isLoggedIn) {
-			history.push({ pathname: "/login" });
-			return;
+			return openModal();
 		}
 
 		sendRequest(
@@ -39,7 +41,7 @@ const QuoteItemContainer = (props) => {
 				//let parent handle if localLikeData present
 				//for custom handling & updating UI
 				localLikeData?.interceptLike();
-				
+
 				//runs when parent does not handle
 				isLikedGlobal
 					? dispatch(dislikeQuote({ quoteId, userId }))
@@ -49,13 +51,16 @@ const QuoteItemContainer = (props) => {
 	};
 
 	return (
-		<QuoteItem
-			key={quote.id}
-			quote={quote}
-			onQuoteLike={quoteLikeHandler}
-			totalLikes={localLikeData?.totalLikesLocal ?? quote.likes.total}
-			isLiked={localLikeData?.isLikedLocal ?? isLikedGlobal}
-		/>
+		<>
+			{isLoginModalOpen && <LoginModal onClose={closeModal} />}
+			<QuoteItem
+				key={quote.id}
+				quote={quote}
+				onQuoteLike={quoteLikeHandler}
+				totalLikes={localLikeData?.totalLikesLocal ?? quote.likes.total}
+				isLiked={localLikeData?.isLikedLocal ?? isLikedGlobal}
+			/>
+		</>
 	);
 };
 
