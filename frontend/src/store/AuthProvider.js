@@ -1,6 +1,5 @@
 import AuthContext from "./auth-context";
 import { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
 const LOCAL_TOKEN_KEY = "token";
 const LOCAL_TOKEN_EXPIRATION_KEY = "expiration";
 const LOCAL_USER_ID_KEY = "userId";
@@ -20,7 +19,6 @@ const AuthProvider = (props) => {
 	const [token, setToken] = useState(tokenData.token);
 	const [expiration, setExpiration] = useState(tokenData.expiration);
 	const [userId, setUserId] = useState(tokenData.userId);
-	const history = useHistory();
 
 	const loginHandler = (token, expiration, userId) => {
 		setToken(token);
@@ -29,7 +27,6 @@ const AuthProvider = (props) => {
 		localStorage.setItem(LOCAL_TOKEN_KEY, token);
 		localStorage.setItem(LOCAL_TOKEN_EXPIRATION_KEY, expiration);
 		localStorage.setItem(LOCAL_USER_ID_KEY, userId);
-		history.goBack();
 	};
 
 	const logoutHandler = () => {

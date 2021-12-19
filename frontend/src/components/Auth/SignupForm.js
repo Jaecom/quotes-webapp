@@ -1,6 +1,6 @@
 import Input from "./Input";
 import classes from "./AuthForm.module.scss";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { useContext, useRef } from "react";
 import useHttp from "../../hooks/useHttp";
 import AuthContext from "../../store/auth-context";
@@ -9,6 +9,7 @@ const SignupForm = () => {
 	const formRef = useRef();
 	const [sendRequest, isLoading, error] = useHttp();
 	const authCtx = useContext(AuthContext);
+	const history = useHistory();
 
 	const submitHandler = async (event) => {
 		event.preventDefault();
@@ -28,6 +29,12 @@ const SignupForm = () => {
 			},
 			(data) => {
 				authCtx.login(data.token, data.expirationDate, data.userId);
+				
+				if (history.location.pathname !== "/signup") {
+					window.location.reload();
+				} else {
+					history.goBack();
+				}
 			}
 		);
 	};
