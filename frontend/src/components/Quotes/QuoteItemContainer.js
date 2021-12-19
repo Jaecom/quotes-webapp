@@ -1,27 +1,23 @@
-import { useState, useContext } from "react";
-import QuoteItem from "./QuoteItem";
+import React from "react";
+import { useContext } from "react";
+import { useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
+
 import AuthContext from "../../store/auth-context";
 import useHttp from "../../hooks/useHttp";
-import { useHistory } from "react-router-dom";
-import React from "react";
 
-import { useDispatch } from "react-redux";
 import { likeQuote, dislikeQuote } from "../../store/quoteSlice";
+import QuoteItem from "./QuoteItem";
 
 const QuoteItemContainer = (props) => {
-	const { quote } = props;
+	const { quote, localLikeData } = props;
 
 	const history = useHistory();
 	const dispatch = useDispatch();
 	const { userId, isLoggedIn, token } = useContext(AuthContext);
 
 	const isLikedGlobal = quote.likes.users.includes(userId);
-	const isLocationHome = history.location.pathname === "/";
-
 	const [sendRequest, isLoading, error] = useHttp();
-
-	const [isLikedLocal, setIsLikedLocal] = useState(!!quote.likes.users.includes(userId));
-	const [totalLikesLocal, setTotalLikesLocal] = useState(quote.likes.total);
 
 	const quoteLikeHandler = (quoteId) => {
 		if (!isLoggedIn) {
@@ -40,15 +36,11 @@ const QuoteItemContainer = (props) => {
 				},
 			},
 			(data) => {
-				//update local state in to update local UI
-				//not managed with redux
-				isLikedLocal
-					? setTotalLikesLocal((total) => total - 1)
-					: setTotalLikesLocal((total) => total + 1);
-
-				setIsLikedLocal((isLocalLiked) => !isLocalLiked);
-
-				//update global state managed by redux
+				//let parent handle if localLikeData present
+				//for custom handling & updating UI
+				localLikeData?.interceptLike();
+				
+				//runs when parent does not handle
 				isLikedGlobal
 					? dispatch(dislikeQuote({ quoteId, userId }))
 					: dispatch(likeQuote({ quoteId, userId }));
@@ -61,8 +53,8 @@ const QuoteItemContainer = (props) => {
 			key={quote.id}
 			quote={quote}
 			onQuoteLike={quoteLikeHandler}
-			totalLikes={isLocationHome ? quote.likes.total : totalLikesLocal}
-			isLiked={isLocationHome ? isLikedGlobal : isLikedLocal}
+			totalLikes={localLikeData?.totalLikesLocal ?? quote.likes.total}
+			isLiked={localLikeData?.isLikedLocal ?? isLikedGlobal}
 		/>
 	);
 };
