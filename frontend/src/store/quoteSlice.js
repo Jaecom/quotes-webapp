@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
 	quotes: [],
@@ -23,24 +23,19 @@ export const quoteSlice = createSlice({
 		},
 		likeQuote: (state, action) => {
 			const { quoteId, userId } = action.payload;
-			state.quotes.find((element) => element.id === quoteId).likes.total += 1;
-			state.quotes.find((element) => element.id === quoteId).likes.users.push(userId);
+			const foundQuote = state.quotes.find((element) => element.id === quoteId);
+			foundQuote.likes.total += 1;
+			foundQuote.likes.users.push(userId);
 		},
 		dislikeQuote: (state, action) => {
 			const { quoteId, userId } = action.payload;
-			state.quotes.find((element) => element.id === quoteId).likes.total -= 1;
-			const indexOfUser = state.quotes
-				.find((element) => element.id === quoteId)
-				.likes.users.indexOf((element) => element === userId);
-			state.quotes.find((element) => element.id === quoteId).likes.users.splice(indexOfUser, 1);
+			const foundQuote = state.quotes.find((element) => element.id === quoteId);
+			const indexOfUser = foundQuote.likes.users.indexOf((element) => element === userId);
+			foundQuote.likes.total -= 1;
+			foundQuote.likes.users.splice(indexOfUser, 1);
 		},
 	},
 });
 
-export const {
-	setInitialQuotes,
-	addNextQuotes,
-	likeQuote,
-	dislikeQuote,
-} = quoteSlice.actions;
+export const { setInitialQuotes, addNextQuotes, likeQuote, dislikeQuote } = quoteSlice.actions;
 export default quoteSlice.reducer;
