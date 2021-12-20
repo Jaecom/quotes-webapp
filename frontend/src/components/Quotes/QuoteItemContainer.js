@@ -1,5 +1,4 @@
 import React, { useContext } from "react";
-import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
 import AuthContext from "../../store/auth-context";
@@ -13,7 +12,6 @@ import useModal from "../../hooks/useModal";
 const QuoteItemContainer = (props) => {
 	const { quote, localLikeData } = props;
 
-	const history = useHistory();
 	const dispatch = useDispatch();
 	const { userId, isLoggedIn, token } = useContext(AuthContext);
 
