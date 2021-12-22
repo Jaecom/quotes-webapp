@@ -1,6 +1,7 @@
 import { useContext, useState } from "react";
 import AuthContext from "../../../store/auth-context";
 import QuoteItemContainer from "../QuoteItemContainer";
+import React from "react";
 
 const QuoteDetailItemContainer = (props) => {
 	const { quote } = props;
@@ -31,4 +32,4 @@ const QuoteDetailItemContainer = (props) => {
 	);
 };
 
-export default QuoteDetailItemContainer;
+export default React.memo(QuoteDetailItemContainer);
