@@ -36,9 +36,8 @@ const QuoteItemContainer = (props) => {
 				},
 			},
 			(data) => {
-				//let parent run custom UI updates before
-				//dispatching action to redux
-				localLikeData?.runBefore();
+				//let parent run custom code before dispatching to redux
+				localLikeData?.handleLike();
 
 				isLikedGlobal
 					? dispatch(dislikeQuote({ quoteId, userId }))

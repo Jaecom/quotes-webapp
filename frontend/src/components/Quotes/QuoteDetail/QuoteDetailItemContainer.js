@@ -10,7 +10,7 @@ const QuoteDetailItemContainer = (props) => {
 	const [isLikedLocal, setIsLikedLocal] = useState(!!quote.likes.users.includes(userId));
 	const [totalLikesLocal, setTotalLikesLocal] = useState(quote.likes.total);
 
-	const runBeforeHandler = () => {
+	const handleLikeHandler = () => {
 		isLikedLocal
 			? setTotalLikesLocal((total) => total - 1)
 			: setTotalLikesLocal((total) => total + 1);
@@ -22,7 +22,11 @@ const QuoteDetailItemContainer = (props) => {
 		<QuoteItemContainer
 			key={quoteId}
 			quote={quote}
-			localLikeData={{ isLikedLocal, totalLikesLocal, runBefore: runBeforeHandler }}
+			localLikeData={{
+				isLikedLocal,
+				totalLikesLocal,
+				handleLike: handleLikeHandler,
+			}}
 		/>
 	);
 };
