@@ -15,10 +15,15 @@ const QuoteItemContainer = (props) => {
 	const dispatch = useDispatch();
 	const { userId, isLoggedIn, token } = useContext(AuthContext);
 
-	const isLikedGlobal = quote.likes.users.includes(userId);
 	const [sendRequest, isLoading, error] = useHttp();
 
 	const [isLoginModalOpen, openModal, closeModal] = useModal(false);
+	const isLikedInitial = !!quote.likes.users.includes(userId);
+
+	//if localLike data present from parent,
+	// use locallike variables
+	const isLiked = localLikeData?.isLikedLocal ?? isLikedInitial;
+	const likeTotal = localLikeData?.totalLikesLocal ?? quote.likes.total;
 
 	const quoteLikeHandler = (quoteId) => {
 		if (!isLoggedIn) {
@@ -39,7 +44,7 @@ const QuoteItemContainer = (props) => {
 				//let parent run custom code before dispatching to redux
 				localLikeData?.handleLike();
 
-				isLikedGlobal
+				isLiked
 					? dispatch(dislikeQuote({ quoteId, userId }))
 					: dispatch(likeQuote({ quoteId, userId }));
 			}
@@ -48,13 +53,13 @@ const QuoteItemContainer = (props) => {
 
 	return (
 		<>
-			{isLoginModalOpen && <LoginModal onClose={closeModal} />}
+			{isLoginModalOpen && <LoginModal onClose={closeLoginModal} />}
 			<QuoteItem
 				key={quote.id}
 				quote={quote}
 				onQuoteLike={quoteLikeHandler}
-				totalLikes={localLikeData?.totalLikesLocal ?? quote.likes.total}
-				isLiked={localLikeData?.isLikedLocal ?? isLikedGlobal}
+				totalLikes={likeTotal}
+				isLiked={isLiked}
 			/>
 		</>
 	);
