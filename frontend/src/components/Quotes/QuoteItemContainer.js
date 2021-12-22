@@ -17,7 +17,8 @@ const QuoteItemContainer = (props) => {
 
 	const [sendRequest, isLoading, error] = useHttp();
 
-	const [isLoginModalOpen, openModal, closeModal] = useModal(false);
+	const [isLoginModalOpen, openLoginModal, closeLoginModal] = useModal(false);
+
 	const isLikedInitial = !!quote.likes.users.includes(userId);
 
 	//if localLike data present from parent,
@@ -27,7 +28,7 @@ const QuoteItemContainer = (props) => {
 
 	const quoteLikeHandler = (quoteId) => {
 		if (!isLoggedIn) {
-			return openModal();
+			return openLoginModal();
 		}
 
 		sendRequest(
