@@ -8,6 +8,7 @@ import QuoteDetailPage from "./pages/QuoteDetailPage";
 import QuoteDetailContainer from "./components/Quotes/QuoteDetail/QuoteDetailContainer";
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
+import AuthorDetailPage from "./pages/AuthorDetailPage";
 
 function App() {
 	const location = useLocation();
@@ -28,7 +29,7 @@ function App() {
 
 				<Route path="/authors/:authorId">
 					<MainNavigation />
-					<div>AuthorId</div>
+					<AuthorDetailPage />
 				</Route>
 
 				<Route path="/title/:titleId">
