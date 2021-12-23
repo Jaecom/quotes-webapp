@@ -26,7 +26,7 @@ function App() {
 					<QuoteDetailPage />
 				</Route>
 
-				<Route path="/author/:authorId">
+				<Route path="/authors/:authorId">
 					<MainNavigation />
 					<div>AuthorId</div>
 				</Route>
