@@ -4,6 +4,7 @@ const app = express();
 const mongoose = require("mongoose");
 const quoteRoutes = require("./routes/quotes-routes");
 const userRoutes = require("./routes/users-routes");
+const authorRoutes = require("./routes/author-routes");
 const HttpError = require("./utils/HttpError");
 
 mongoose.connect("mongodb://Jaecom:27017/quoteWebsite?replicaSet=rs");
@@ -34,6 +35,7 @@ app.get("/", (req, res) => {
 
 app.use("/api/quotes", quoteRoutes);
 app.use("/api/users", userRoutes);
+app.use("/api/authors", authorRoutes);
 
 app.all("*", (req, res, next) => {
 	next(new HttpError("Route Not Found", 404));
