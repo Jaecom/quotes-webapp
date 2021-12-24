@@ -7,6 +7,7 @@ import LoadingSpinner from "../UI/LoadingSpinner";
 import QuoteSearchNotFound from "./QuoteSearchNotFound";
 import { useSelector, useDispatch } from "react-redux";
 import { setInitialQuotes, addNextQuotes } from "../../store/quoteSlice";
+import QuoteListBanner from "./QuoteListBanner";
 
 const QuoteListContainer = (props) => {
 	const history = useHistory();
@@ -75,7 +76,11 @@ const QuoteListContainer = (props) => {
 		<>
 			{isLoading && <LoadingSpinner />}
 			{error && <div>Error</div>}
-			{quotes && quotes.length !== 0 && <QuoteList quotes={quotes} ref={quoteBottomRef} />}
+			{quotes && quotes.length !== 0 && (
+				<QuoteList quotes={quotes} ref={quoteBottomRef}>
+					<QuoteListBanner />
+				</QuoteList>
+			)}
 			{!isLoading && !error && (!quotes || quotes.length === 0) && (
 				<QuoteSearchNotFound searchWord={searchWord} />
 			)}
