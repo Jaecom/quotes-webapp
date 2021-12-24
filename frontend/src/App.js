@@ -9,6 +9,7 @@ import QuoteDetailContainer from "./components/Quotes/QuoteDetail/QuoteDetailCon
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
 import AuthorDetailPage from "./pages/AuthorDetailPage";
+import PageNotFound from "./pages/PageNotFound/PageNotFound";
 
 function App() {
 	const location = useLocation();
@@ -51,7 +52,7 @@ function App() {
 				</Route>
 
 				<Route path="*">
-					<div>ERROR</div>
+					<PageNotFound />
 				</Route>
 			</Switch>
 
