@@ -5,6 +5,7 @@ import SearchBar from "./SearchBar";
 import Button from "../UI/Button";
 import { useContext } from "react";
 import AuthContext from "../../store/auth-context";
+import UserMenu from "./UserMenu";
 
 const MainNavigation = () => {
 	const authCtx = useContext(AuthContext);
@@ -35,7 +36,7 @@ const MainNavigation = () => {
 
 					{authCtx.isLoggedIn && (
 						<li className="heading-nav">
-							<Button onClick={authCtx.logout}>Signout</Button>
+							<UserMenu />
 						</li>
 					)}
 				</ul>

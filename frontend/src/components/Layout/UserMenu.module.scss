@@ -1,0 +1,45 @@
+.wrapper {
+	position: relative;
+
+	&:hover .action-wrapper {
+		visibility: visible;
+	}
+}
+
+.user-image {
+	border-radius: 50%;
+	width: 4rem;
+	height: 4rem;
+	object-position: center;
+	object-fit: cover;
+}
+
+.action-wrapper {
+	visibility: hidden;
+	position: absolute;
+	top: 4.5rem;
+	right: -4rem;
+}
+
+.action-list {
+	width: 25rem;
+
+	display: flex;
+	flex-direction: column;
+
+	background-color: white;
+	box-shadow: 0 1rem 1.5rem rgba(black, 0.2);
+	border-radius: 1rem;
+	overflow: hidden;
+
+	.action-link,
+	button {
+		width: 100%;
+		text-align: left;
+		padding: 1.5rem 2rem;
+
+		&:hover {
+			background-color: rgba(black, 0.05);
+		}
+	}
+}
