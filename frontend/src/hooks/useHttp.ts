@@ -7,6 +7,7 @@ interface RequestObject {
 	headers: {
 		[header: string]: string;
 	};
+	credentials: RequestCredentials;
 }
 
 const useHttp = () => {
@@ -16,14 +17,15 @@ const useHttp = () => {
 	const sendRequest = useCallback(
 		async (requestObject: RequestObject, processData: (data: any) => {}) => {
 			try {
-				const { url, body, method, headers } = requestObject;
+				const { url, body, method, headers, credentials } = requestObject;
 				setIsLoading(true);
 				const res = await fetch(url, {
 					body: body ?? null,
 					method: method ?? "GET",
 					headers: headers ?? { "Content-Type": "application/json" },
+					credentials: credentials ?? "same-origin",
 				});
-				
+				console.log(res);
 				const data = await res.json();
 
 				if (!res.ok) {

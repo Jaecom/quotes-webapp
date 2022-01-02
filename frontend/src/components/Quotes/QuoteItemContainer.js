@@ -38,8 +38,8 @@ const QuoteItemContainer = (props) => {
 				body: JSON.stringify({ quoteId }),
 				headers: {
 					"Content-Type": "application/json",
-					Authorization: "Bearer " + token,
 				},
+				credentials: "include",
 			},
 			(data) => {
 				//let parent run custom code before dispatching to redux

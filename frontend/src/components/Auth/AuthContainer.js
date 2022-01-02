@@ -26,8 +26,10 @@ const AuthContainer = (props) => {
 				headers: {
 					"Content-Type": "application/x-www-form-urlencoded",
 				},
+				credentials: "include",
 			},
 			(data) => {
+				console.log(data);
 				authCtx.login(data.token, data.expirationDate, data.userId);
 
 				if (history.location.pathname !== `/${flag}`) {
