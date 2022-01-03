@@ -53,6 +53,11 @@ module.exports.signin = async (req, res, next) => {
 
 	const expirationDate = jwt.decode(token).exp;
 
+	res.cookie("token", token, { httpOnly: true });
+	res.cookie("isLoggedIn", true);
+	res.cookie("userId", newUser.id);
+	res.cookie("expirationDate", expirationDate);
+
 	res.json({ userId: newUser.id, token, expirationDate });
 };
 
@@ -85,6 +90,11 @@ module.exports.login = async (req, res, next) => {
 	}
 
 	const expirationDate = jwt.decode(token).exp;
+
+	res.cookie("token", token, { httpOnly: true });
+	res.cookie("isLoggedIn", true);
+	res.cookie("userId", existingUser.id);
+	res.cookie("expirationDate", expirationDate);
 
 	res.json({ userId: existingUser.id, token, expirationDate });
 };
