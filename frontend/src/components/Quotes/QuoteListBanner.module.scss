@@ -1,9 +1,53 @@
 @use "src/assets/styles/main.scss" as *;
 
 .wrapper {
-	height: 30rem;
+	grid-column: span 2;
+
+	@media only screen and (max-width: 800px) {
+		grid-column: 1/-1;
+	}
+}
+
+.container {
+	height: 100%;
 	background-color: $color-grey-light;
-	grid-row: 3/4;
-	grid-column: 1/-1;
 	border-radius: 1rem;
+	padding: 4rem 5rem;
+	position: relative;
+	overflow: hidden;
+	transition: all 0.2s ease;
+
+	&:hover {
+		box-shadow: 0 1rem 1.5rem rgba($color-black, 0.15);
+		transform: scale(1.03);
+		cursor: pointer;
+	}
+
+	a {
+		text-decoration: none;
+	}
+}
+
+.author {
+	@extend .heading-3;
+	margin-bottom: 1rem;
+}
+
+.paragraph {
+	@extend .paragraph--medium;
+}
+
+.link {
+	margin-top: 1rem;
+	display: inline-block;
+}
+
+.double-quote {
+	@extend .paragraph--big;
+	font-size: 40rem;
+	color: rgba($color-grey-dark, 0.2);
+	position: absolute;
+	bottom: -30%;
+	right: -2%;
+	line-height: 0;
 }
