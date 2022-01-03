@@ -2,18 +2,12 @@ import Card from "../UI/Card";
 import classes from "./QuoteItem.module.scss";
 import "../../assets/styles/main.scss";
 import { Link } from "react-router-dom";
-import { useLocation, matchPath } from "react-router";
 import sprite from "../../assets/sprite.svg";
+import useLinkStateBackground from "../../hooks/useLinkStateBackground";
 
 const QuoteItem = (props) => {
-	const location = useLocation();
 	const { quote, totalLikes, isLiked, onQuoteLike } = props;
-
-	const matched = matchPath(location.pathname, {
-		path: ["/", "/authors/:authorId"],
-		exact: true,
-		strict: true,
-	});
+	const linkStateBackground = useLinkStateBackground();
 
 	return (
 		<div>
@@ -21,8 +15,7 @@ const QuoteItem = (props) => {
 				key={quote.id}
 				to={{
 					pathname: `/quotes/${quote.id}`,
-					//set or pass on background location
-					state: matched ? { background: location } : location.state,
+					state: linkStateBackground,
 				}}
 			>
 				<Card>
