@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import Button from "../UI/Button";
 import { useContext } from "react";
 import AuthContext from "../../store/auth-context";
+import LogoutButtonContainer from "../Auth/LogoutButtonContainer";
 
 const UserMenu = () => {
 	const authCtx = useContext(AuthContext);
@@ -37,7 +38,7 @@ const UserMenu = () => {
 						</Link>
 					</li>
 					<li className={classes["action-item"]}>
-						<Button onClick={authCtx.logout}>Signout</Button>
+						<LogoutButtonContainer />
 					</li>
 				</ul>
 			</div>
