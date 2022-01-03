@@ -6,6 +6,7 @@ const quoteRoutes = require("./routes/quotes-routes");
 const userRoutes = require("./routes/users-routes");
 const authorRoutes = require("./routes/author-routes");
 const HttpError = require("./utils/HttpError");
+const cookieParser = require("cookie-parser");
 
 mongoose.connect("mongodb://Jaecom:27017/quoteWebsite?replicaSet=rs");
 
@@ -19,8 +20,11 @@ db.on("error", console.error.bind(console, "connection error:"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+app.use(cookieParser());
+
 app.use((req, res, next) => {
-	res.setHeader("Access-Control-Allow-Origin", "*");
+	res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+	res.setHeader("Access-Control-Allow-Credentials", true);
 	res.setHeader(
 		"Access-Control-Allow-Headers",
 		"Origin, X-Requested-With, Content-Type, Accept, Authorization"
