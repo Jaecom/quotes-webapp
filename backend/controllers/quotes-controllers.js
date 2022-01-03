@@ -21,7 +21,13 @@ module.exports.index = async (req, res, next) => {
 	} else {
 		quotes = await Quote.find()
 			.skip(QUOTE_PER_LOAD * (page - 1))
-			.limit(QUOTE_PER_LOAD);
+			.limit(QUOTE_PER_LOAD)
+			.lean();
+
+		const randomIndex = Math.floor(Math.random() * (quotes.length - 1));
+		quotes[randomIndex].isBanner = true;
+
+		quotes = quotes.map((element) => Quote.hydrate(element));
 	}
 
 	if (quotes.length !== QUOTE_PER_LOAD) {
