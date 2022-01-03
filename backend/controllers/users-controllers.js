@@ -7,6 +7,20 @@ const SALT_ROUNDS = 10;
 const jwt = require("jsonwebtoken");
 const TOKEN_EXPIRATION = "1 day";
 
+module.exports.isLoggedIn = async (req, res, next) => {
+	const { token } = req.cookies;
+	const { userId, exp: expirationDate } = jwt.decode(token);
+	res.json({ userId, expirationDate });
+};
+
+module.exports.logout = async (req, res, next) => {
+	res.clearCookie("token");
+	res.clearCookie("isLoggedIn");
+	res.clearCookie("expirationDate");
+	res.clearCookie("userId");
+	res.json("success");
+};
+
 module.exports.signin = async (req, res, next) => {
 	const { name, password, email, username } = req.body;
 
