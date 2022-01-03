@@ -1,59 +1,81 @@
 import AuthContext from "./auth-context";
 import { useEffect, useState } from "react";
-const LOCAL_TOKEN_KEY = "token";
-const LOCAL_TOKEN_EXPIRATION_KEY = "expiration";
-const LOCAL_USER_ID_KEY = "userId";
+
 let logoutTimer;
 
-//initially retrieve token
-const retrieveToken = () => {
-	const token = localStorage.getItem(LOCAL_TOKEN_KEY);
-	const expiration = localStorage.getItem(LOCAL_TOKEN_EXPIRATION_KEY);
-	const userId = localStorage.getItem(LOCAL_USER_ID_KEY);
-	return { token, expiration, userId };
+const getCookies = () => {
+	let object = {};
+	document.cookie.split("; ").forEach((element) => {
+		const splitArray = element.split("=");
+		object[splitArray[0]] = splitArray[1];
+	});
+	return object;
 };
 
-const AuthProvider = (props) => {
-	const tokenData = retrieveToken();
+const doesTokenExist = () => {
+	document.cookie = "token=-1";
+	const cookies = getCookies();
+	if (cookies.token === "-1") {
+		return false;
+	}
+	return true;
+};
 
-	const [token, setToken] = useState(tokenData.token);
-	const [expiration, setExpiration] = useState(tokenData.expiration);
-	const [userId, setUserId] = useState(tokenData.userId);
+const initialCookies = getCookies();
+const isTokenPresent = doesTokenExist();
+
+const AuthProvider = (props) => {
+	const [isLoggedIn, setIsLoggedIn] = useState(initialCookies?.isLoggedIn ?? false);
+	const [userId, setUserId] = useState(initialCookies?.userId);
+	const [expiration, setExpiration] = useState(initialCookies?.expirationDate);
 
 	const loginHandler = (token, expiration, userId) => {
-		setToken(token);
-		setExpiration(expiration);
+		setIsLoggedIn(true);
 		setUserId(userId);
-		localStorage.setItem(LOCAL_TOKEN_KEY, token);
-		localStorage.setItem(LOCAL_TOKEN_EXPIRATION_KEY, expiration);
-		localStorage.setItem(LOCAL_USER_ID_KEY, userId);
+		setExpiration(expiration);
 	};
 
-	const logoutHandler = () => {
-		setToken(null);
-		setExpiration(null);
+	const logoutHandler = async () => {
+		setIsLoggedIn(false);
 		setUserId(null);
-		localStorage.removeItem(LOCAL_TOKEN_KEY);
-		localStorage.removeItem(LOCAL_TOKEN_EXPIRATION_KEY);
-		localStorage.removeItem(LOCAL_USER_ID_KEY);
+		setExpiration(null);
 	};
 
-	//autoLogout
+	// autoLogout;
 	useEffect(() => {
-		if (token && expiration) {
+		if (isLoggedIn && expiration) {
 			const currentTimeMili = new Date().getTime();
 			const expirationTimeMili = expiration * 1000;
 			const remaingTimeMili = expirationTimeMili - currentTimeMili;
-
-			logoutTimer = setTimeout(logoutHandler, remaingTimeMili);
+			logoutTimer = setTimeout(() => {
+				logoutHandler();
+			}, remaingTimeMili);
 		} else {
 			clearTimeout(logoutTimer);
 		}
-	}, [token, expiration]);
+	}, [isLoggedIn, expiration]);
+
+	//if any of required cookies are missing & token present, logout
+	useEffect(() => {
+		const requestLogout = async () => {
+			await fetch("http://localhost:5000/api/users/logout", {
+				method: "POST",
+				credentials: "include",
+			});
+		};
+
+		if (
+			(!initialCookies.isLoggedIn || !initialCookies.expirationDate || !initialCookies.userId) &&
+			isTokenPresent
+		) {
+			requestLogout();
+			logoutHandler();
+		}
+	}, []);
 
 	return (
 		<AuthContext.Provider
-			value={{ login: loginHandler, logout: logoutHandler, isLoggedIn: !!token, token, userId }}
+			value={{ login: loginHandler, logout: logoutHandler, isLoggedIn, userId }}
 		>
 			{props.children}
 		</AuthContext.Provider>
