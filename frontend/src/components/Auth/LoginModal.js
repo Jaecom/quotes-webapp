@@ -6,14 +6,12 @@ import AuthContainer from "./AuthContainer";
 
 const LoginModal = (props) => {
 	return (
-		<Modal onClose={props.onClose} top>
-			<div className={classes.wrapper}>
-				<Card>
-					<div className={classes.container}>
-						<AuthContainer login />
-					</div>
-				</Card>
-			</div>
+		<Modal onClose={props.onClose} top center>
+			<Card>
+				<div className={classes.container}>
+					<AuthContainer login />
+				</div>
+			</Card>
 		</Modal>
 	);
 };

@@ -29,7 +29,9 @@ const Modal = (props) => {
 				document.getElementById("backdrop")
 			)}
 			{ReactDOM.createPortal(
-				<ModalOverlay top={props.top}>{props.children}</ModalOverlay>,
+				<ModalOverlay top={props.top}>
+					<div className={`${props.center && classes.content}`}>{props.children}</div>
+				</ModalOverlay>,
 				document.getElementById("modal")
 			)}
 		</>
