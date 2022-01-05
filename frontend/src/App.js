@@ -1,15 +1,18 @@
 import "./App.css";
-import { Route, Switch } from "react-router-dom";
-import HomePage from "./pages/HomePage";
-import MainNavigation from "./components/Layout/MainNavigation";
 import { useLocation } from "react-router";
+import { Route, Switch } from "react-router-dom";
+
+import MainNavigation from "./components/Layout/MainNavigation";
 import QuoteDetailModal from "./components/Quotes/QuoteDetail/QuoteDetailModal";
-import QuoteDetailPage from "./pages/QuoteDetailPage";
 import QuoteDetailContainer from "./components/Quotes/QuoteDetail/QuoteDetailContainer";
+import PageNotFound from "./pages/PageNotFound/PageNotFound";
+
+import CollectionsPage from "./pages/CollectionsPage";
+import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
 import AuthorDetailPage from "./pages/AuthorDetailPage";
-import PageNotFound from "./pages/PageNotFound/PageNotFound";
+import QuoteDetailPage from "./pages/QuoteDetailPage";
 
 function App() {
 	const location = useLocation();
