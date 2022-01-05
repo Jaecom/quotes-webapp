@@ -28,11 +28,6 @@ const UserMenu = () => {
 						</Link>
 					</li>
 					<li className={classes["action-item"]}>
-						<Link className={classes["action-link"]} to="/likes">
-							My Likes
-						</Link>
-					</li>
-					<li className={classes["action-item"]}>
 						<Link className={classes["action-link"]} to="/settings">
 							Account Settings
 						</Link>
