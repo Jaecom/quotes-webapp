@@ -15,13 +15,13 @@ module.exports.index = async (req, res, next) => {
 
 module.exports.createCollection = async (req, res, next) => {
 	const { userId } = res.locals;
-	const { name, description } = req.body;
+	const { name, description, isPrivate } = req.body;
 
 	const updatedUser = await Users.findByIdAndUpdate(
 		userId,
 		{
 			$push: {
-				collections: { name, description, content: [] },
+				collections: { name, description, content: [], isPrivate },
 			},
 		},
 		{ new: true }

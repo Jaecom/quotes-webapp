@@ -32,6 +32,11 @@ const userSchema = new Schema({
 				type: [{ type: Schema.Types.ObjectId, ref: "Quote" }],
 				required: true,
 			},
+			isPrivate: {
+				type: Boolean,
+				required: true,
+				default: false,
+			},
 		},
 	],
 });
