@@ -1,7 +1,10 @@
 import "./App.css";
+
+import { useContext } from "react";
 import { useLocation } from "react-router";
 import { Route, Switch } from "react-router-dom";
 
+import AuthContext from "./store/auth-context";
 import MainNavigation from "./components/Layout/MainNavigation";
 import QuoteDetailModal from "./components/Quotes/QuoteDetail/QuoteDetailModal";
 import QuoteDetailContainer from "./components/Quotes/QuoteDetail/QuoteDetailContainer";
@@ -18,6 +21,8 @@ function App() {
 	const location = useLocation();
 	const background = location.state?.background;
 
+	const authCtx = useContext(AuthContext);
+
 	return (
 		<div className="App">
 			<Switch location={background || location}>
@@ -25,6 +30,12 @@ function App() {
 					<MainNavigation />
 					<HomePage />
 				</Route>
+
+				{authCtx.isLoggedIn && (
+					<Route path="/collections">
+						<MainNavigation />
+					</Route>
+				)}
 
 				<Route path="/quotes/:quoteId">
 					<MainNavigation />
