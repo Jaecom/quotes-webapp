@@ -2,9 +2,12 @@ require("dotenv").config();
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
+
 const quoteRoutes = require("./routes/quotes-routes");
 const userRoutes = require("./routes/users-routes");
 const authorRoutes = require("./routes/author-routes");
+const collectionRoutes = require("./routes/collections-routes");
+
 const HttpError = require("./utils/HttpError");
 const cookieParser = require("cookie-parser");
 
@@ -40,6 +43,7 @@ app.get("/", (req, res) => {
 app.use("/api/quotes", quoteRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/authors", authorRoutes);
+app.use("/api/collections", collectionRoutes);
 
 app.all("*", (req, res, next) => {
 	next(new HttpError("Route Not Found", 404));
