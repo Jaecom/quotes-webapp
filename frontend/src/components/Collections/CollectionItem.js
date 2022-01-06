@@ -3,7 +3,7 @@ import classes from "./CollectionItem.module.scss";
 const CollectionItem = (props) => {
 	return (
 		<div className={classes.wrapper}>
-			<h3 className={classes.name}>{props.name}</h3>
+			<h3 className="heading-3">{props.name}</h3>
 		</div>
 	);
 };

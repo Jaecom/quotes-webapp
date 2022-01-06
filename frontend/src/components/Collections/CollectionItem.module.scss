@@ -10,10 +10,3 @@
 
 	background-color: $color-grey-light;
 }
-.name {
-	@extend .heading-3;
-}
-
-.description {
-	@extend .paragraph--small;
-}
