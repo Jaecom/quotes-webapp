@@ -18,6 +18,22 @@ const userSchema = new Schema({
 		type: [{ type: Schema.Types.ObjectId, ref: "Quote" }],
 		required: true,
 	},
+	collections: [
+		{
+			name: {
+				type: String,
+				required: true,
+			},
+			description: {
+				type: String,
+				required: true,
+			},
+			quotes: {
+				type: [{ type: Schema.Types.ObjectId, ref: "Quote" }],
+				required: true,
+			},
+		},
+	],
 });
 
 module.exports = mongoose.model("User", userSchema);
