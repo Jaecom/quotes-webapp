@@ -1,6 +1,5 @@
 import classes from "./MainNavigation.module.scss";
 import { NavLink, Link } from "react-router-dom";
-import "../../assets/styles/main.scss";
 import SearchBar from "./SearchBar";
 import Button from "../UI/Button";
 import { useContext } from "react";

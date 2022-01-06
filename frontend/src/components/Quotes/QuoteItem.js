@@ -1,6 +1,5 @@
 import Card from "../UI/Card";
 import classes from "./QuoteItem.module.scss";
-import "../../assets/styles/main.scss";
 import { Link } from "react-router-dom";
 import sprite from "../../assets/sprite.svg";
 import useLinkStateBackground from "../../hooks/useLinkStateBackground";
