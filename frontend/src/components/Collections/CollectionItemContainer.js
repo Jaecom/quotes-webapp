@@ -3,7 +3,7 @@ import CollectionItem from "./CollectionItem";
 const CollectionItemContainer = (props) => {
 	const { collection } = props;
 
-	return <CollectionItem name={collection.name} description={collection.description} />;
+	return <CollectionItem collection={collection} />;
 };
 
 export default CollectionItemContainer;

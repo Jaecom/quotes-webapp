@@ -1,8 +1,9 @@
 @use "src/assets/styles/main.scss" as *;
 
 .wrapper {
-	margin-top: 7rem;
+	height: 100%;
 	padding: 4rem;
+	padding-top: 11rem;
 }
 
 .grid {
@@ -14,25 +15,6 @@
 	align-content: flex-start;
 }
 
-.grid-item {
-	&::before {
-		content: "";
-		display: block;
-		padding-bottom: 1.5 * 100%;
-	}
-
-	position: relative;
-}
-
-.grid-content {
-	position: absolute;
-	inset: 0;
-	background-color: $color-white;
-	box-shadow: 0 1rem 1rem rgba($color-black, 0.2);
-	border-radius: 1rem;
-	overflow: hidden;
-}
-
 .button {
 	width: 6rem;
 	height: 6rem;
@@ -42,8 +24,8 @@
 
 	position: fixed;
 	z-index: 50;
-	bottom: 4%;
-	right: 4%;
+	bottom: 3rem;
+	right: 3rem;
 
 	display: flex;
 	justify-content: center;

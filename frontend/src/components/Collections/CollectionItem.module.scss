@@ -1,5 +1,32 @@
 @use "src/assets/styles/main.scss" as *;
 
+.grid-item {
+	&::before {
+		content: "";
+		display: block;
+		padding-bottom: 1.5 * 100%;
+	}
+
+	position: relative;
+}
+
+.grid-content {
+	position: absolute;
+	inset: 0;
+	background-color: $color-white;
+	border-radius: 1rem;
+	overflow: hidden;
+
+	box-shadow: 0 0.5rem 0.5rem rgba($color-black, 0.05);
+	transition: all 0.2s ease;
+
+	&:hover {
+		transform: translateY(-0.5rem) scale(1.02);
+		box-shadow: 0 1rem 1rem rgba($color-black, 0.2);
+		cursor: pointer;
+	}
+}
+
 .wrapper {
 	height: 100%;
 

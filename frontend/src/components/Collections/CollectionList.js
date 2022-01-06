@@ -40,11 +40,7 @@ const CollectionList = (props) => {
 				<div className={classes.grid}>
 					{collections &&
 						collections.map((collection) => (
-							<div className={classes["grid-item"]} key={collection._id}>
-								<div className={classes["grid-content"]}>
-									<CollectionItemContainer key={collection._id} collection={collection} />
-								</div>
-							</div>
+							<CollectionItemContainer key={collection._id} collection={collection} />
 						))}
 				</div>
 			</div>
