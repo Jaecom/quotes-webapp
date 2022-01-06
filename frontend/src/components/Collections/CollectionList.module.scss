@@ -1,0 +1,59 @@
+@use "src/assets/styles/main.scss" as *;
+
+.wrapper {
+	margin-top: 7rem;
+	padding: 4rem;
+}
+
+.grid {
+	display: grid;
+	grid-auto-flow: row dense;
+	grid-template-columns: repeat(auto-fill, minmax(25rem, 1fr));
+	grid-template-rows: min-content;
+	gap: 3rem;
+	align-content: flex-start;
+}
+
+.grid-item {
+	&::before {
+		content: "";
+		display: block;
+		padding-bottom: 1.5 * 100%;
+	}
+
+	position: relative;
+}
+
+.grid-content {
+	position: absolute;
+	inset: 0;
+	background-color: $color-white;
+	box-shadow: 0 1rem 1rem rgba($color-black, 0.2);
+	border-radius: 1rem;
+	overflow: hidden;
+}
+
+.button {
+	width: 6rem;
+	height: 6rem;
+	padding: unset;
+
+	border-radius: 50%;
+
+	position: fixed;
+	z-index: 50;
+	bottom: 4%;
+	right: 4%;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	box-shadow: 0 1rem 1rem rgba($color-black, 0.2);
+
+	svg {
+		width: 2rem;
+		height: 2rem;
+		fill: $color-white;
+	}
+}

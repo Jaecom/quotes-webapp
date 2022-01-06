@@ -1,0 +1,19 @@
+@use "src/assets/styles/main.scss" as *;
+
+.wrapper {
+	height: 100%;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+
+	background-color: $color-grey-light;
+}
+.name {
+	@extend .heading-3;
+}
+
+.description {
+	@extend .paragraph--small;
+}

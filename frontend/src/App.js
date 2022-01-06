@@ -34,6 +34,7 @@ function App() {
 				{authCtx.isLoggedIn && (
 					<Route path="/collections">
 						<MainNavigation />
+						<CollectionsPage />
 					</Route>
 				)}
 
