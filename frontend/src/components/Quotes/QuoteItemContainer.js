@@ -13,9 +13,9 @@ const QuoteItemContainer = (props) => {
 	const { quote, localLikeData } = props;
 
 	const dispatch = useDispatch();
-	const { userId, isLoggedIn, token } = useContext(AuthContext);
+	const { userId, isLoggedIn } = useContext(AuthContext);
 
-	const [sendRequest, isLoading, error] = useHttp();
+	const [sendRequest] = useHttp();
 
 	const [isLoginModalOpen, openLoginModal, closeLoginModal] = useModal(false);
 
