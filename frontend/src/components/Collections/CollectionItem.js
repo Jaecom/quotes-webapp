@@ -1,8 +1,13 @@
 import classes from "./CollectionItem.module.scss";
-
+import { Link } from "react-router-dom";
+import useLinkStateBackground from "../../hooks/useLinkStateBackground";
 const CollectionItem = (props) => {
 	const { collection } = props;
+
+	const backgroundState = useLinkStateBackground();
+
 	return (
+		<Link to={{ pathname: `/collections/${collection._id}`, state: backgroundState }}>
 			<div className={classes["grid-item"]}>
 				<div className={classes["grid-content"]}>
 					<div className={classes.wrapper}>
@@ -10,6 +15,7 @@ const CollectionItem = (props) => {
 					</div>
 				</div>
 			</div>
+		</Link>
 	);
 };
 

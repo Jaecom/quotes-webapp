@@ -1,6 +1,6 @@
 import { useLocation, matchPath } from "react-router";
 
-const pathsToMatch = ["/", "/authors/:authorId"];
+const pathsToMatch = ["/", "/authors/:id", "/collections/:id"];
 
 const useLinkStateBackground = () => {
 	const location = useLocation();
