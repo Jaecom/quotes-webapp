@@ -22,9 +22,8 @@ const QuoteDetailContainer = () => {
 	}, [sendRequest, quoteId]);
 
 	useEffect(() => {
-		const quoteId = quote?.id;
 		const worksByAuthor = quote?.author.authorObject.quotes.filter(
-			(element) => element.id !== quoteId
+			(element) => element.id !== quote.id
 		);
 		setOtherQuotesByAuthor(worksByAuthor);
 	}, [quote]);
