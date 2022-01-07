@@ -16,8 +16,8 @@ const QuoteItemContainer = (props) => {
 	const { userId, isLoggedIn } = useContext(AuthContext);
 
 	const [sendRequest] = useHttp();
+	const [isModalOpen, openModal, closeModal] = useModal(false);
 
-	const [isLoginModalOpen, openLoginModal, closeLoginModal] = useModal(false);
 
 	const isLikedInitial = !!quote.likes.users.includes(userId);
 
@@ -28,7 +28,7 @@ const QuoteItemContainer = (props) => {
 
 	const quoteLikeHandler = (quoteId) => {
 		if (!isLoggedIn) {
-			return openLoginModal();
+			return openModal();
 		}
 
 		sendRequest(
@@ -54,7 +54,7 @@ const QuoteItemContainer = (props) => {
 
 	return (
 		<>
-			{isLoginModalOpen && <LoginModal onClose={closeLoginModal} />}
+			{isModalOpen && <LoginModal onClose={closeModal} />}
 			<QuoteItem
 				key={quote.id}
 				quote={quote}
