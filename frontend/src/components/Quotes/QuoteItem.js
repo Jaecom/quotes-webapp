@@ -1,4 +1,3 @@
-import Card from "../UI/Card";
 import classes from "./QuoteItem.module.scss";
 import { Link } from "react-router-dom";
 import sprite from "../../assets/sprite.svg";
@@ -7,6 +6,11 @@ import useLinkStateBackground from "../../hooks/useLinkStateBackground";
 const QuoteItem = (props) => {
 	const { quote, totalLikes, isLiked, onQuoteLike } = props;
 	const linkStateBackground = useLinkStateBackground();
+
+	const addCollectionHandler = (event) => {
+		event.preventDefault();
+		props.addCollection(quote.id);
+	};
 
 	return (
 		<div>
@@ -17,22 +21,21 @@ const QuoteItem = (props) => {
 					state: linkStateBackground,
 				}}
 			>
-				<Card>
-					<div className={classes.wrapper}>
-						<div className={classes.container}>
-							<div className={classes.main}>
-								<div className={classes.content}>
-									<p className={`${classes.quote} paragraph--small`}>
-										{quote.previewQuote}&hellip;
-									</p>
-								</div>
-								<div className={classes["image-wrapper"]}>
-									<img src={quote.image} alt="quote" />
-								</div>
+				<div className={classes.wrapper}>
+					<div className={classes.main}>
+						<div className={classes.content}>
+							<p className="paragraph--small">{quote.previewQuote}&hellip;</p>
+							<div className={classes["plus-box"]} onClick={addCollectionHandler}>
+								<svg className={classes.plus}>
+									<use href={sprite + "#icon-plus"} />
+								</svg>
 							</div>
 						</div>
+						<div className={classes["image-wrapper"]}>
+							<img src={quote.image} alt="quote" />
+						</div>
 					</div>
-				</Card>
+				</div>
 			</Link>
 
 			<div className={`${classes.details}`}>
