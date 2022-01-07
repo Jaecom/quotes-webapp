@@ -6,23 +6,16 @@ import sprite from "../../assets/sprite.svg";
 import CollectionItemContainer from "./CollectionItemContainer";
 import AddCollectionModal from "./AddCollectionModal";
 import Button from "../UI/Button";
+import useModal from "../../hooks/useModal";
 
 const CollectionList = (props) => {
 	const { collections, closeAfterCreate } = props;
-	const [isModalOpen, setisModalOpen] = useState(false);
-
-	const openModal = () => {
-		setisModalOpen(true);
-	};
-
-	const closeModal = () => {
-		setisModalOpen(false);
-	};
+	const [isModalOpen, openModal, closeModal] = useModal();
 
 	useEffect(() => {
 		//when closeAfterCreate changes
-		setisModalOpen(false);
-	}, [closeAfterCreate]);
+		closeModal();
+	}, [closeAfterCreate, closeModal]);
 
 	return (
 		<>
