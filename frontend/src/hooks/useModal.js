@@ -1,15 +1,15 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 
 const useModal = () => {
 	const [isModalOpen, setIsModalOpen] = useState(false);
 
-	const closeModal = () => {
+	const closeModal = useCallback(() => {
 		setIsModalOpen(false);
-	};
+	}, []);
 
-	const openModal = () => {
+	const openModal = useCallback(() => {
 		setIsModalOpen(true);
-	};
+	}, []);
 
 	return [isModalOpen, openModal, closeModal];
 };
