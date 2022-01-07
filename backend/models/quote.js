@@ -71,6 +71,10 @@ quoteSchema.virtual("previewQuote").get(function () {
 	return previewQuote;
 });
 
+quoteSchema.virtual("thumbnail").get(function () {
+	return this.image.replace(/w=\d*&q=\d*/g, "&w=700&h=700&q=80");
+});
+
 quoteSchema.index({ source: "text", quoteFull: "text", "author.name": "text" });
 
 module.exports = mongoose.model("Quote", quoteSchema);
