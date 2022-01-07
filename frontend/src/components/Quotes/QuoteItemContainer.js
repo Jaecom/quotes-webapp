@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { useDispatch } from "react-redux";
 
 import AuthContext from "../../store/auth-context";
@@ -10,21 +10,18 @@ import LoginModal from "../Auth/LoginModal";
 import useModal from "../../hooks/useModal";
 
 const QuoteItemContainer = (props) => {
-	const { quote, localLikeData } = props;
+	const { quote, local } = props;
 
 	const dispatch = useDispatch();
 	const { userId, isLoggedIn } = useContext(AuthContext);
-
 	const [sendRequest] = useHttp();
 	const [isModalOpen, openModal, closeModal] = useModal(false);
 
+	const isLikedGlobal = !!quote.likes.users.includes(userId);
+	const totalLikesGlobal = quote.likes.total;
 
-	const isLikedInitial = !!quote.likes.users.includes(userId);
-
-	//if localLike data present from parent,
-	// use locallike variables
-	const isLiked = localLikeData?.isLikedLocal ?? isLikedInitial;
-	const likeTotal = localLikeData?.totalLikesLocal ?? quote.likes.total;
+	const [totalLikesLocal, setTotalLikesLocal] = useState(quote.likes.total);
+	const [isLikedLocal, setIsLikedLocal] = useState(isLikedGlobal);
 
 	const quoteLikeHandler = (quoteId) => {
 		if (!isLoggedIn) {
@@ -42,12 +39,15 @@ const QuoteItemContainer = (props) => {
 				credentials: "include",
 			},
 			(data) => {
-				//let parent run custom code before dispatching to redux
-				localLikeData?.handleLike();
-
-				isLiked
-					? dispatch(dislikeQuote({ quoteId, userId }))
-					: dispatch(likeQuote({ quoteId, userId }));
+				if (isLikedLocal) {
+					setIsLikedLocal(false);
+					setTotalLikesLocal((likes) => likes - 1);
+					dispatch(dislikeQuote({ quoteId, userId }));
+				} else {
+					setIsLikedLocal(true);
+					setTotalLikesLocal((likes) => likes + 1);
+					dispatch(likeQuote({ quoteId, userId }));
+				}
 			}
 		);
 	};
@@ -59,8 +59,8 @@ const QuoteItemContainer = (props) => {
 				key={quote.id}
 				quote={quote}
 				onQuoteLike={quoteLikeHandler}
-				totalLikes={likeTotal}
-				isLiked={isLiked}
+				totalLikes={local ? totalLikesLocal : totalLikesGlobal}
+				isLiked={local ? isLikedLocal : isLikedGlobal}
 			/>
 		</>
 	);
