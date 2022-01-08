@@ -2,12 +2,12 @@ import { useState, useCallback } from "react";
 
 interface RequestObject {
 	url: string;
-	body: string;
-	method: string;
-	headers: {
+	body?: string;
+	method?: string;
+	headers?: {
 		[header: string]: string;
 	};
-	credentials: RequestCredentials;
+	credentials?: RequestCredentials;
 }
 
 const useHttp = () => {
@@ -15,7 +15,7 @@ const useHttp = () => {
 	const [error, setError] = useState();
 
 	const sendRequest = useCallback(
-		async (requestObject: RequestObject, processData: (data: any) => {}) => {
+		async (requestObject: RequestObject, processData: (data: any) => void) => {
 			try {
 				const { url, body, method, headers, credentials } = requestObject;
 				setIsLoading(true);
@@ -25,9 +25,9 @@ const useHttp = () => {
 					headers: headers ?? { "Content-Type": "application/json" },
 					credentials: credentials ?? "same-origin",
 				});
-				console.log(res);
+				// console.log(res);
 				const data = await res.json();
-
+				// console.log(data);
 				if (!res.ok) {
 					throw new Error(data);
 				}
@@ -42,7 +42,7 @@ const useHttp = () => {
 		[]
 	);
 
-	return [sendRequest, isLoading, error];
+	return [sendRequest, isLoading, error] as const;
 };
 
 export default useHttp;
