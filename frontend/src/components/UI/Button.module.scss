@@ -8,7 +8,16 @@
 .highlight {
 	color: $color-white;
 	background: $color-primary;
+
 	&:hover {
 		background-color: rgba($color-primary, 0.8);
+	}
+}
+
+.outline {
+	border: solid 0.5px $color-grey-dark;
+
+	&:hover {
+		background-color: rgba($color-grey-light, 0.5);
 	}
 }
