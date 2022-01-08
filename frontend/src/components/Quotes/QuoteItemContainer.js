@@ -3,11 +3,12 @@ import { useDispatch } from "react-redux";
 
 import AuthContext from "../../store/auth-context";
 import useHttp from "../../hooks/useHttp";
-
+import useModal from "../../hooks/useModal";
 import { likeQuote, dislikeQuote } from "../../store/quoteSlice";
+
 import QuoteItem from "./QuoteItem";
 import LoginModal from "../Auth/LoginModal";
-import useModal from "../../hooks/useModal";
+import AddToCollectionModal from "../Collections/AddToCollectionModal/AddToCollectionModal";
 
 const QuoteItemContainer = (props) => {
 	const { quote, local } = props;
@@ -15,7 +16,8 @@ const QuoteItemContainer = (props) => {
 	const dispatch = useDispatch();
 	const { userId, isLoggedIn } = useContext(AuthContext);
 	const [sendRequest] = useHttp();
-	const [isModalOpen, openModal, closeModal] = useModal(false);
+	const [isLoginModalOpen, openLoginModal, closeLoginModal] = useModal(false);
+	const [isCollectionModalOpen, openCollectionModal, closeCollectionModal] = useModal(false);
 
 	const isLikedGlobal = !!quote.likes.users.includes(userId);
 	const totalLikesGlobal = quote.likes.total;
@@ -25,7 +27,7 @@ const QuoteItemContainer = (props) => {
 
 	const quoteLikeHandler = (quoteId) => {
 		if (!isLoggedIn) {
-			return openModal();
+			return openLoginModal();
 		}
 
 		sendRequest(
@@ -52,15 +54,29 @@ const QuoteItemContainer = (props) => {
 		);
 	};
 
+	const onAddToCollectionModal = (event) => {
+		event.preventDefault();
+
+		if (!isLoggedIn) {
+			return openLoginModal();
+		}
+
+		return openCollectionModal();
+	};
+
 	return (
 		<>
-			{isModalOpen && <LoginModal onClose={closeModal} />}
+			{isLoginModalOpen && <LoginModal onClose={closeLoginModal} />}
+			{isCollectionModalOpen && (
+				<AddToCollectionModal quoteId={quote.id} onClose={closeCollectionModal} top />
+			)}
 			<QuoteItem
 				key={quote.id}
 				quote={quote}
 				onQuoteLike={quoteLikeHandler}
 				totalLikes={local ? totalLikesLocal : totalLikesGlobal}
 				isLiked={local ? isLikedLocal : isLikedGlobal}
+				addToCollection={onAddToCollectionModal}
 			/>
 		</>
 	);

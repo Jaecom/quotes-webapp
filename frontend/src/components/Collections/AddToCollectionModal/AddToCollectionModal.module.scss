@@ -1,0 +1,26 @@
+@use "src/assets/styles/main.scss" as *;
+
+.wrapper {
+	min-width: 50rem;
+	padding: 7rem;
+	max-height: 50rem;
+	overflow: auto;
+}
+
+.heading {
+	font-size: 3rem;
+}
+
+.list {
+	margin-top: 2rem;
+	display: flex;
+	flex-direction: column;
+	row-gap: 2rem;
+}
+
+.buttons {
+	margin-top: 6rem;
+
+	display: flex;
+	justify-content: space-between;
+}

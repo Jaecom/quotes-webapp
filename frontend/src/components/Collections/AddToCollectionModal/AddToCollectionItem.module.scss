@@ -1,0 +1,54 @@
+@use "src/assets/styles/main.scss" as *;
+
+.item {
+	padding: 2rem;
+	border-radius: 1rem;
+	background-color: $color-grey-light;
+	cursor: pointer;
+	transition: all 0.2s ease;
+
+	&:hover {
+		box-shadow: 0 1rem 1rem rgba($color-black, 0.2);
+		transform: translateY(-0.5rem);
+	}
+
+	&--included {
+		background-color: $color-primary;
+		color: $color-white;
+
+		.notification {
+			visibility: visible;
+			transform: translateX(0);
+		}
+	}
+}
+
+.content {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.name {
+	@extend %display;
+	font-size: 1.6rem;
+}
+
+.description {
+	margin-top: 0.5rem;
+}
+
+.notification {
+	visibility: hidden;
+	text-align: center;
+	color: $color-white;
+	transition: all .3s ease;
+	transform: translateX(60%);
+}
+
+.checkmark {
+	width: 1.5rem;
+	height: 1.5rem;
+	fill: $color-white;
+}
+

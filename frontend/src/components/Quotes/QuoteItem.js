@@ -7,11 +7,6 @@ const QuoteItem = (props) => {
 	const { quote, totalLikes, isLiked, onQuoteLike } = props;
 	const linkStateBackground = useLinkStateBackground();
 
-	const addCollectionHandler = (event) => {
-		event.preventDefault();
-		props.addCollection(quote.id);
-	};
-
 	return (
 		<div>
 			<Link
@@ -25,7 +20,7 @@ const QuoteItem = (props) => {
 					<div className={classes.main}>
 						<div className={classes.content}>
 							<p className="paragraph--small">{quote.previewQuote}&hellip;</p>
-							<div className={classes["plus-box"]} onClick={addCollectionHandler}>
+							<div className={classes["plus-box"]} onClick={props.addToCollection}>
 								<svg className={classes.plus}>
 									<use href={sprite + "#icon-plus"} />
 								</svg>
