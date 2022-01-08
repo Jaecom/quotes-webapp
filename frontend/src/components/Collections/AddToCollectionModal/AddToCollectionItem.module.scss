@@ -20,6 +20,10 @@
 			visibility: visible;
 			transform: translateX(0);
 		}
+
+		.lock {
+			fill: $color-white;
+		}
 	}
 }
 
@@ -27,6 +31,11 @@
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
+}
+
+.heading {
+	display: flex;
+	align-items: baseline;
 }
 
 .name {
@@ -41,8 +50,12 @@
 .notification {
 	visibility: hidden;
 	text-align: center;
+	column-gap: 2rem;
+
+	display: flex;
+
 	color: $color-white;
-	transition: all .3s ease;
+	transition: all 0.3s ease;
 	transform: translateX(60%);
 }
 
@@ -52,3 +65,9 @@
 	fill: $color-white;
 }
 
+.lock {
+	width: 1.2rem;
+	height: 1.2rem;
+	fill: rgba($color-black, 0.6);
+	margin-left: 0.5rem;
+}

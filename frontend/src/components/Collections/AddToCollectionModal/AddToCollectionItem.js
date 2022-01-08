@@ -4,7 +4,6 @@ import classes from "./AddToCollectionItem.module.scss";
 import sprite from "../../../assets/sprite.svg";
 
 const AddToCollectionItem = (props) => {
-	console.log("AddToCollectionItem");
 	const { collection, quoteId } = props;
 	const [isQuoteIncluded, setisQuoteIncluded] = useState(collection.quotes.includes(quoteId));
 	const [sendRequest] = useHttp();
@@ -38,14 +37,23 @@ const AddToCollectionItem = (props) => {
 		>
 			<div className={classes.content}>
 				<div>
-					<h3 className={`${classes.name}`}>{collection.name}</h3>
+					<div className={classes.heading}>
+						<h3 className={`${classes.name}`}>{collection.name}</h3>
+						{collection.isPrivate && (
+							<svg className={classes.lock}>
+								<use href={sprite + "#icon-lock"} />
+							</svg>
+						)}
+					</div>
 					<p className={`heading-5 ${classes.description}`}>{collection.description}</p>
 				</div>
 				<div className={classes.notification}>
-					<svg className={classes.checkmark}>
-						<use href={sprite + "#icon-check"} />
-					</svg>
-					<p>Added</p>
+					<div>
+						<svg className={classes.checkmark}>
+							<use href={sprite + "#icon-check"} />
+						</svg>
+						<p>Added</p>
+					</div>
 				</div>
 			</div>
 		</li>
