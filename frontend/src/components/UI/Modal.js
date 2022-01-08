@@ -15,7 +15,7 @@ const Backdrop = (props) => {
 
 const ModalOverlay = (props) => {
 	return (
-		<div className={`${classes.overlay} ${props.top ? classes.overlayTop : classes.overlayFirst}`}>
+		<div className={`${classes.overlay} ${props.top ? classes.overlayTop : ""}`}>
 			{props.children}
 		</div>
 	);
