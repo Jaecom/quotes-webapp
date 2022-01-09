@@ -5,7 +5,7 @@ module.exports.index = async (req, res, next) => {
 	const { userId } = res.locals;
 
 	const user = await Users.findById(userId).catch((error) => {
-		next(new HttpError("Getting collection failed. Please try again later", 500));
+		next(new HttpError("Getting user info failed. Please try again", 500));
 	});
 
 	res.json(user.collections);
@@ -15,21 +15,22 @@ module.exports.createCollection = async (req, res, next) => {
 	const { userId } = res.locals;
 	const { name, description, isPrivate } = req.body;
 
-	const updatedUser = await Users.findByIdAndUpdate(
-		userId,
-		{
-			$push: {
-				collections: { name, description, quotes: [], isPrivate },
-			},
-		},
-		{ new: true }
-	).catch((error) => {
+	const user = await Users.findById(userId);
+
+	const isDupliateName = user.collections.some((element) => element.name === name);
+
+	if (isDupliateName) {
+		return next(new HttpError(`Collection with name \"${name}\" already exists`, 409));
+	}
+
+	const newCollection = { name, description, quotes: [], isPrivate };
+	user.collections.push(newCollection);
+
+	await user.save().catch(() => {
 		return next(new HttpError("Creating collection failed. Please try again later.", 500));
 	});
 
-	const updatedCollection = updatedUser.collections[updatedUser.collections.length - 1];
-
-	res.json(updatedCollection);
+	res.json(newCollection);
 };
 
 module.exports.addQuoteToCollection = async (req, res, next) => {
@@ -73,5 +74,5 @@ module.exports.removeQuoteFromCollection = async (req, res, next) => {
 		next(new HttpError("Deleting quote from collection failed. Please try again", 500))
 	);
 
-	res.json("Adding success");
+	res.json("Removing success");
 };
