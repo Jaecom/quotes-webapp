@@ -1,5 +1,16 @@
 import { useState, useCallback } from "react";
 
+class CustomError extends Error {
+	errorArray: [];
+	isArray: boolean;
+
+	constructor(error: any) {
+		super(error.message);
+		this.errorArray = error;
+		this.isArray = Array.isArray(error);
+	}
+}
+
 interface RequestObject {
 	url: string;
 	body?: string;
@@ -29,13 +40,14 @@ const useHttp = () => {
 				const data = await res.json();
 				// console.log(data);
 				if (!res.ok) {
-					throw new Error(data);
+					throw new CustomError(data);
 				}
 
 				processData(data);
 				setIsLoading(false);
 			} catch (e: any) {
-				setError(e.message);
+				const error = e.isArray ? e.errorArray : e.message;
+				setError(error);
 				setIsLoading(false);
 			}
 		},

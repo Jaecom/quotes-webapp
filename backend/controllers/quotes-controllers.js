@@ -5,7 +5,7 @@ const Quote = require("../models/quote");
 const Author = require("../models/author");
 const User = require("../models/user");
 
-const HttpError = require("../utils/HttpError");
+const { HttpError } = require("../utils/CustomErrors");
 const QUOTE_PER_LOAD = 24;
 
 module.exports.index = async (req, res, next) => {

@@ -1,5 +1,5 @@
 const Users = require("../models/user");
-const HttpError = require("../utils/HttpError");
+const { HttpError } = require("../utils/CustomErrors");
 
 module.exports.index = async (req, res, next) => {
 	const { userId } = res.locals;

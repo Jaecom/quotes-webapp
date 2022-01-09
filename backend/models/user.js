@@ -26,7 +26,6 @@ const userSchema = new Schema({
 			},
 			description: {
 				type: String,
-				required: true,
 			},
 			quotes: {
 				type: [{ type: Schema.Types.ObjectId, ref: "Quote" }],

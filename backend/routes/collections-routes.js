@@ -3,10 +3,16 @@ const router = express.Router();
 const catchAsync = require("../utils/catchAsync");
 const collectionController = require("../controllers/collections-controllers");
 const checkAuthentication = require("../middleware/check-auth");
+const { validateCollection } = require("../middleware/schema-validate");
 
 router
 	.get("/", checkAuthentication, catchAsync(collectionController.index))
-	.post("/", checkAuthentication, catchAsync(collectionController.createCollection));
+	.post(
+		"/",
+		checkAuthentication,
+		validateCollection,
+		catchAsync(collectionController.createCollection)
+	);
 
 router
 	.post(

@@ -1,5 +1,5 @@
 const User = require("../models/user");
-const HttpError = require("../utils/HttpError");
+const { HttpError } = require("../utils/CustomErrors");
 
 const bcrypt = require("bcrypt");
 const SALT_ROUNDS = 10;

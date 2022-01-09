@@ -8,7 +8,7 @@ const userRoutes = require("./routes/users-routes");
 const authorRoutes = require("./routes/author-routes");
 const collectionRoutes = require("./routes/collections-routes");
 
-const HttpError = require("./utils/HttpError");
+const { HttpError, SchemaError } = require("./utils/CustomErrors");
 const cookieParser = require("cookie-parser");
 
 mongoose.connect("mongodb://Jaecom:27017/quoteWebsite?replicaSet=rs");
@@ -51,7 +51,11 @@ app.all("*", (req, res, next) => {
 
 //process all errors by sending response to frontend with statuscode & message
 app.use((error, req, res, next) => {
-	res.status(error.status || 500).json(error.message || "Something went wrong");
+	if (error instanceof SchemaError) {
+		return res.status(error.status || 500).json(error.messageArray || "Something went wrong");
+	}
+
+	return res.status(error.status || 500).json(error.message || "Something went wrong");
 });
 
 const port = 5000;
