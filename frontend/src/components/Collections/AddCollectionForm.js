@@ -48,7 +48,9 @@ const AddCollectionForm = (props) => {
 				<Button type="submit" highlight>
 					Create
 				</Button>
-				<Button onClick={props.onCancel}>Cancel</Button>
+				<Button outline onClick={props.onCancel}>
+					Cancel
+				</Button>
 			</div>
 		</form>
 	);

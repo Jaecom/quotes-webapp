@@ -52,6 +52,10 @@ const AddToCollectionModal = (props: { quoteId: String; onClose: () => void }) =
 		if (isCollectionCreated) {
 			openAddToPage();
 		}
+
+		return () => {
+			setIsCollectionCreated(false);
+		};
 	}, [isCollectionCreated, openAddToPage]);
 
 	return (

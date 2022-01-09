@@ -45,7 +45,9 @@ const AddToCollectionItem = (props) => {
 							</svg>
 						)}
 					</div>
-					<p className={`heading-5 ${classes.description}`}>{collection.description}</p>
+					{collection.description && (
+						<p className={`heading-5 ${classes.description}`}>{collection.description}</p>
+					)}
 				</div>
 				<div className={classes.notification}>
 					<div>
