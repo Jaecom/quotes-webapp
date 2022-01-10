@@ -3,6 +3,7 @@ import classes from "./Form.module.scss";
 import { Link } from "react-router-dom";
 import React from "react";
 import ValidationError from "../../UI/ValidationError";
+import Button from "../../UI/Button";
 
 const SignupForm = React.forwardRef((props, ref) => {
 	const { schemaErrors, errorField } = props;
@@ -48,7 +49,7 @@ const SignupForm = React.forwardRef((props, ref) => {
 				name="password"
 				error={errorField?.password}
 			/>
-			<button type="submit">Create Account</button>
+			<Button fill type="submit">Create Account</Button>
 		</form>
 	);
 });

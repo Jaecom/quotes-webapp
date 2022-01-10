@@ -52,7 +52,7 @@ const AddCollectionForm = (props) => {
 			</fieldset>
 
 			<div className={classes["button-container"]}>
-				<Button type="submit" highlight>
+				<Button type="submit" fill>
 					Create
 				</Button>
 				<Button outline onClick={props.onCancel}>

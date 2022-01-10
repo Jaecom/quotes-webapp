@@ -17,7 +17,7 @@ const QuoteListBanner = (props) => {
 					className={classes.link}
 					to={{ pathname: `/quotes/${quote.id}`, state: linkStateBackground }}
 				>
-					<Button highlight>View Quote</Button>
+					<Button fill>View Quote</Button>
 				</Link>
 				<p className={`paragraph--big ${classes["double-quote"]}`}>&#8221;</p>
 			</div>

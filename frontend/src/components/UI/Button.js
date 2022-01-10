@@ -3,7 +3,7 @@ import classes from "./Button.module.scss";
 const Button = (props) => {
 	const btnClass = [
 		classes.btn,
-		props.highlight && classes.highlight,
+		props.fill && classes.fill,
 		props.outline && classes.outline,
 		props.className,
 	]

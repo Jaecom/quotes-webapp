@@ -2,6 +2,7 @@ import classes from "./Form.module.scss";
 import Input from "./Input";
 import { Link } from "react-router-dom";
 import React from "react";
+import Button from "../../UI/Button";
 
 const LoginForm = React.forwardRef((props, ref) => {
 	return (
@@ -13,7 +14,9 @@ const LoginForm = React.forwardRef((props, ref) => {
 			</p>
 			<Input id="email" attribute={{ type: "email" }} label="Email" name="email" />
 			<Input id="password" attribute={{ type: "password" }} label="Password" name="password" />
-			<button type="submit">Login</button>
+			<Button fill type="submit">
+				Login
+			</Button>
 		</form>
 	);
 });

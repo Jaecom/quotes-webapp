@@ -16,11 +16,11 @@ const MainNavigation = () => {
 					<div className={`${classes.logo} heading-nav`}>Quotes</div>
 				</Link>
 				<SearchBar />
-				<ul>
+				<ul className={classes["user-controls"]}>
 					{!authCtx.isLoggedIn && (
 						<li>
 							<NavLink to="/login" className="heading-nav">
-								Login
+								<Button>Login</Button>
 							</NavLink>
 						</li>
 					)}
@@ -28,7 +28,7 @@ const MainNavigation = () => {
 					{!authCtx.isLoggedIn && (
 						<li>
 							<NavLink to="/signup" className="heading-nav">
-								<Button highlight>Signup</Button>
+								<Button fill>Signup</Button>
 							</NavLink>
 						</li>
 					)}

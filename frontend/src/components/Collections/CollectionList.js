@@ -24,7 +24,7 @@ const CollectionList = (props) => {
 			)}
 
 			<div className={classes.wrapper}>
-				<Button className={classes.button} onClick={openModal} highlight>
+				<Button className={classes.button} onClick={openModal} fill>
 					<svg className={classes.plus}>
 						<use href={sprite + "#icon-plus"} />
 					</svg>

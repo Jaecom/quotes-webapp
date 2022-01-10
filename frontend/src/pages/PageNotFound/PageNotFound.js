@@ -11,7 +11,7 @@ const PageNotFound = () => {
 				<div className={classes["error-code"]}>404</div>
 				<Link to="/">
 					<span>
-						<Button highlight>Back to Quotes!</Button>
+						<Button fill>Back to Quotes!</Button>
 					</span>
 				</Link>
 			</div>

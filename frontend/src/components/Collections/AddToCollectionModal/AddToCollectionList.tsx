@@ -23,7 +23,7 @@ const AddToCollectionList = (props: {
 					))}
 			</ul>
 			<div className={classes.buttons}>
-				<Button highlight onClick={props.onClose}>
+				<Button fill onClick={props.onClose}>
 					Done
 				</Button>
 				<Button outline onClick={props.openCreatePage}>
