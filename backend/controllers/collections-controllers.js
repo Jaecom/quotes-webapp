@@ -1,5 +1,5 @@
 const Users = require("../models/user");
-const { HttpError } = require("../utils/CustomErrors");
+const { HttpError, SchemaError } = require("../utils/CustomErrors");
 
 module.exports.index = async (req, res, next) => {
 	const { userId } = res.locals;
@@ -20,7 +20,12 @@ module.exports.createCollection = async (req, res, next) => {
 	const isDupliateName = user.collections.some((element) => element.name === name);
 
 	if (isDupliateName) {
-		return next(new HttpError(`Collection with name \"${name}\" already exists`, 409));
+		return next(
+			new SchemaError(
+				[{ path: "name", message: `Collection with name \"${name}\" already exists` }],
+				409
+			)
+		);
 	}
 
 	const newCollection = { name, description, quotes: [], isPrivate };
