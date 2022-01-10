@@ -11,8 +11,8 @@ enum pageType {
 	CREATE_COLLECTION,
 }
 
-const AddToCollectionModal = (props: { quoteId: String; onClose: () => void }) => {
-	const [collections, setCollections] = useState<[{ _id: String }]>();
+const AddToCollectionModal = (props: { quoteId: string; onClose: () => void }) => {
+	const [collections, setCollections] = useState<{ _id: string; name: string }[]>([]);
 	const [page, setPage] = useState(pageType.ADD_QUOTE);
 	const [isCollectionCreated, setIsCollectionCreated] = useState(false);
 

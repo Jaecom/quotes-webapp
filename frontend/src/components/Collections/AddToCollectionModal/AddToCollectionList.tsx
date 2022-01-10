@@ -3,8 +3,8 @@ import Button from "../../UI/Button";
 import AddToCollectionItem from "./AddToCollectionItem";
 
 const AddToCollectionList = (props: {
-	collections: [{ _id: String }] | undefined;
-	quoteId: String;
+	collections: { _id: string; name: string }[];
+	quoteId: string;
 	onClose: () => void;
 	openCreatePage: () => void;
 }) => {
@@ -13,8 +13,11 @@ const AddToCollectionList = (props: {
 	return (
 		<div className={classes.wrapper}>
 			<h2 className={classes.heading}>Add to Collection</h2>
+			{collections.length === 0 && (
+				<p className={`heading-4 ${classes.message}`}>You currently have no collections.</p>
+			)}
 			<ul className={classes.list}>
-				{collections &&
+				{collections.length > 0 &&
 					collections.map((collection) => (
 						<AddToCollectionItem key={collection._id} collection={collection} quoteId={quoteId} />
 					))}

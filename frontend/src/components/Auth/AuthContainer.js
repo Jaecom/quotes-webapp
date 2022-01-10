@@ -1,13 +1,13 @@
 import { useHistory } from "react-router-dom";
 import { useContext, useRef } from "react";
-import useHttp from "../../hooks/useHttp";
 import AuthContext from "../../store/auth-context";
 import LoginForm from "./Form/LoginForm";
 import SignupForm from "./Form/SignupForm";
+import useSchemaHttp from "../../hooks/useSchemaHttp";
 
 const AuthContainer = (props) => {
 	const formRef = useRef();
-	const [sendRequest, isLoading, error] = useHttp();
+	const [sendRequest, schemaErrors, errorField] = useSchemaHttp();
 	const authCtx = useContext(AuthContext);
 	const history = useHistory();
 	const flag = props.login ? "login" : "signup";
@@ -22,14 +22,9 @@ const AuthContainer = (props) => {
 			{
 				url: `http://localhost:5000/api/users/${flag}`,
 				method: "POST",
-				body: new URLSearchParams(formObject),
-				headers: {
-					"Content-Type": "application/x-www-form-urlencoded",
-				},
-				credentials: "include",
+				body: formObject,
 			},
 			(data) => {
-				console.log(data);
 				authCtx.login(data.token, data.expirationDate, data.userId);
 
 				if (history.location.pathname !== `/${flag}`) {
@@ -45,7 +40,14 @@ const AuthContainer = (props) => {
 	return (
 		<>
 			{flag === "login" && <LoginForm ref={formRef} onSubmit={submitHandler} />}
-			{flag === "signup" && <SignupForm ref={formRef} onSubmit={submitHandler} />}
+			{flag === "signup" && (
+				<SignupForm
+					ref={formRef}
+					onSubmit={submitHandler}
+					schemaErrors={schemaErrors}
+					errorField={errorField}
+				/>
+			)}
 		</>
 	);
 };

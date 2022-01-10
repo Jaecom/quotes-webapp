@@ -2,11 +2,13 @@ import classes from "./AddCollectionForm.module.scss";
 import Input from "../Auth/Form/Input";
 import Button from "../UI/Button";
 import { useRef } from "react";
-import useHttp from "../../hooks/useHttp";
+import ValidationError from "../UI/ValidationError";
+import useSchemaHttp from "../../hooks/useSchemaHttp";
 
 const AddCollectionForm = (props) => {
+	console.log("AddCollectionForm");
 	const formRef = useRef();
-	const [sendRequest] = useHttp();
+	const [sendRequest, schemaErrors, errorField] = useSchemaHttp();
 
 	const onSubmitHandler = (event) => {
 		event.preventDefault();
@@ -18,9 +20,7 @@ const AddCollectionForm = (props) => {
 			{
 				url: "http://localhost:5000/api/collections",
 				method: "POST",
-				body: new URLSearchParams(formObject),
-				headers: { "Content-Type": "application/x-www-form-urlencoded" },
-				credentials: "include",
+				body: formObject,
 			},
 			(data) => {
 				return props.onAddCollection(data);
@@ -31,7 +31,14 @@ const AddCollectionForm = (props) => {
 	return (
 		<form onSubmit={onSubmitHandler} className={classes.form} ref={formRef}>
 			<h2 className={classes.heading}>Create a Collection</h2>
-			<Input id="collectionName" attribute={{ type: "text" }} label="Name" name="name" />
+			{schemaErrors && <ValidationError errors={schemaErrors} />}
+			<Input
+				id="collectionName"
+				attribute={{ type: "text" }}
+				label="Name"
+				name="name"
+				error={errorField?.name}
+			/>
 			<Input
 				id="collectionDescription"
 				attribute={{ type: "text" }}
