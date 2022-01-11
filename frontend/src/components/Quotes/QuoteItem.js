@@ -27,7 +27,7 @@ const QuoteItem = (props) => {
 							</div>
 						</div>
 						<div className={classes["image-wrapper"]}>
-							<img src={quote.thumbnail} alt="quote" />
+							<img src={quote.thumbnail} alt="quote" loading="lazy" />
 						</div>
 					</div>
 				</div>
