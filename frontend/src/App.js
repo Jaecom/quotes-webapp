@@ -16,6 +16,8 @@ import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
 import AuthorDetailPage from "./pages/AuthorDetailPage";
 import QuoteDetailPage from "./pages/QuoteDetailPage";
+import Modal from "./components/UI/Modal";
+import CollectionDetailModal from "./components/Collections/CollectionDetail/CollectionDetailModal";
 
 function App() {
 	const location = useLocation();
@@ -70,6 +72,12 @@ function App() {
 					<PageNotFound />
 				</Route>
 			</Switch>
+
+			{background && authCtx.isLoggedIn && (
+				<Route path="/collections/:collectionId">
+					<CollectionDetailModal />
+				</Route>
+			)}
 
 			{background && (
 				<Route path="/quotes/:quoteId">

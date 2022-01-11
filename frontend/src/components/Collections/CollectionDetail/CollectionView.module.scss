@@ -1,0 +1,61 @@
+@use "src/assets/styles/main.scss" as *;
+
+.wrapper {
+	height: 100vh;
+	width: 100vw;
+
+	display: flex;
+	align-items: center;
+
+	position: relative;
+}
+
+.view {
+	height: fit-content;
+
+	overflow: scroll;
+	// border: solid 2px red;
+	&::-webkit-scrollbar {
+		display: none;
+	}
+}
+
+.view-content {
+	height: 100%;
+	width: fit-content;
+
+	padding: 3rem 0;
+
+	display: flex;
+	column-gap: 5rem;
+	align-items: center;
+}
+
+.control {
+	height: 100%;
+	padding: 0 4rem;
+
+	display: flex;
+	align-items: center;
+
+	cursor: pointer;
+
+	position: absolute;
+	z-index: 100;
+}
+
+.arrow {
+	width: 3rem;
+	height: 3rem;
+	fill: $color-white;
+
+	&--right {
+		right: 0;
+		background: linear-gradient(90deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.4) 100%);
+	}
+
+	&--left {
+		left: 0;
+		background: linear-gradient(90deg, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0) 100%);
+	}
+}
