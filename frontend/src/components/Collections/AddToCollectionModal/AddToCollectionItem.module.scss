@@ -5,7 +5,9 @@
 	border-radius: 1rem;
 	background-color: $color-grey-light;
 	cursor: pointer;
-	transition: all 0.2s ease;
+
+	transition: box-shadow 0.2s, transform 0.2s;
+	transition-timing-function: ease;
 
 	&:hover {
 		box-shadow: 0 1rem 1rem rgba($color-black, 0.2);
@@ -55,7 +57,7 @@
 	display: flex;
 
 	color: $color-white;
-	transition: all 0.3s ease;
+	transition: transform 0.3s ease;
 	transform: translateX(60%);
 }
 

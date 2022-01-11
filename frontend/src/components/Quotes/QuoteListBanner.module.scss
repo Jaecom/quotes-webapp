@@ -15,7 +15,9 @@
 	padding: 4rem 5rem;
 	position: relative;
 	overflow: hidden;
-	transition: all 0.2s ease;
+	
+	transition: box-shadow 0.2s, transform 0.2s;
+	transition-timing-function: ease;
 
 	&:hover {
 		box-shadow: 0 1rem 1.5rem rgba($color-black, 0.15);

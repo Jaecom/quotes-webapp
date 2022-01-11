@@ -22,12 +22,14 @@ fieldset {
 		border-radius: 0.5rem;
 		background-color: $color-grey-light-2;
 		border: solid 1px $color-grey-light-2;
-		transition: all 0.2s ease;
+		outline: none;
+
+		transition: background-color 0.2s, border 0.2s;
+		transition-timing-function: ease;
 
 		&:focus {
 			background-color: $color-white;
 			box-shadow: 0 0 1rem rgba($color-black, 0.15);
-			outline: none;
 			border: solid 1px $color-primary;
 		}
 	}
