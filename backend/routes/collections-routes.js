@@ -15,6 +15,7 @@ router
 	);
 
 router
+	.get("/:collectionId", checkAuthentication, catchAsync(collectionController.getCollection))
 	.post(
 		"/:collectionId",
 		checkAuthentication,

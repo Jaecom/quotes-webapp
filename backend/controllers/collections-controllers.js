@@ -11,6 +11,24 @@ module.exports.index = async (req, res, next) => {
 	res.json(user.collections);
 };
 
+module.exports.getCollection = async (req, res, next) => {
+	const { userId } = res.locals;
+	const { collectionId } = req.params;
+
+	const matchedResult = await Users.findOne(
+		{ _id: userId },
+		{ _id: 0, collections: { $elemMatch: { _id: collectionId } } }
+	)
+		.populate("collections.quotes")
+		.catch(() => {
+			next(new HttpError("Getting user info failed. Please try again", 500));
+		});
+
+	const foundCollection = matchedResult.collections[0];
+
+	res.json(foundCollection);
+};
+
 module.exports.createCollection = async (req, res, next) => {
 	const { userId } = res.locals;
 	const { name, description, isPrivate } = req.body;
