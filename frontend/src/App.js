@@ -6,8 +6,8 @@ import { Route, Switch } from "react-router-dom";
 
 import AuthContext from "./store/auth-context";
 import MainNavigation from "./components/Layout/MainNavigation";
-import QuoteDetailModal from "./components/Quotes/QuoteDetail/QuoteDetailModal";
-import QuoteDetailContainer from "./components/Quotes/QuoteDetail/QuoteDetailContainer";
+import QuoteDetailModal from "./components/Quotes/Detail/QuoteDetailModal";
+import QuoteDetailContainer from "./components/Quotes/Detail/QuoteDetailContainer";
 import PageNotFound from "./pages/PageNotFound/PageNotFound";
 
 import CollectionsPage from "./pages/CollectionsPage";
@@ -17,7 +17,7 @@ import SignupPage from "./pages/SignupPage";
 import AuthorDetailPage from "./pages/AuthorDetailPage";
 import QuoteDetailPage from "./pages/QuoteDetailPage";
 import Modal from "./components/UI/Modal";
-import CollectionDetailModal from "./components/Collections/CollectionDetail/CollectionDetailModal";
+import CollectionDetailModal from "./components/Collections/Detail/CollectionDetailModal";
 
 function App() {
 	const location = useLocation();

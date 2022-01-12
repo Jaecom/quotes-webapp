@@ -1,12 +1,11 @@
-import classes from "./AddCollectionForm.module.scss";
-import Input from "../Auth/Form/Input";
-import Button from "../UI/Button";
+import classes from "./CreateCollectionForm.module.scss";
+import Input from "../../UI/Form/Input";
+import Button from "../../UI/Button";
 import { useRef } from "react";
-import ValidationError from "../UI/ValidationError";
-import useSchemaHttp from "../../hooks/useSchemaHttp";
+import ValidationError from "../../UI/Form/ValidationError";
+import useSchemaHttp from "../../../hooks/useSchemaHttp";
 
-const AddCollectionForm = (props) => {
-	console.log("AddCollectionForm");
+const CreateCollectionForm = (props) => {
 	const formRef = useRef();
 	const [sendRequest, schemaErrors, errorField] = useSchemaHttp();
 
@@ -63,4 +62,4 @@ const AddCollectionForm = (props) => {
 	);
 };
 
-export default AddCollectionForm;
+export default CreateCollectionForm;

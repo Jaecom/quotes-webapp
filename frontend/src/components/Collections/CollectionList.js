@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 import classes from "./CollectionList.module.scss";
 import sprite from "../../assets/sprite.svg";
 
 import CollectionItemContainer from "./CollectionItemContainer";
-import AddCollectionModal from "./AddCollectionModal";
+import CreateCollectionModal from "./CreateCollection/CreateCollectionModal";
 import Button from "../UI/Button";
 import useModal from "../../hooks/useModal";
 
@@ -20,7 +20,7 @@ const CollectionList = (props) => {
 	return (
 		<>
 			{isModalOpen && (
-				<AddCollectionModal onAddCollection={props.onAddCollection} onClose={closeModal} />
+				<CreateCollectionModal onAddCollection={props.onAddCollection} onClose={closeModal} />
 			)}
 
 			<div className={classes.wrapper}>

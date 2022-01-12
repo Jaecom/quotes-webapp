@@ -3,7 +3,7 @@ import useHttp from "../../../hooks/useHttp";
 
 import Modal from "../../UI/Modal";
 import Card from "../../UI/Card";
-import AddCollectionForm from "../AddCollectionForm";
+import CreateCollectionForm from "../CreateCollection/CreateCollectionForm";
 import AddToCollectionList from "./AddToCollectionList";
 
 interface Props {
@@ -74,7 +74,7 @@ const AddToCollectionModal = ({ quoteId, onClose }: Props) => {
 					/>
 				)}
 				{page === pageType.CREATE_COLLECTION && (
-					<AddCollectionForm onAddCollection={createCollectionHandler} onCancel={openAddToPage} />
+					<CreateCollectionForm onAddCollection={createCollectionHandler} onCancel={openAddToPage} />
 				)}
 			</Card>
 		</Modal>

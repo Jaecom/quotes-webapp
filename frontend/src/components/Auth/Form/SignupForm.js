@@ -1,8 +1,8 @@
-import Input from "./Input";
+import Input from "../../UI/Form/Input";
 import classes from "./Form.module.scss";
 import { Link } from "react-router-dom";
 import React from "react";
-import ValidationError from "../../UI/ValidationError";
+import ValidationError from "../../UI/Form/ValidationError";
 import Button from "../../UI/Button";
 
 const SignupForm = React.forwardRef((props, ref) => {

@@ -1,5 +1,5 @@
 import classes from "./Form.module.scss";
-import Input from "./Input";
+import Input from "../../UI/Form/Input";
 import { Link } from "react-router-dom";
 import React from "react";
 import Button from "../../UI/Button";

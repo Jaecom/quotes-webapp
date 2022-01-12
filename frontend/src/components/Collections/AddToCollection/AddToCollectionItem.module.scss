@@ -6,7 +6,7 @@
 	background-color: $color-grey-light;
 	cursor: pointer;
 
-	transition: box-shadow 0.2s, transform 0.2s;
+	transition: box-shadow 0.2s, transform 0.2s, background-color 0.2s;
 	transition-timing-function: ease;
 
 	&:hover {
@@ -52,7 +52,6 @@
 .notification {
 	visibility: hidden;
 	text-align: center;
-	column-gap: 2rem;
 
 	display: flex;
 
@@ -65,6 +64,7 @@
 	width: 1.5rem;
 	height: 1.5rem;
 	fill: $color-white;
+	margin-right: 2px;
 }
 
 .lock {

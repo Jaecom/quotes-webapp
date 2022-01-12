@@ -8,7 +8,7 @@ import { likeQuote, dislikeQuote } from "../../store/quoteSlice";
 
 import QuoteItem from "./QuoteItem";
 import LoginModal from "../Auth/LoginModal";
-import AddToCollectionModal from "../Collections/AddToCollectionModal/AddToCollectionModal";
+import AddToCollectionModal from "../Collections/AddToCollection/AddToCollectionModal";
 
 const QuoteItemContainer = (props) => {
 	const { quote, local } = props;
