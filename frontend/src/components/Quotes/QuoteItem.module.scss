@@ -3,23 +3,40 @@
 .wrapper {
 	position: relative;
 
+	border-radius: 0.5rem;
+
+	transition: transform 0.2s ease;
+
+	cursor: pointer;
+
+	//box-dimension
 	&::before {
 		content: "";
 		display: block;
 		padding-bottom: 0.75 * 100%;
 	}
 
+	//box-shadow
+	&::after {
+		@include pseudoCenter;
+
+		opacity: 0;
+		border-radius: 0.5rem;
+
+		box-shadow: 0 1rem 1rem rgba($color-black, 0.2);
+		transition: opacity 0.3s ease;
+	}
+
 	&:hover {
-		cursor: pointer;
+		transform: translateY(-0.5rem);
+
+		&::after {
+			opacity: 1;
+		}
 
 		.content {
 			background-color: rgba($color-black, 0.65);
 			opacity: 1;
-		}
-
-		.main {
-			box-shadow: 0 1rem 1rem rgba($color-black, 0.2);
-			transform: translateY(-0.5rem);
 		}
 	}
 }
@@ -30,9 +47,6 @@
 
 	border-radius: 0.5rem;
 	overflow: hidden;
-
-	transition: box-shadow 0.2s, transform 0.2s;
-	transition-timing-function: ease;
 }
 
 .content {
@@ -88,9 +102,7 @@
 	color: $color-grey-dark;
 	margin-top: 2px;
 
-	&:hover {
-		cursor: pointer;
-	}
+	cursor: pointer;
 }
 
 .bookmark {

@@ -1,6 +1,6 @@
 @use "src/assets/styles/main.scss" as *;
 
-.wrapper {
+.grid-wrapper {
 	grid-column: span 2;
 
 	@media only screen and (max-width: 800px) {
@@ -8,22 +8,38 @@
 	}
 }
 
+.wrapper {
+	position: relative;
+	cursor: pointer;
+	transition: transform 0.2s ease;
+
+	&::after {
+		@include pseudoCenter;
+
+		border-radius: 1rem;
+		box-shadow: 0 1rem 1.5rem rgba($color-black, 0.15);
+		opacity: 0;
+
+		transition: opacity 0.3s ease;
+	}
+
+	&:hover {
+		transform: translateY(-1rem);
+
+		&::after {
+			opacity: 1;
+		}
+	}
+}
+
 .container {
 	height: 100%;
+
 	background-color: $color-grey-light;
 	border-radius: 1rem;
 	padding: 4rem 5rem;
-	position: relative;
-	overflow: hidden;
-	
-	transition: box-shadow 0.2s, transform 0.2s;
-	transition-timing-function: ease;
 
-	&:hover {
-		box-shadow: 0 1rem 1.5rem rgba($color-black, 0.15);
-		transform: scale(1.03);
-		cursor: pointer;
-	}
+	overflow: hidden;
 }
 
 .author {

@@ -10,7 +10,7 @@ const CollectionItem = (props) => {
 		<Link to={{ pathname: `/collections/${collection._id}`, state: backgroundState }}>
 			<div className={classes["grid-item"]}>
 				<div className={classes["grid-content"]}>
-					<div className={classes.wrapper}>
+					<div className={classes.container}>
 						<h3 className="heading-3">{collection.name}</h3>
 					</div>
 				</div>

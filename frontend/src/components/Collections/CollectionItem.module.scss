@@ -2,11 +2,30 @@
 
 .grid-item {
 	position: relative;
+	transition: transform 0.3s ease;
 
 	&::before {
 		content: "";
 		display: block;
 		padding-bottom: 1.5 * 100%;
+	}
+
+	&::after {
+		@include pseudoCenter;
+
+		opacity: 0;
+		border-radius: 1rem;
+		box-shadow: 0 1rem 1rem rgba($color-black, 0.2);
+
+		transition: opacity 0.3s ease;
+	}
+
+	&:hover {
+		transform: translateY(-1rem);
+
+		&::after {
+			opacity: 1;
+		}
 	}
 }
 
@@ -14,24 +33,13 @@
 	position: absolute;
 	inset: 0;
 
-	background-color: $color-white;
 	border-radius: 1rem;
 	overflow: hidden;
-
-	box-shadow: 0 0.5rem 0.5rem rgba($color-black, 0.05);
-	
-	transition: transform 0.2s, box-shadow 0.2s;
-	transition-timing-function: ease;
-
-	&:hover {
-		transform: translateY(-1.5rem) scale(1.02);
-		box-shadow: 0 1rem 1rem rgba($color-black, 0.2);
-	}
 
 	cursor: pointer;
 }
 
-.wrapper {
+.container {
 	height: 100%;
 
 	display: flex;
