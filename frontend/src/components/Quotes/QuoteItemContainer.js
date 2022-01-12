@@ -71,7 +71,6 @@ const QuoteItemContainer = (props) => {
 				<AddToCollectionModal quoteId={quote.id} onClose={closeCollectionModal} top />
 			)}
 			<QuoteItem
-				key={quote.id}
 				quote={quote}
 				onQuoteLike={quoteLikeHandler}
 				totalLikes={local ? totalLikesLocal : totalLikesGlobal}

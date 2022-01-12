@@ -10,7 +10,6 @@ const QuoteItem = (props) => {
 	return (
 		<div>
 			<Link
-				key={quote.id}
 				to={{
 					pathname: `/quotes/${quote.id}`,
 					state: linkStateBackground,
