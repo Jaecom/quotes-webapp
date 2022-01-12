@@ -3,9 +3,15 @@ import useHttp from "../../../hooks/useHttp";
 import classes from "./AddToCollectionItem.module.scss";
 import sprite from "../../../assets/sprite.svg";
 
-const AddToCollectionItem = (props) => {
-	const { collection, quoteId } = props;
-	const [isQuoteIncluded, setisQuoteIncluded] = useState(collection.quotes.includes(quoteId));
+interface Props {
+	collection: collection;
+	quoteId: string;
+}
+
+const AddToCollectionItem = ({ collection, quoteId }: Props) => {
+	const [isQuoteIncluded, setisQuoteIncluded] = useState<boolean>(
+		collection.quotes.includes(quoteId)
+	);
 	const [sendRequest] = useHttp();
 
 	useEffect(() => {
@@ -23,7 +29,7 @@ const AddToCollectionItem = (props) => {
 				credentials: "include",
 				headers: { Accept: "application/json", "Content-Type": "application/json" },
 			},
-			(data) => {
+			() => {
 				setisQuoteIncluded((state) => !state);
 			}
 		);
@@ -50,12 +56,10 @@ const AddToCollectionItem = (props) => {
 					)}
 				</div>
 				<div className={classes.notification}>
-					<div>
-						<svg className={classes.checkmark}>
-							<use href={sprite + "#icon-check"} />
-						</svg>
-						<p>Added</p>
-					</div>
+					<svg className={classes.checkmark}>
+						<use href={sprite + "#icon-check"} />
+					</svg>
+					<p>Added</p>
 				</div>
 			</div>
 		</li>

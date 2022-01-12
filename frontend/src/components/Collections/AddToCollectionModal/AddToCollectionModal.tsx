@@ -6,18 +6,22 @@ import Card from "../../UI/Card";
 import AddCollectionForm from "../AddCollectionForm";
 import AddToCollectionList from "./AddToCollectionList";
 
+interface Props {
+	quoteId: string;
+	onClose: () => void;
+}
+
 enum pageType {
 	ADD_QUOTE,
 	CREATE_COLLECTION,
 }
 
-const AddToCollectionModal = (props: { quoteId: string; onClose: () => void }) => {
-	const [collections, setCollections] = useState<{ _id: string; name: string }[]>([]);
-	const [page, setPage] = useState(pageType.ADD_QUOTE);
-	const [isCollectionCreated, setIsCollectionCreated] = useState(false);
+const AddToCollectionModal = ({ quoteId, onClose }: Props) => {
+	const [collections, setCollections] = useState<collection[]>([]);
+	const [page, setPage] = useState<pageType>(pageType.ADD_QUOTE);
+	const [isCollectionCreated, setIsCollectionCreated] = useState<boolean>(false);
 
 	const [sendRequest] = useHttp();
-	const { quoteId } = props;
 
 	useEffect(() => {
 		if (page === pageType.CREATE_COLLECTION) {
@@ -30,7 +34,7 @@ const AddToCollectionModal = (props: { quoteId: string; onClose: () => void }) =
 				method: "GET",
 				credentials: "include",
 			},
-			(data) => {
+			(data: collection[]) => {
 				setCollections(data);
 			}
 		);
@@ -59,13 +63,13 @@ const AddToCollectionModal = (props: { quoteId: string; onClose: () => void }) =
 	}, [isCollectionCreated, openAddToPage]);
 
 	return (
-		<Modal onClose={props.onClose} center top>
+		<Modal onClose={onClose} center top>
 			<Card>
 				{page === pageType.ADD_QUOTE && (
 					<AddToCollectionList
 						collections={collections}
 						quoteId={quoteId}
-						onClose={props.onClose}
+						onClose={onClose}
 						openCreatePage={openCreatePage}
 					/>
 				)}

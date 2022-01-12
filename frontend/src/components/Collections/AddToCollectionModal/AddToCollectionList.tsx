@@ -2,14 +2,14 @@ import classes from "./AddToCollectionList.module.scss";
 import Button from "../../UI/Button";
 import AddToCollectionItem from "./AddToCollectionItem";
 
-const AddToCollectionList = (props: {
-	collections: { _id: string; name: string }[];
+interface Props {
+	collections: collection[];
 	quoteId: string;
 	onClose: () => void;
 	openCreatePage: () => void;
-}) => {
-	const { collections, quoteId } = props;
+}
 
+const AddToCollectionList = ({ collections, quoteId, onClose, openCreatePage }: Props) => {
 	return (
 		<div className={classes.wrapper}>
 			<h2 className={classes.heading}>Add to Collection</h2>
@@ -23,10 +23,10 @@ const AddToCollectionList = (props: {
 					))}
 			</ul>
 			<div className={classes.buttons}>
-				<Button fill onClick={props.onClose}>
+				<Button fill onClick={onClose}>
 					Done
 				</Button>
-				<Button outline onClick={props.openCreatePage}>
+				<Button outline onClick={openCreatePage}>
 					Create Collection
 				</Button>
 			</div>
