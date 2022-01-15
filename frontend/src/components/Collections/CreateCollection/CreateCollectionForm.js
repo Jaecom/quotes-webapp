@@ -1,4 +1,6 @@
 import classes from "./CreateCollectionForm.module.scss";
+import inputClasses from "../../UI/Form/Input.module.scss";
+
 import Input from "../../UI/Form/Input";
 import Button from "../../UI/Button";
 import { useRef } from "react";
@@ -45,7 +47,7 @@ const CreateCollectionForm = (props) => {
 				name="description"
 			/>
 
-			<fieldset className={classes.checkbox}>
+			<fieldset className={`${inputClasses.fieldset} ${classes.checkbox}`}>
 				<label htmlFor="privateCheckbox">Private</label>
 				<input type="checkbox" id="privateCheckbox" name="isPrivate" value="true" />
 			</fieldset>
