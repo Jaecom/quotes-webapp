@@ -14,7 +14,7 @@
 	transition: transform 0.2s ease;
 
 	&::after {
-		@include pseudoCenter;
+		@include absoluteCenter;
 
 		border-radius: 1rem;
 		box-shadow: 0 1rem 1.5rem rgba($color-black, 0.15);
