@@ -16,8 +16,8 @@ import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
 import AuthorDetailPage from "./pages/AuthorDetailPage";
 import QuoteDetailPage from "./pages/QuoteDetailPage";
-import Modal from "./components/UI/Modal";
 import CollectionDetailModal from "./components/Collections/Detail/CollectionDetailModal";
+import CreateQuotePage from "./pages/CreateQuotePage";
 
 function App() {
 	const location = useLocation();
@@ -37,6 +37,13 @@ function App() {
 					<Route path="/collections">
 						<MainNavigation />
 						<CollectionsPage />
+					</Route>
+				)}
+				
+				{authCtx.isLoggedIn && (
+					<Route path="/quotes/create" exact>
+						<MainNavigation />
+						<CreateQuotePage />
 					</Route>
 				)}
 

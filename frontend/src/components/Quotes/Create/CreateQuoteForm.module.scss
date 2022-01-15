@@ -1,0 +1,44 @@
+@use "src/assets/styles/main.scss" as *;
+
+.wrapper {
+	height: 100vh;
+	width: 70%;
+
+	margin: 0 auto;
+	margin-top: 7rem;
+	padding: 6rem;
+}
+
+.container--horizontal {
+	display: flex;
+	column-gap: 2rem;
+
+	div {
+		flex: 1;
+	}
+}
+
+.container--vertical {
+	display: flex;
+	flex-direction: column;
+	row-gap: 2rem;
+}
+
+.btn-image {
+	align-self: flex-end;
+}
+
+.text-area {
+	height: 15rem;
+	resize: none;
+}
+
+.controls {
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+}
+
+.btn-upload {
+	margin-left: 3rem;
+}
