@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import useHttp from "../../hooks/useHttp";
 import useObserver from "../../hooks/useObserver";
 import QuoteList from "./QuoteList";
-import LoadingSpinner from "../UI/LoadingSpinner";
+import LoadingPopup from "../UI/Loading/LoadingPopup";
 import QuoteSearchNotFound from "./QuoteSearchNotFound";
 import { useSelector, useDispatch } from "react-redux";
 import { setInitialQuotes, addNextQuotes } from "../../store/quoteSlice";
@@ -74,7 +74,7 @@ const QuoteListContainer = (props) => {
 
 	return (
 		<>
-			{isLoading && <LoadingSpinner />}
+			{isLoading && <LoadingPopup />}
 			{error && <div>Error</div>}
 			{quotes && quotes.length !== 0 && <QuoteList quotes={quotes} ref={quoteBottomRef} />}
 			{!isLoading && !error && (!quotes || quotes.length === 0) && (

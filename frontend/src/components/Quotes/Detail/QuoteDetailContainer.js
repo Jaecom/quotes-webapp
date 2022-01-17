@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router";
 import useHttp from "../../../hooks/useHttp";
-import LoadingSpinner from "../../UI/LoadingSpinner";
+import LoadingPopup from "../../UI/Loading/LoadingPopup";
 import QuoteDetail from "./QuoteDetail";
 import MoreBy from "./MoreBy";
 
@@ -31,7 +31,7 @@ const QuoteDetailContainer = () => {
 	return (
 		<>
 			{error && <div>Error...</div>}
-			{isLoading && <LoadingSpinner />}
+			{isLoading && <LoadingPopup />}
 			{quote && <QuoteDetail quote={quote} />}
 			{otherQuotesByAuthor?.length > 0 && (
 				<MoreBy text={`More by ${quote?.author.name}`} quotes={otherQuotesByAuthor} />

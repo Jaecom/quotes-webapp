@@ -1,7 +1,8 @@
 import classes from "./PreviewImage.module.scss";
 import inputClasses from "../../UI/Form/Input.module.scss";
-
+import Loading from "../../UI/Loading/Loading";
 import { useEffect, useState } from "react";
+import LoadingPopup from "../../UI/Loading/LoadingPopup";
 
 interface Props {
 	inputUrl: string;
@@ -53,12 +54,16 @@ const PreviewImage = ({ inputUrl, inputRef }: Props) => {
 		if (urlEmpty) {
 			return <div className={classes.empty}>Insert URL</div>;
 		}
-
+		
 		if (!isValidUrl || error) {
 			return <div className={classes.invalid}>Image URL is broken</div>;
 		}
 
-		return <div className={classes.loading}>Loading</div>;
+		return (
+			<div className={classes.loading}>
+				<Loading />
+			</div>
+		);
 	};
 
 	return (

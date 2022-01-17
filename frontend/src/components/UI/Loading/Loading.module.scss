@@ -1,0 +1,39 @@
+.loading {
+	height: 2px;
+	width: inherit;
+
+	&::before {
+		content: "";
+		height: inherit;
+		width: inherit;
+
+		position: absolute;
+		background-color: rgba(black, 0.7);
+		animation: load 0.8s cubic-bezier(0, 0, 0.03, 0.9) infinite;
+	}
+}
+
+@keyframes load {
+	0%,
+	44%,
+	88.1%,
+	100% {
+		transform-origin: left;
+	}
+
+	0%,
+	100%,
+	88% {
+		transform: scaleX(0);
+	}
+
+	44.1%,
+	88% {
+		transform-origin: right;
+	}
+
+	33%,
+	44% {
+		transform: scaleX(1);
+	}
+}

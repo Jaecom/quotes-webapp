@@ -18,8 +18,6 @@
 	}
 }
 
-
-
 .status-box {
 	@include absoluteCenter;
 
@@ -30,4 +28,9 @@
 	align-items: center;
 
 	background-color: $color-grey-light;
+}
+
+.loading {
+	width: 10rem;
+	margin: auto 0;
 }
