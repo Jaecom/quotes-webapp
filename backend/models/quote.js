@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 const { Schema } = mongoose;
 
 const schemaOptions = {
@@ -77,4 +77,6 @@ quoteSchema.virtual("thumbnail").get(function () {
 
 quoteSchema.index({ source: "text", quoteFull: "text", "author.name": "text" });
 
-module.exports = mongoose.model("Quote", quoteSchema);
+const Quote = mongoose.model("Quote", quoteSchema);
+
+export default Quote;

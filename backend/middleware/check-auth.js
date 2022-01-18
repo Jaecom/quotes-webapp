@@ -1,7 +1,7 @@
-const jwt = require("jsonwebtoken");
-const { HttpError } = require("../utils/CustomErrors");
+import jwt from "jsonwebtoken";
+import { HttpError } from "../utils/CustomErrors.js";
 
-module.exports = (req, res, next) => {
+const checkAuth = (req, res, next) => {
 	try {
 		const { token } = req.cookies;
 		const result = jwt.verify(token, process.env.JWT_SECRET);
@@ -14,3 +14,5 @@ module.exports = (req, res, next) => {
 		next(new HttpError("Invalid Signature", 401));
 	}
 };
+
+export default checkAuth;

@@ -1,29 +1,18 @@
-const express = require("express");
-const router = express.Router();
-const catchAsync = require("../utils/catchAsync");
-const collectionController = require("../controllers/collections-controllers");
-const checkAuthentication = require("../middleware/check-auth");
-const { validateCollection } = require("../middleware/schema-validate");
+import express from "express";
+import catchAsync from "../utils/catchAsync.js";
+import collectionController from "../controllers/collections-controllers.js";
+import checkAuth from "../middleware/check-auth.js";
+import { validateCollection } from "../middleware/schema-validate.js";
 
-router
-	.get("/", checkAuthentication, catchAsync(collectionController.index))
-	.post(
-		"/",
-		checkAuthentication,
-		validateCollection,
-		catchAsync(collectionController.createCollection)
-	);
+const collectionRoutes = express.Router();
 
-router
-	.get("/:collectionId", checkAuthentication, catchAsync(collectionController.getCollection))
-	.post(
-		"/:collectionId",
-		checkAuthentication,
-		catchAsync(collectionController.addQuoteToCollection)
-	)
-	.delete(
-		"/:collectionId",
-		checkAuthentication,
-		catchAsync(collectionController.removeQuoteFromCollection)
-	);
-module.exports = router;
+collectionRoutes
+	.get("/", checkAuth, catchAsync(collectionController.index))
+	.post("/", checkAuth, validateCollection, catchAsync(collectionController.createCollection));
+
+collectionRoutes
+	.get("/:collectionId", checkAuth, catchAsync(collectionController.getCollection))
+	.post("/:collectionId", checkAuth, catchAsync(collectionController.addQuoteToCollection))
+	.delete("/:collectionId", checkAuth, catchAsync(collectionController.removeQuoteFromCollection));
+
+export default collectionRoutes;

@@ -1,13 +1,14 @@
-const express = require("express");
-const router = express.Router();
-const quoteController = require("../controllers/quotes-controllers");
-const catchAsync = require("../utils/catchAsync");
-const isAuthenticated = require("../middleware/check-auth");
+import express from "express";
+import quoteController from "../controllers/quotes-controllers.js";
+import checkAuth from "../middleware/check-auth.js";
+import catchAsync from "../utils/catchAsync.js";
 
-router.get("/", catchAsync(quoteController.index));
+const quoteRoutes = express.Router();
 
-router.get("/:quoteId", catchAsync(quoteController.getQuote));
+quoteRoutes.get("/", catchAsync(quoteController.index));
 
-router.patch("/:quoteId/toggleLike", isAuthenticated, catchAsync(quoteController.likeQuote));
+quoteRoutes.get("/:quoteId", catchAsync(quoteController.getQuote));
 
-module.exports = router;
+quoteRoutes.patch("/:quoteId/toggleLike", checkAuth, catchAsync(quoteController.likeQuote));
+
+export default quoteRoutes;

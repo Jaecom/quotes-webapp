@@ -1,21 +1,22 @@
-const Users = require("../models/user");
-const { HttpError, SchemaError } = require("../utils/CustomErrors");
+import User from "../models/user.js";
+import { HttpError, SchemaError } from "../utils/CustomErrors.js";
+const collectionController = {};
 
-module.exports.index = async (req, res, next) => {
+collectionController.index = async (req, res, next) => {
 	const { userId } = res.locals;
 
-	const user = await Users.findById(userId).catch((error) => {
+	const user = await User.findById(userId).catch((error) => {
 		next(new HttpError("Getting user info failed. Please try again", 500));
 	});
 
 	res.json(user.collections);
 };
 
-module.exports.getCollection = async (req, res, next) => {
+collectionController.getCollection = async (req, res, next) => {
 	const { userId } = res.locals;
 	const { collectionId } = req.params;
 
-	const matchedResult = await Users.findOne(
+	const matchedResult = await User.findOne(
 		{ _id: userId },
 		{ _id: 0, collections: { $elemMatch: { _id: collectionId } } }
 	)
@@ -29,11 +30,11 @@ module.exports.getCollection = async (req, res, next) => {
 	res.json(foundCollection);
 };
 
-module.exports.createCollection = async (req, res, next) => {
+collectionController.createCollection = async (req, res, next) => {
 	const { userId } = res.locals;
 	const { name, description, isPrivate } = req.body;
 
-	const user = await Users.findById(userId);
+	const user = await User.findById(userId);
 
 	const isDupliateName = user.collections.some((element) => element.name === name);
 
@@ -56,12 +57,12 @@ module.exports.createCollection = async (req, res, next) => {
 	res.json(newCollection);
 };
 
-module.exports.addQuoteToCollection = async (req, res, next) => {
+collectionController.addQuoteToCollection = async (req, res, next) => {
 	const { userId } = res.locals;
 	const { collectionId } = req.params;
 	const { quoteId } = req.body;
 
-	const updatedUser = await Users.updateOne(
+	const updatedUser = await User.updateOne(
 		{
 			_id: userId,
 			"collections._id": collectionId,
@@ -78,12 +79,12 @@ module.exports.addQuoteToCollection = async (req, res, next) => {
 	res.json("Adding success");
 };
 
-module.exports.removeQuoteFromCollection = async (req, res, next) => {
+collectionController.removeQuoteFromCollection = async (req, res, next) => {
 	const { userId } = res.locals;
 	const { collectionId } = req.params;
 	const { quoteId } = req.body;
 
-	const updatedUser = await Users.updateOne(
+	const updatedUser = await User.updateOne(
 		{
 			_id: userId,
 			"collections._id": collectionId,
@@ -99,3 +100,5 @@ module.exports.removeQuoteFromCollection = async (req, res, next) => {
 
 	res.json("Removing success");
 };
+
+export default collectionController;

@@ -1,11 +1,13 @@
-const Quotes = require("../models/quote");
-const { ObjectId } = require("mongoose").Types;
+import Quote from "../models/quote.js";
+const authorController = {};
 
-module.exports.index = (req, res, next) => {};
+authorController.index = (req, res, next) => {};
 
-module.exports.getAuthorQuotes = async (req, res, next) => {
+authorController.getAuthorQuotes = async (req, res, next) => {
 	console.log(req.params);
 	const { authorId } = req.params;
-	const quotes = await Quotes.find({ "author.authorObject": authorId });
+	const quotes = await Quote.find({ "author.authorObject": authorId });
 	res.json({ quotes });
 };
+
+export default authorController;

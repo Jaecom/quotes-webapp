@@ -1,10 +1,11 @@
-const express = require("express");
-const router = express.Router();
-const authorController = require("../controllers/authors-controllers");
-const catchAsync = require("../utils/catchAsync");
+import express from "express";
+import authorController from "../controllers/authors-controllers.js";
+import catchAsync from "../utils/catchAsync.js";
 
-router.get("/", catchAsync(authorController.index));
+const authorRoutes = express.Router();
 
-router.get("/:authorId", catchAsync(authorController.getAuthorQuotes));
+authorRoutes.get("/", catchAsync(authorController.index));
 
-module.exports = router;
+authorRoutes.get("/:authorId", catchAsync(authorController.getAuthorQuotes));
+
+export default authorRoutes;

@@ -1,14 +1,15 @@
-const { startSession } = require("mongoose");
-const { ObjectId } = require("mongoose").Types;
+import mongoose from "mongoose";
+import Author from "../models/author.js";
+import Quote from "../models/quote.js";
+import User from "../models/user.js";
+import { HttpError } from "../utils/CustomErrors.js";
 
-const Quote = require("../models/quote");
-const Author = require("../models/author");
-const User = require("../models/user");
+const { ObjectId } = mongoose.Types;
 
-const { HttpError } = require("../utils/CustomErrors");
 const QUOTE_PER_LOAD = 24;
+const quoteController = {};
 
-module.exports.index = async (req, res, next) => {
+quoteController.index = async (req, res, next) => {
 	const { search } = req.query;
 	const page = req.query.page || 1;
 	let quotes = [];
@@ -37,12 +38,14 @@ module.exports.index = async (req, res, next) => {
 	res.json({ quotes, isLastPage });
 };
 
-module.exports.getQuote = async (req, res) => {
+quoteController.getQuote = async (req, res) => {
 	const { quoteId } = req.params;
 	const quote = await Quote.findById(quoteId).populate({
 		path: "author.authorObject",
+		model: Author,
 		populate: {
 			path: "quotes",
+			model: Quote,
 		},
 	});
 
@@ -53,7 +56,7 @@ module.exports.getQuote = async (req, res) => {
 	res.json({ quote, recommended });
 };
 
-module.exports.likeQuote = async (req, res, next) => {
+quoteController.likeQuote = async (req, res, next) => {
 	const { quoteId } = req.body;
 	const userId = res.locals.userId;
 
@@ -66,7 +69,7 @@ module.exports.likeQuote = async (req, res, next) => {
 	});
 
 	//mongoose transaction
-	const session = await startSession();
+	const session = await mongoose.startSession();
 
 	try {
 		session.startTransaction();
@@ -108,3 +111,5 @@ module.exports.likeQuote = async (req, res, next) => {
 	session.endSession();
 	res.json("OK");
 };
+
+export default quoteController;

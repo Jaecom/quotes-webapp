@@ -1,18 +1,18 @@
-const Joi = require("joi");
+import Joi from "joi";
 
 //at least one alphabet, number, and special character
 //with minium 8 digits
-const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
+// const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
 
 //for development
-// const passwordRegex = /^.*$/;
+const passwordRegex = /^.*$/;
 
-module.exports.userSchema = Joi.object({
+const userSchema = Joi.object({
 	email: Joi.string().email().required().messages({
-		"string.base": `Username should include text`,
-		"string.empty": `Username can't be blank`,
+		"string.base": `Email should include text`,
+		"string.empty": `Email can't be blank`,
 		"string.email": `Please enter valid email address`,
-		"string.required": `Username is required`,
+		"string.required": `Email is required`,
 	}),
 	username: Joi.string().min(3).max(30).required().messages({
 		"string.base": `Username should include text`,
@@ -32,7 +32,7 @@ module.exports.userSchema = Joi.object({
 	}),
 });
 
-module.exports.collectionSchema = Joi.object({
+const collectionSchema = Joi.object({
 	name: Joi.string().max(30).required().messages({
 		"string.base": `Name of collection should include text`,
 		"string.empty": `Name of collection can't be blank`,
@@ -42,3 +42,5 @@ module.exports.collectionSchema = Joi.object({
 	description: Joi.string().allow(""),
 	isPrivate: Joi.boolean(),
 });
+
+export { userSchema, collectionSchema };

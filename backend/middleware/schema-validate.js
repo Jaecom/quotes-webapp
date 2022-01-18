@@ -1,5 +1,5 @@
-const { userSchema, collectionSchema } = require("../schemas");
-const { SchemaError } = require("../utils/CustomErrors");
+import { collectionSchema, userSchema } from "../schemas.js";
+import { SchemaError } from "../utils/CustomErrors.js";
 
 const returnValidateErrorObject = (joiError) => {
 	const msg = joiError.details.map((el) => {
@@ -9,7 +9,7 @@ const returnValidateErrorObject = (joiError) => {
 	return msg;
 };
 
-module.exports.validateUser = (req, res, next) => {
+const validateUser = (req, res, next) => {
 	const { error } = userSchema.validate(req.body, { abortEarly: false });
 
 	if (error) {
@@ -20,7 +20,7 @@ module.exports.validateUser = (req, res, next) => {
 	}
 };
 
-module.exports.validateCollection = (req, res, next) => {
+const validateCollection = (req, res, next) => {
 	const { error } = collectionSchema.validate(req.body);
 
 	if (error) {
@@ -30,3 +30,6 @@ module.exports.validateCollection = (req, res, next) => {
 		next();
 	}
 };
+
+export { validateUser, validateCollection };
+

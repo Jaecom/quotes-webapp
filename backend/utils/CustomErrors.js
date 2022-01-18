@@ -5,8 +5,6 @@ class HttpError extends Error {
 	}
 }
 
-module.exports.HttpError = HttpError;
-
 class SchemaError extends Error {
 	constructor(messageArray, status) {
 		super();
@@ -15,4 +13,4 @@ class SchemaError extends Error {
 	}
 }
 
-module.exports.SchemaError = SchemaError;
+export { HttpError, SchemaError };

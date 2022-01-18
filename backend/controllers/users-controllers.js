@@ -1,19 +1,20 @@
-const User = require("../models/user");
-const { HttpError } = require("../utils/CustomErrors");
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+import User from "../models/user.js";
+import { HttpError } from "../utils/CustomErrors.js";
 
-const bcrypt = require("bcrypt");
 const SALT_ROUNDS = 10;
 
-const jwt = require("jsonwebtoken");
 const TOKEN_EXPIRATION = "1 day";
+const userController = {};
 
-module.exports.isLoggedIn = async (req, res, next) => {
+userController.isLoggedIn = async (req, res, next) => {
 	const { token } = req.cookies;
 	const { userId, exp: expirationDate } = jwt.decode(token);
 	res.json({ userId, expirationDate });
 };
 
-module.exports.logout = async (req, res, next) => {
+userController.logout = async (req, res, next) => {
 	res.clearCookie("token");
 	res.clearCookie("isLoggedIn");
 	res.clearCookie("expirationDate");
@@ -21,7 +22,7 @@ module.exports.logout = async (req, res, next) => {
 	res.json("success");
 };
 
-module.exports.signin = async (req, res, next) => {
+userController.signin = async (req, res, next) => {
 	const { name, password, email, username } = req.body;
 
 	const existingUser = await User.findOne({ email: email }).catch(() => {
@@ -61,7 +62,7 @@ module.exports.signin = async (req, res, next) => {
 	res.json({ userId: newUser.id, token, expirationDate });
 };
 
-module.exports.login = async (req, res, next) => {
+userController.login = async (req, res, next) => {
 	const { email, password } = req.body;
 
 	const existingUser = await User.findOne({ email: email }).catch(() => {
@@ -98,3 +99,5 @@ module.exports.login = async (req, res, next) => {
 
 	res.json({ userId: existingUser.id, token, expirationDate });
 };
+
+export default userController;

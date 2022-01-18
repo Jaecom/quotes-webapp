@@ -1,19 +1,21 @@
-require("dotenv").config();
-const express = require("express");
+import dotenv from "dotenv";
+dotenv.config();
+
+import express from "express";
+import mongoose from "mongoose";
+import { HttpError, SchemaError } from "./utils/CustomErrors.js";
+import cookieParser from "cookie-parser";
+
+import quoteRoutes from "./routes/quotes-routes.js";
+import userRoutes from "./routes/users-routes.js";
+import authorRoutes from "./routes/author-routes.js";
+import collectionRoutes from "./routes/collections-routes.js";
+
 const app = express();
-const mongoose = require("mongoose");
-
-const quoteRoutes = require("./routes/quotes-routes");
-const userRoutes = require("./routes/users-routes");
-const authorRoutes = require("./routes/author-routes");
-const collectionRoutes = require("./routes/collections-routes");
-
-const { HttpError, SchemaError } = require("./utils/CustomErrors");
-const cookieParser = require("cookie-parser");
 
 mongoose.connect("mongodb://Jaecom:27017/quoteWebsite?replicaSet=rs");
-
 const db = mongoose.connection;
+
 db.once("open", () => {
 	console.log("Database connected");
 });
@@ -51,6 +53,7 @@ app.all("*", (req, res, next) => {
 
 //process all errors by sending response to frontend with statuscode & message
 app.use((error, req, res, next) => {
+	console.log(error.message);
 	if (error instanceof SchemaError) {
 		return res.status(error.status || 500).json(error.messageArray || "Something went wrong");
 	}
