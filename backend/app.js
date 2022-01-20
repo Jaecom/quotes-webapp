@@ -10,6 +10,7 @@ import quoteRoutes from "./routes/quotes-routes.js";
 import userRoutes from "./routes/users-routes.js";
 import authorRoutes from "./routes/author-routes.js";
 import collectionRoutes from "./routes/collections-routes.js";
+import bookSearchRoutes from "./routes/book-search-routes.js";
 
 const app = express();
 
@@ -46,6 +47,7 @@ app.use("/api/quotes", quoteRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/authors", authorRoutes);
 app.use("/api/collections", collectionRoutes);
+app.use("/api/book-search", bookSearchRoutes);
 
 app.all("*", (req, res, next) => {
 	next(new HttpError("Route Not Found", 404));

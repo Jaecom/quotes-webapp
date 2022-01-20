@@ -1,0 +1,31 @@
+@use "src/assets/styles/main.scss" as *;
+
+.input-container {
+	position: relative;
+}
+
+.suggests {
+	position: absolute;
+	left: 0;
+	right: 0;
+	box-shadow: 0 1.5rem 1rem rgba($color-black, 0.11);
+	border-radius: 0 0 0.5rem 0.5rem;
+	overflow: hidden;
+
+	li {
+		background-color: $color-white;
+		padding: 1rem 1.5rem;
+		cursor: pointer;
+	}
+
+	&-title {
+		font-size: 1.3rem;
+	}
+
+	&-author {
+	}
+
+	.select {
+		background-color: $color-grey-light;
+	}
+}

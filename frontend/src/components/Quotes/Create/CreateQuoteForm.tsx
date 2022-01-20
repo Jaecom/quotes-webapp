@@ -8,6 +8,7 @@ import React, { MouseEvent, useRef, useState } from "react";
 import PreviewImage from "./PreviewImage";
 import useModal from "../../../hooks/useModal";
 import Modal from "../../UI/Modal";
+import CreateQuoteInputSuggests from "./CreateQuoteInputSuggests";
 
 interface Props {
 	onSubmitForm: (e: React.MouseEvent<HTMLButtonElement>) => void;
@@ -20,14 +21,19 @@ const CreateQuoteForm = ({ onSubmitForm, onSaveDraft, onCancel }: Props) => {
 	const [isModalOpen, openModal, closeModal] = useModal();
 	const imageUrlInputRef = useRef<HTMLInputElement>(null);
 
-	const onUrlInputChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-		const imageUrl = e.target.value;
-		setImageUrl(imageUrl);
-	};
+	const titleInputRef = useRef<HTMLInputElement>(null);
+	const authorInputRef = useRef<HTMLInputElement>(null);
+	const genreInputRef = useRef<HTMLInputElement>(null);
 
 	const findImagesHandler = (e: MouseEvent<HTMLButtonElement>) => {
 		e.preventDefault();
 		openModal();
+	};
+
+	const onSuggestClick = (object: any) => {
+		titleInputRef.current!.value = object.title;
+		authorInputRef.current!.value = object.author;
+		genreInputRef.current!.value = object.genre?.join(" ");
 	};
 
 	return (
@@ -39,16 +45,30 @@ const CreateQuoteForm = ({ onSubmitForm, onSaveDraft, onCancel }: Props) => {
 						<PreviewImage inputUrl={imageUrl} inputRef={imageUrlInputRef} />
 						<div>
 							<div className={classes["container--vertical"]}>
-								<Input id="source" attribute={{ type: "text" }} label="Title" name="source" />
-								<Input id="author" attribute={{ type: "text" }} label="Author" name="author" />
-								<Input id="genre" attribute={{ type: "text" }} label="Genre" name="genre" />
+								<CreateQuoteInputSuggests onSuggestsClick={onSuggestClick} ref={titleInputRef} />
+								<Input
+									id="author"
+									attribute={{ type: "text" }}
+									label="Author"
+									name="author"
+									ref={authorInputRef}
+								/>
+								<Input
+									id="genre"
+									attribute={{ type: "text" }}
+									label="Genre"
+									name="genre"
+									ref={genreInputRef}
+								/>
 								<div className={classes["container--horizontal"]}>
 									<Input
 										id="image"
 										attribute={{ type: "text" }}
 										label="Image URL"
 										name="image"
-										onChange={onUrlInputChange}
+										onChange={(e) => {
+											setImageUrl(e.target.value);
+										}}
 										ref={imageUrlInputRef}
 									/>
 									<Button outline onClick={findImagesHandler} className={classes["btn-image"]}>
