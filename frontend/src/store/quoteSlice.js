@@ -14,6 +14,7 @@ export const quoteSlice = createSlice({
 			const { quotes, isLastPage } = action.payload;
 			state.quotes = quotes;
 			state.isLastPage = isLastPage;
+			state.page = 1;
 		},
 		addNextQuotes: (state, action) => {
 			const { quotes: newQuotes, isLastPage } = action.payload;
