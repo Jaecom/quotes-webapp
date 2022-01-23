@@ -28,8 +28,9 @@ bookSearchController.searchTitle = async (req, res, next) => {
 		const authorArray = element.volumeInfo.authors;
 
 		const author = authorArray ? authorArray[0] : "";
-		const newObject = { ...element.volumeInfo, author };
+		const newObject = { ...element.volumeInfo, author, genres: element.volumeInfo.categories };
 		delete newObject.authors;
+		delete newObject.categories;
 
 		return newObject;
 	});

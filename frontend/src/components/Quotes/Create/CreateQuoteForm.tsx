@@ -33,7 +33,7 @@ const CreateQuoteForm = ({ onSubmitForm, onSaveDraft, onCancel }: Props) => {
 	const onSuggestClick = (object: any) => {
 		titleInputRef.current!.value = object.title;
 		authorInputRef.current!.value = object.author;
-		genreInputRef.current!.value = object.genre?.join(" ");
+		genreInputRef.current!.value = object.genres?.join(" ") ?? "";
 	};
 
 	return (
@@ -72,7 +72,7 @@ const CreateQuoteForm = ({ onSubmitForm, onSaveDraft, onCancel }: Props) => {
 										ref={imageUrlInputRef}
 									/>
 									<Button outline onClick={findImagesHandler} className={classes["btn-image"]}>
-										Unsplash
+										Upload
 									</Button>
 								</div>
 							</div>
