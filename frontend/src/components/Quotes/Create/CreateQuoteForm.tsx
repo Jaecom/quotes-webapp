@@ -8,7 +8,13 @@ import React, { MouseEvent, useRef, useState } from "react";
 import PreviewImage from "./PreviewImage";
 import useModal from "../../../hooks/useModal";
 import Modal from "../../UI/Modal";
-import CreateQuoteInputSuggests from "./CreateQuoteInputSuggests";
+import InputAndSuggestions from "./InputAndSuggestions";
+
+interface TitleSuggests {
+	title: string;
+	author: string;
+	genre: string[];
+}
 
 interface Props {
 	onSubmitForm: (e: React.MouseEvent<HTMLButtonElement>) => void;
@@ -19,8 +25,8 @@ interface Props {
 const CreateQuoteForm = ({ onSubmitForm, onSaveDraft, onCancel }: Props) => {
 	const [imageUrl, setImageUrl] = useState("");
 	const [isModalOpen, openModal, closeModal] = useModal();
-	const imageUrlInputRef = useRef<HTMLInputElement>(null);
 
+	const imageUrlInputRef = useRef<HTMLInputElement>(null);
 	const titleInputRef = useRef<HTMLInputElement>(null);
 	const authorInputRef = useRef<HTMLInputElement>(null);
 	const genreInputRef = useRef<HTMLInputElement>(null);
@@ -30,7 +36,7 @@ const CreateQuoteForm = ({ onSubmitForm, onSaveDraft, onCancel }: Props) => {
 		openModal();
 	};
 
-	const onSuggestClick = (object: any) => {
+	const onTitleClick = (object: any) => {
 		titleInputRef.current!.value = object.title;
 		authorInputRef.current!.value = object.author;
 		genreInputRef.current!.value = object.genres?.join(" ") ?? "";
@@ -45,7 +51,23 @@ const CreateQuoteForm = ({ onSubmitForm, onSaveDraft, onCancel }: Props) => {
 						<PreviewImage inputUrl={imageUrl} inputRef={imageUrlInputRef} />
 						<div>
 							<div className={classes["container--vertical"]}>
-								<CreateQuoteInputSuggests onSuggestsClick={onSuggestClick} ref={titleInputRef} />
+								<InputAndSuggestions<TitleSuggests>
+									id="source"
+									attribute={{ type: "text" }}
+									label="Title"
+									name="source"
+									onSuggestClick={onTitleClick}
+									inputRef={titleInputRef}
+									apiUrl={(title) => `http://localhost:5000/api/book-search/${title}`}
+									suggestChildren={(suggest) => {
+										return (
+											<>
+												<p style={{ fontSize: "1.3rem" }}>{suggest.title}</p>
+												<p>{suggest.author}</p>
+											</>
+										);
+									}}
+								/>
 								<Input
 									id="author"
 									attribute={{ type: "text" }}

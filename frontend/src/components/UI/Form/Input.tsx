@@ -1,7 +1,7 @@
 import classes from "./Input.module.scss";
 import React from "react";
 
-interface Props {
+export interface InputProp {
 	id: string;
 	name: string;
 	label: string;
@@ -13,7 +13,7 @@ interface Props {
 	attribute?: {};
 }
 
-const Input = React.forwardRef<HTMLInputElement, Props>(
+const Input = React.forwardRef<HTMLInputElement, InputProp>(
 	({ error, id, name, attribute, label, onChange, onFocus, onBlur, onKeyDown }, ref) => {
 		return (
 			<fieldset className={classes.fieldset}>
