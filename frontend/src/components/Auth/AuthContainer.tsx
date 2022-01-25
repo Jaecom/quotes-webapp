@@ -1,21 +1,25 @@
 import { useHistory } from "react-router-dom";
-import { useContext, useRef } from "react";
+import React, { useContext, useRef } from "react";
 import AuthContext from "../../store/auth-context";
 import LoginForm from "./Form/LoginForm";
 import SignupForm from "./Form/SignupForm";
 import useSchemaHttp from "../../hooks/useSchemaHttp";
 
-const AuthContainer = (props) => {
-	const formRef = useRef();
-	const [sendRequest, schemaErrors, errorField] = useSchemaHttp();
+interface Props {
+	login: boolean;
+}
+
+const AuthContainer = (props: Props) => {
+	const formRef = useRef<HTMLFormElement>(null);
+	const [sendRequest, error, errorField] = useSchemaHttp();
 	const authCtx = useContext(AuthContext);
 	const history = useHistory();
 	const flag = props.login ? "login" : "signup";
 
-	const submitHandler = async (event) => {
-		event.preventDefault();
+	const submitHandler = async (e: React.FormEvent) => {
+		e.preventDefault();
 
-		const formData = new FormData(formRef.current);
+		const formData = new FormData(formRef.current ?? undefined);
 		const formObject = Object.fromEntries(formData);
 
 		sendRequest(
@@ -39,12 +43,12 @@ const AuthContainer = (props) => {
 
 	return (
 		<>
-			{flag === "login" && <LoginForm ref={formRef} onSubmit={submitHandler} />}
+			{flag === "login" && <LoginForm ref={formRef} onSubmit={submitHandler} error={error} />}
 			{flag === "signup" && (
 				<SignupForm
 					ref={formRef}
 					onSubmit={submitHandler}
-					schemaErrors={schemaErrors}
+					schemaErrors={error}
 					errorField={errorField}
 				/>
 			)}

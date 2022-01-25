@@ -1,6 +1,10 @@
 import classes from "./ValidationError.module.scss";
 
-const ValidationError = (props: { errors: [{ path: string; message: string }] }) => {
+interface Props {
+	errors: [{ path: string; message: string }] | string;
+}
+
+const ValidationError = (props: Props) => {
 	const { errors } = props;
 
 	return (

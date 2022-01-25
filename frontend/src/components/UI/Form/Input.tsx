@@ -5,7 +5,7 @@ export interface InputProp {
 	id: string;
 	name: string;
 	label: string;
-	error?: string;
+	error?: boolean;
 	onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 	onFocus?: (event: React.FocusEvent<HTMLInputElement>) => void;
 	onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void;

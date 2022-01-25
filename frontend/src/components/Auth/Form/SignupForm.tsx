@@ -4,8 +4,15 @@ import { Link } from "react-router-dom";
 import React from "react";
 import ValidationError from "../../UI/Form/ValidationError";
 import Button from "../../UI/Button";
+import type { SchemaError } from "../../../hooks/useSchemaHttp";
 
-const SignupForm = React.forwardRef((props, ref) => {
+interface Props {
+	onSubmit: (e: React.FormEvent) => Promise<void>;
+	schemaErrors?: SchemaError;
+	errorField?: { [fieldName: string]: boolean };
+}
+
+const SignupForm = React.forwardRef<HTMLFormElement, Props>((props, ref) => {
 	const { schemaErrors, errorField } = props;
 
 	return (
@@ -49,7 +56,9 @@ const SignupForm = React.forwardRef((props, ref) => {
 				name="password"
 				error={errorField?.password}
 			/>
-			<Button fill type="submit">Create Account</Button>
+			<Button fill type="submit">
+				Create Account
+			</Button>
 		</form>
 	);
 });
