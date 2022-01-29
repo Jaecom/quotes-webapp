@@ -1,0 +1,27 @@
+@use "src/assets/styles/main.scss" as *;
+@use "../../UI/Form/Input.module.scss" as *;
+
+.quote-text {
+	width: 100%;
+	min-height: 15rem;
+
+	display: inline-block;
+
+	font-size: 1.7rem;
+	line-height: 1.7;
+
+	padding: 1rem 1.5rem;
+	border-radius: 0.5rem;
+
+	background-color: #f4f4f4;
+	border: solid 1px #f4f4f4;
+	outline: none;
+
+	&:focus {
+		border-color: $color-primary;
+	}
+
+	mark {
+		background-color: rgba($color-primary, 0.5);
+	}
+}

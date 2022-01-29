@@ -9,6 +9,7 @@ import PreviewImage from "./PreviewImage";
 import useModal from "../../../hooks/useModal";
 import Modal from "../../UI/Modal";
 import InputAndSuggestions from "./InputAndSuggestions";
+import QuoteTextInput from "./QuoteTextInput";
 
 interface TitleSuggests {
 	title: string;
@@ -122,10 +123,7 @@ const CreateQuoteForm = ({ onSubmitForm, onSaveDraft, onCancel }: Props) => {
 						</div>
 					</div>
 
-					<fieldset className={`${inputClasses.fieldset}`}>
-						<label>Quote</label>
-						<textarea className={classes["text-area"]} id="quote" name="quote" />
-					</fieldset>
+					<QuoteTextInput />
 
 					<div className={classes.controls}>
 						<Button onClick={onCancel} outline>
