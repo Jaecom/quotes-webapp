@@ -6,7 +6,9 @@ const ScrollToTop = () => {
 
 	useEffect(() => {
 		const unlisten = history.listen((location, action) => {
-			window.scrollTo(0, 0);
+			if (action === "PUSH") {
+				window.scrollTo(0, 0);
+			}
 		});
 
 		return () => {

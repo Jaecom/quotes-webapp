@@ -7,7 +7,6 @@ import LoadingPopup from "../UI/Loading/LoadingPopup";
 import QuoteSearchNotFound from "./QuoteSearchNotFound";
 import { useSelector, useDispatch } from "react-redux";
 import { setInitialQuotes, addNextQuotes } from "../../store/quoteSlice";
-import QuoteListBanner from "./QuoteListBanner";
 
 const QuoteListContainer = (props) => {
 	const history = useHistory();

@@ -36,7 +36,7 @@ const MainNavigation = () => {
 					{authCtx.isLoggedIn && (
 						<li className="heading-nav">
 							<NavLink to="/quotes/create" className="heading-nav">
-								<Button fill>Upload Quote</Button>
+								<Button fill>Create</Button>
 							</NavLink>
 						</li>
 					)}

@@ -64,6 +64,7 @@ const InputAndSuggestions = <T extends object>({
 				if (selectedIndex > 0) {
 					setSelectedIndex((index) => index - 1);
 				}
+				e.preventDefault();
 				break;
 			}
 
@@ -71,6 +72,7 @@ const InputAndSuggestions = <T extends object>({
 				if (selectedIndex < suggestList.length - 1) {
 					setSelectedIndex((index) => index + 1);
 				}
+				e.preventDefault();
 				break;
 			}
 
