@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 
 interface Props {
 	inputUrl: string;
+	localImage: string;
 	inputRef: React.RefObject<HTMLInputElement>;
 }
 
@@ -31,12 +32,13 @@ const isValidHttpUrl = (inputUrl: string) => {
 	return { isValidUrl: true, errorMessage: "" };
 };
 
-const PreviewImage = ({ inputUrl, inputRef }: Props) => {
-	const urlEmpty = inputUrl.trim() === "";
-	const { isValidUrl, errorMessage } = isValidHttpUrl(inputUrl);
-
+const PreviewImage = ({ inputUrl, inputRef, localImage }: Props) => {
+	const [imageUrl, setImageUrl] = useState("");
 	const [imageLoaded, setImageLoaded] = useState(false);
 	const [error, setError] = useState(false);
+
+	const urlEmpty = inputUrl.trim() === "";
+	const { isValidUrl, errorMessage } = isValidHttpUrl(inputUrl);
 	const urlError = !urlEmpty && (!isValidUrl || error);
 
 	useEffect(() => {
@@ -51,10 +53,19 @@ const PreviewImage = ({ inputUrl, inputRef }: Props) => {
 	}, [inputRef, urlError]);
 
 	useEffect(() => {
-		//reset whenever inputUrl changes
+		setImageUrl(inputUrl);
 		setImageLoaded(false);
 		setError(false);
 	}, [inputUrl]);
+
+	useEffect(() => {
+		setImageUrl(localImage);
+		setImageLoaded(false);
+		setError(false);
+
+		inputRef.current!.value = "";
+		inputRef.current?.classList.remove(inputClasses.error);
+	}, [localImage, inputRef]);
 
 	const status = () => {
 		if (urlEmpty) {
@@ -77,7 +88,7 @@ const PreviewImage = ({ inputUrl, inputRef }: Props) => {
 		<div className={classes["image-preview"]}>
 			{!imageLoaded && <div className={classes["status-box"]}>{status()}</div>}
 			<img
-				src={inputUrl}
+				src={imageUrl}
 				alt="quote"
 				onError={() => setError(true)}
 				onLoad={() => setImageLoaded(true)}

@@ -1,5 +1,5 @@
 import classes from "./CreateQuoteForm.module.scss";
-import inputClasses from "../../UI/Form/Input.module.scss";
+import btnClasses from "../../UI/Button.module.scss";
 
 import Input from "../../UI/Form/Input";
 import Button from "../../UI/Button";
@@ -25,6 +25,7 @@ interface Props {
 const CreateQuoteForm = ({ onSubmitForm, onSaveDraft, onCancel }: Props) => {
 	const [imageUrl, setImageUrl] = useState("");
 	const [isModalOpen, openModal, closeModal] = useModal();
+	const [localImage, setLocalImage] = useState("");
 
 	const imageUrlInputRef = useRef<HTMLInputElement>(null);
 	const titleInputRef = useRef<HTMLInputElement>(null);
@@ -42,13 +43,21 @@ const CreateQuoteForm = ({ onSubmitForm, onSaveDraft, onCancel }: Props) => {
 		genreInputRef.current!.value = object.genres?.join(" ") ?? "";
 	};
 
+	const onFileInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		const file = e.target.files![0];
+		if (file) {
+			const url = URL.createObjectURL(file);
+			setLocalImage(url);
+		}
+	};
+
 	return (
 		<>
 			{isModalOpen && <Modal onClose={closeModal}></Modal>}
 			<div className={classes.wrapper}>
 				<form className={classes["container--vertical"]}>
 					<div className={classes["container--horizontal"]}>
-						<PreviewImage inputUrl={imageUrl} inputRef={imageUrlInputRef} />
+						<PreviewImage inputUrl={imageUrl} localImage={localImage} inputRef={imageUrlInputRef} />
 						<div>
 							<div className={classes["container--vertical"]}>
 								<InputAndSuggestions<TitleSuggests>
@@ -93,9 +102,21 @@ const CreateQuoteForm = ({ onSubmitForm, onSaveDraft, onCancel }: Props) => {
 										}}
 										ref={imageUrlInputRef}
 									/>
-									<Button outline onClick={findImagesHandler} className={classes["btn-image"]}>
-										Upload
-									</Button>
+									<div className={classes["file-input-container"]}>
+										<label
+											htmlFor="file"
+											className={`${btnClasses.btn} ${btnClasses.outline} ${classes["file-input-btn"]}`}
+										>
+											Upload
+										</label>
+										<input
+											id="file"
+											type="file"
+											className={classes["file-input"]}
+											onChange={onFileInputChange}
+											accept="image/png, image/jpeg"
+										/>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -114,8 +135,8 @@ const CreateQuoteForm = ({ onSubmitForm, onSaveDraft, onCancel }: Props) => {
 							<Button onClick={onSaveDraft} outline>
 								Save as draft
 							</Button>
-							<Button onClick={onSubmitForm} fill className={classes["btn-upload"]}>
-								Upload
+							<Button onClick={onSubmitForm} fill className={classes["btn-submit"]}>
+								Create
 							</Button>
 						</div>
 					</div>
