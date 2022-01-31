@@ -15,7 +15,7 @@ const AuthorDetailContainer = (props) => {
 	const { quotes } = useSelector((state) => state.quote);
 
 	useEffect(() => {
-		const url = new URL(`http://localhost:5000/api/authors/${authorId}`);
+		const url = new URL(`/api/authors/${authorId}`);
 		
 		sendRequest(
 			{

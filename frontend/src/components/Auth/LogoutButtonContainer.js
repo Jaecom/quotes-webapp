@@ -8,7 +8,7 @@ const LogoutButtonContainer = () => {
 	const history = useHistory();
 
 	const logoutButtonHandler = async () => {
-		const res = await fetch("http://localhost:5000/api/users/logout", {
+		const res = await fetch("/api/users/logout", {
 			method: "POST",
 			credentials: "include",
 		});

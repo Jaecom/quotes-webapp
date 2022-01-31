@@ -16,7 +16,7 @@ const CollectionListContainer = () => {
 	useEffect(() => {
 		sendRequest(
 			{
-				url: "http://localhost:5000/api/collections",
+				url: "/api/collections",
 				method: "GET",
 				credentials: "include",
 			},

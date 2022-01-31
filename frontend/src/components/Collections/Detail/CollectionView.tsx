@@ -18,7 +18,7 @@ const CollectionView = (props: { onClose: () => void }) => {
 	useEffect(() => {
 		sendRequest(
 			{
-				url: `http://localhost:5000/api/collections/${collectionId}`,
+				url: `/api/collections/${collectionId}`,
 				method: "GET",
 				credentials: "include",
 			},

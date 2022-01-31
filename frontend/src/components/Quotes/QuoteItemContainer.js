@@ -32,7 +32,7 @@ const QuoteItemContainer = (props) => {
 
 		sendRequest(
 			{
-				url: `http://localhost:5000/api/quotes/${quoteId}/toggleLike`,
+				url: `/api/quotes/${quoteId}/toggleLike`,
 				method: "PATCH",
 				body: JSON.stringify({ quoteId }),
 				headers: {

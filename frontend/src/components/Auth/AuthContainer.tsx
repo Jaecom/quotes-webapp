@@ -24,7 +24,7 @@ const AuthContainer = (props: Props) => {
 
 		sendRequest(
 			{
-				url: `http://localhost:5000/api/users/${flag}`,
+				url: `/api/users/${flag}`,
 				method: "POST",
 				body: formObject,
 			},

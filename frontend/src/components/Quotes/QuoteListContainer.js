@@ -23,13 +23,13 @@ const QuoteListContainer = (props) => {
 			return;
 		}
 
-		const url = new URL("http://localhost:5000/api/quotes");
-		searchWord && url.searchParams.append("search", searchWord);
-		page && url.searchParams.append("page", page + 1);
+		const urlParams = new URLSearchParams();
+		searchWord && urlParams.append("search", searchWord);
+		page && urlParams.append("page", page + 1);
 
 		sendRequest(
 			{
-				url,
+				url: `/api/quotes?${urlParams}`,
 			},
 			(data) => {
 				dispatch(addNextQuotes({ ...data }));
@@ -58,12 +58,12 @@ const QuoteListContainer = (props) => {
 			return;
 		}
 
-		const url = new URL("http://localhost:5000/api/quotes");
-		searchWord && url.searchParams.append("search", searchWord);
+		const urlParams = new URLSearchParams();
+		searchWord && urlParams.append("search", searchWord);
 
 		sendRequest(
 			{
-				url,
+				url: `/api/quotes?${urlParams}`,
 			},
 			(data) => {
 				dispatch(setInitialQuotes({ ...data }));

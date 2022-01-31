@@ -19,7 +19,7 @@ const CreateCollectionForm = (props) => {
 
 		sendRequest(
 			{
-				url: "http://localhost:5000/api/collections",
+				url: "/api/collections",
 				method: "POST",
 				body: formObject,
 			},

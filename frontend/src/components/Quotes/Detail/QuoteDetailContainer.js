@@ -15,7 +15,7 @@ const QuoteDetailContainer = () => {
 	const [recommendQuotes, setReommmenedQuotes] = useState();
 
 	useEffect(() => {
-		sendRequest({ url: `http://localhost:5000/api/quotes/${quoteId}` }, (data) => {
+		sendRequest({ url: `/api/quotes/${quoteId}` }, (data) => {
 			setQuote(data.quote);
 			setReommmenedQuotes(data.recommended);
 		});

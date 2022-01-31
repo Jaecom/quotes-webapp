@@ -58,7 +58,7 @@ const AuthProvider = (props) => {
 	//if any of required cookies are missing & token present, logout
 	useEffect(() => {
 		const requestLogout = async () => {
-			await fetch("http://localhost:5000/api/users/logout", {
+			await fetch("/api/users/logout", {
 				method: "POST",
 				credentials: "include",
 			});
