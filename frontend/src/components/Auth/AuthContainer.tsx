@@ -20,13 +20,12 @@ const AuthContainer = (props: Props) => {
 		e.preventDefault();
 
 		const formData = new FormData(formRef.current ?? undefined);
-		const formObject = Object.fromEntries(formData);
 
 		sendRequest(
 			{
 				url: `/api/users/${flag}`,
 				method: "POST",
-				body: formObject,
+				body: new URLSearchParams(formData as any),
 			},
 			(data) => {
 				authCtx.login(data.token, data.expirationDate, data.userId);

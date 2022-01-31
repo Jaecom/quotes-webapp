@@ -3,28 +3,32 @@ import inputClasses from "../../UI/Form/Input.module.scss";
 
 import Input from "../../UI/Form/Input";
 import Button from "../../UI/Button";
-import { useRef } from "react";
+import React, { useRef } from "react";
 import ValidationError from "../../UI/Form/ValidationError";
 import useSchemaHttp from "../../../hooks/useSchemaHttp";
 
-const CreateCollectionForm = (props) => {
-	const formRef = useRef();
+interface Props {
+	onCancel: () => void;
+	onAddCollection: (data: any) => void;
+}
+
+const CreateCollectionForm = ({ onCancel, onAddCollection }: Props) => {
+	const formRef = useRef<HTMLFormElement>(null);
 	const [sendRequest, schemaErrors, errorField] = useSchemaHttp();
 
-	const onSubmitHandler = (event) => {
-		event.preventDefault();
+	const onSubmitHandler = (e: React.FormEvent) => {
+		e.preventDefault();
 
-		const formData = new FormData(formRef.current);
-		const formObject = Object.fromEntries(formData);
+		const formData = new FormData(formRef.current ?? undefined);
 
 		sendRequest(
 			{
 				url: "/api/collections",
 				method: "POST",
-				body: formObject,
+				body: new URLSearchParams(formData as any),
 			},
 			(data) => {
-				return props.onAddCollection(data);
+				return onAddCollection(data);
 			}
 		);
 	};
@@ -56,7 +60,7 @@ const CreateCollectionForm = (props) => {
 				<Button type="submit" fill>
 					Create
 				</Button>
-				<Button outline onClick={props.onCancel}>
+				<Button outline onClick={onCancel}>
 					Cancel
 				</Button>
 			</div>

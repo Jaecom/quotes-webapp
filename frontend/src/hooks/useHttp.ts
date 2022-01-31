@@ -2,7 +2,7 @@ import { useState, useCallback } from "react";
 
 interface RequestObject {
 	url: string;
-	body?: FormDataEntryValue | string;
+	body?: FormData | string;
 	method?: string;
 	headers?: {
 		[header: string]: string;
