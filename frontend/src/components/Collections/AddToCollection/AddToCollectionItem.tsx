@@ -23,7 +23,7 @@ const AddToCollectionItem = ({ collection, quoteId }: Props) => {
 
 		sendRequest(
 			{
-				url: `http://localhost:5000/api/collections/${collection._id}`,
+				url: `http://localhost:5000/api/collections/${collection._id}/quotes`,
 				method: method,
 				body: JSON.stringify({ quoteId }),
 				credentials: "include",

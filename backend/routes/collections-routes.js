@@ -7,12 +7,17 @@ import { validateCollection } from "../middleware/schema-validate.js";
 const collectionRoutes = express.Router();
 
 collectionRoutes
-	.get("/", checkAuth, catchAsync(collectionController.index))
-	.post("/", checkAuth, validateCollection, catchAsync(collectionController.createCollection));
+	.route("/")
+	.get(checkAuth, catchAsync(collectionController.index))
+	.post(checkAuth, validateCollection, catchAsync(collectionController.createCollection));
 
 collectionRoutes
-	.get("/:collectionId", checkAuth, catchAsync(collectionController.getCollection))
-	.post("/:collectionId", checkAuth, catchAsync(collectionController.addQuoteToCollection))
-	.delete("/:collectionId", checkAuth, catchAsync(collectionController.removeQuoteFromCollection));
+	.route("/:collectionId")
+	.get(checkAuth, catchAsync(collectionController.getCollection));
+
+collectionRoutes
+	.route("/:collectionId/quotes")
+	.post(checkAuth, catchAsync(collectionController.addQuoteToCollection))
+	.delete(checkAuth, catchAsync(collectionController.removeQuoteFromCollection));
 
 export default collectionRoutes;
