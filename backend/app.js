@@ -1,6 +1,4 @@
-import dotenv from "dotenv";
-dotenv.config();
-
+import "./utils/envconfig.js";
 import express from "express";
 import mongoose from "mongoose";
 import { HttpError, SchemaError } from "./utils/CustomErrors.js";
