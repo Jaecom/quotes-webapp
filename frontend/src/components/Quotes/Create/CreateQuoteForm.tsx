@@ -18,7 +18,7 @@ interface TitleSuggests {
 }
 
 interface Props {
-	onSubmitForm: (e: React.MouseEvent<HTMLButtonElement>) => void;
+	onSubmitForm: (formData: FormData) => void;
 	onSaveDraft: (e: React.MouseEvent<HTMLButtonElement>) => void;
 	onCancel: (e: React.MouseEvent<HTMLButtonElement>) => void;
 }
@@ -32,10 +32,23 @@ const CreateQuoteForm = ({ onSubmitForm, onSaveDraft, onCancel }: Props) => {
 	const titleInputRef = useRef<HTMLInputElement>(null);
 	const authorInputRef = useRef<HTMLInputElement>(null);
 	const genreInputRef = useRef<HTMLInputElement>(null);
+	const formRef = useRef<HTMLFormElement>(null);
+	const quoteRef = useRef<HTMLDivElement>(null);
 
 	const findImagesHandler = (e: MouseEvent<HTMLButtonElement>) => {
 		e.preventDefault();
 		openModal();
+	};
+
+	const onFormSubmitHandler = (e: React.MouseEvent<HTMLFormElement>) => {
+		e.preventDefault();
+
+		if (!formRef.current) return;
+
+		const formData = new FormData(formRef.current);
+		formData.append("quote", quoteRef.current?.textContent ?? "");
+
+		onSubmitForm(formData);
 	};
 
 	const onTitleClick = (object: any) => {
@@ -56,7 +69,7 @@ const CreateQuoteForm = ({ onSubmitForm, onSaveDraft, onCancel }: Props) => {
 		<>
 			{isModalOpen && <Modal onClose={closeModal}></Modal>}
 			<div className={classes.wrapper}>
-				<form className={classes["container--vertical"]}>
+				<form className={classes["container--vertical"]} ref={formRef}>
 					<div className={classes["container--horizontal"]}>
 						<PreviewImage inputUrl={imageUrl} localImage={localImage} inputRef={imageUrlInputRef} />
 						<div>
@@ -68,7 +81,7 @@ const CreateQuoteForm = ({ onSubmitForm, onSaveDraft, onCancel }: Props) => {
 									name="source"
 									onSuggestClick={onTitleClick}
 									inputRef={titleInputRef}
-									apiUrl={(title) => `http://localhost:5000/api/book-search/${title}`}
+									apiUrl={(title) => `/api/book-search/${title}`}
 									suggestChildren={(suggest) => {
 										return (
 											<>
@@ -97,7 +110,7 @@ const CreateQuoteForm = ({ onSubmitForm, onSaveDraft, onCancel }: Props) => {
 										id="image"
 										attribute={{ type: "text" }}
 										label="Image URL"
-										name="image"
+										name="imageUrl"
 										onChange={(e) => {
 											setImageUrl(e.target.value);
 										}}
@@ -113,6 +126,7 @@ const CreateQuoteForm = ({ onSubmitForm, onSaveDraft, onCancel }: Props) => {
 										<input
 											id="file"
 											type="file"
+											name="imageFile"
 											className={classes["file-input"]}
 											onChange={onFileInputChange}
 											accept="image/png, image/jpeg"
@@ -123,7 +137,7 @@ const CreateQuoteForm = ({ onSubmitForm, onSaveDraft, onCancel }: Props) => {
 						</div>
 					</div>
 
-					<QuoteTextInput />
+					<QuoteTextInput quoteRef={quoteRef} />
 
 					<div className={classes.controls}>
 						<Button onClick={onCancel} outline>
@@ -133,7 +147,7 @@ const CreateQuoteForm = ({ onSubmitForm, onSaveDraft, onCancel }: Props) => {
 							<Button onClick={onSaveDraft} outline>
 								Save as draft
 							</Button>
-							<Button onClick={onSubmitForm} fill className={classes["btn-submit"]}>
+							<Button onClick={onFormSubmitHandler} fill className={classes["btn-submit"]}>
 								Create
 							</Button>
 						</div>

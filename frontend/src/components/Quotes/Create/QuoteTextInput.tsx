@@ -18,8 +18,11 @@ const removeMarkers = (string: string) => {
 	return string.replaceAll(/<|>/g, "");
 };
 
-const QuoteTextInput = () => {
-	const quoteInputRef = useRef<HTMLDivElement>(null);
+interface Props {
+	quoteRef: React.RefObject<HTMLDivElement>;
+}
+
+const QuoteTextInput = ({ quoteRef }: Props) => {
 	const selection = window.getSelection();
 
 	const onKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
@@ -27,7 +30,7 @@ const QuoteTextInput = () => {
 	};
 
 	const onKeyUp = (e: React.KeyboardEvent<HTMLDivElement>) => {
-		const quoteInput = quoteInputRef!.current;
+		const quoteInput = quoteRef!.current;
 
 		if (!quoteInput) return;
 
@@ -126,7 +129,7 @@ const QuoteTextInput = () => {
 				className={classes["quote-text"]}
 				onKeyUp={onKeyUp}
 				onKeyDown={onKeyDown}
-				ref={quoteInputRef}
+				ref={quoteRef}
 				onPaste={onPaste}
 			/>
 		</fieldset>
