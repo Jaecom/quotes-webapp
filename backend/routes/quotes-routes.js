@@ -2,14 +2,21 @@ import express from "express";
 import quoteController from "../controllers/quotes-controllers.js";
 import checkAuth from "../middleware/check-auth.js";
 import catchAsync from "../utils/catchAsync.js";
-import sw3upload from "../middleware/multer-image-s3.js";
+import multer from "multer";
+import uploadToS3 from "../middleware/multer-s3-image-upload.js";
 
+const upload = multer();
 const quoteRoutes = express.Router();
 
 quoteRoutes
 	.route("/")
 	.get(catchAsync(quoteController.index))
-	.post(checkAuth, sw3upload.single("imageFile"), catchAsync(quoteController.createQuote));
+	.post(
+		checkAuth,
+		upload.single("imageFile"),
+		uploadToS3,
+		catchAsync(quoteController.createQuote)
+	);
 
 quoteRoutes.get("/:quoteId", catchAsync(quoteController.getQuote));
 

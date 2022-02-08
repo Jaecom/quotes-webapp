@@ -1,5 +1,9 @@
 import multer from "multer";
 import AWS from "aws-sdk";
+import { quoteSchema } from "../schemas.js";
+import { SchemaError } from "../utils/CustomErrors.js";
+import { returnValidateErrorObject } from "../middleware/schema-validate.js";
+import path from "path";
 
 const s3 = new AWS.S3({
 	credentials: {
@@ -54,10 +58,9 @@ S3Storage.prototype._handleFile = function _handleFile(req, file, cb) {
 function getResizedImageUrl(url, modification) {
 	// example original
 	//https://<bucketname>.example/example.jpg
-
 	const regex = new RegExp("(?<=^(https|http)://)" + process.env.AWS_S3_BUCKET);
 	//match extesion
-	const extension = url.match(/\.([^.]*)$/)[0];
+	const extension = path.extname(url);
 
 	const newUrl = url
 		//replace "bucket" name with "bucket-resized"
@@ -71,4 +74,16 @@ S3Storage.prototype._removeFile = function _removeFile(req, file, cb) {
 	s3.deleteObject({ Bucket: file.bucket, Key: file.key }, cb);
 };
 
-export default multer({ storage: new S3Storage() });
+export default multer({
+	fileFilter: function (req, file, cb) {
+		const { error } = quoteSchema.validate(req.body, { abortEarly: false });
+		
+		if (error) {
+			const msg = returnValidateErrorObject(error);
+			return cb(new SchemaError(msg, 400));
+		}
+
+		return cb(null, true);
+	},
+	storage: new S3Storage(),
+});
