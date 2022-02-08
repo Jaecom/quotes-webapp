@@ -11,13 +11,12 @@ class CustomError extends Error {
 
 interface RequestObject {
 	url: string;
-	body?: FormData | URLSearchParams;
+	body: FormData | URLSearchParams;
 	method?: string;
-	headers?: Headers;
+	headers?: HeadersInit;
 }
 
-type ErrorField = { [key: string]: boolean };
-
+export type ErrorField = { [key: string]: boolean };
 export type SchemaError = [{ path: string; message: string }] | string | undefined;
 
 const useSchemaHttp = () => {
@@ -31,7 +30,7 @@ const useSchemaHttp = () => {
 				const res = await fetch(url, {
 					body: body ?? null,
 					method: method ?? "GET",
-					headers: headers ?? { "Content-Type": "application/x-www-form-urlencoded" },
+					headers: headers,
 					credentials: "include",
 				});
 

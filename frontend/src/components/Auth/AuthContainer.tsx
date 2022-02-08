@@ -26,6 +26,9 @@ const AuthContainer = (props: Props) => {
 				url: `/api/users/${flag}`,
 				method: "POST",
 				body: new URLSearchParams(formData as any),
+				headers: {
+					"Content-Type": "application/x-www-form-urlencoded",
+				},
 			},
 			(data) => {
 				authCtx.login(data.token, data.expirationDate, data.userId);

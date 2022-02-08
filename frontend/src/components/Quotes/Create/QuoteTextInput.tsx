@@ -1,6 +1,6 @@
+import React from "react";
 import classes from "./QuoteTextInput.module.scss";
 import inputClasses from "../../UI/Form/Input.module.scss";
-import React, { useRef } from "react";
 
 let keydown = "";
 let currentKeyQuote = "";
@@ -20,9 +20,10 @@ const removeMarkers = (string: string) => {
 
 interface Props {
 	quoteRef: React.RefObject<HTMLDivElement>;
+	error: boolean | undefined;
 }
 
-const QuoteTextInput = ({ quoteRef }: Props) => {
+const QuoteTextInput = ({ quoteRef, error }: Props) => {
 	const selection = window.getSelection();
 
 	const onKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
@@ -126,7 +127,7 @@ const QuoteTextInput = ({ quoteRef }: Props) => {
 			<label>Quote</label>
 			<div
 				contentEditable
-				className={classes["quote-text"]}
+				className={`${classes["quote-text"]} ${error ? inputClasses.error : ""}`}
 				onKeyUp={onKeyUp}
 				onKeyDown={onKeyDown}
 				ref={quoteRef}

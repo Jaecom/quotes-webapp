@@ -11,6 +11,7 @@ interface Props<T> {
 	suggestChildren: (suggestItem: T) => ReactElement;
 	apiUrl: (query: string) => string;
 	inputRef: React.Ref<HTMLInputElement>;
+	error: boolean | undefined;
 }
 
 const InputAndSuggestions = <T extends object>({
@@ -22,6 +23,7 @@ const InputAndSuggestions = <T extends object>({
 	name,
 	label,
 	attribute,
+	error,
 }: Props<T> & InputProp) => {
 	const [isFocused, setIsFocused] = useState(false);
 	const [sendRequest, isLoading] = useHttp();
@@ -97,6 +99,7 @@ const InputAndSuggestions = <T extends object>({
 				onBlur={() => setIsFocused(false)}
 				ref={inputRef}
 				onKeyDown={onKeyDownHandler}
+				error={error}
 			/>
 			<ul className={classes.suggests}>
 				{isFocused &&

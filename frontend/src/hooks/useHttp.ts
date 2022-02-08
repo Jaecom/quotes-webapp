@@ -4,9 +4,7 @@ interface RequestObject {
 	url: string;
 	body?: FormData | string;
 	method?: string;
-	headers?: {
-		[header: string]: string;
-	};
+	headers?: HeadersInit;
 	credentials?: RequestCredentials;
 }
 

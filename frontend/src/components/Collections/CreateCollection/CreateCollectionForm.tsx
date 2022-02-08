@@ -26,6 +26,9 @@ const CreateCollectionForm = ({ onCancel, onAddCollection }: Props) => {
 				url: "/api/collections",
 				method: "POST",
 				body: new URLSearchParams(formData as any),
+				headers: {
+					"Content-Type": "application/x-www-form-urlencoded",
+				},
 			},
 			(data) => {
 				return onAddCollection(data);

@@ -10,6 +10,8 @@ import useModal from "../../../hooks/useModal";
 import Modal from "../../UI/Modal";
 import InputAndSuggestions from "./InputAndSuggestions";
 import QuoteTextInput from "./QuoteTextInput";
+import ValidationError from "../../UI/Form/ValidationError";
+import { ErrorField, SchemaError } from "../../../hooks/useSchemaHttp";
 
 interface TitleSuggests {
 	title: string;
@@ -21,9 +23,11 @@ interface Props {
 	onSubmitForm: (formData: FormData) => void;
 	onSaveDraft: (e: React.MouseEvent<HTMLButtonElement>) => void;
 	onCancel: (e: React.MouseEvent<HTMLButtonElement>) => void;
+	errors: SchemaError;
+	errorField: ErrorField;
 }
 
-const CreateQuoteForm = ({ onSubmitForm, onSaveDraft, onCancel }: Props) => {
+const CreateQuoteForm = ({ onSubmitForm, onSaveDraft, onCancel, errors, errorField }: Props) => {
 	const [imageUrl, setImageUrl] = useState("");
 	const [isModalOpen, openModal, closeModal] = useModal();
 	const [localImage, setLocalImage] = useState("");
@@ -69,16 +73,17 @@ const CreateQuoteForm = ({ onSubmitForm, onSaveDraft, onCancel }: Props) => {
 		<>
 			{isModalOpen && <Modal onClose={closeModal}></Modal>}
 			<div className={classes.wrapper}>
-				<form className={classes["container--vertical"]} ref={formRef}>
+				{errors && <ValidationError errors={errors} className={classes["error-box"]} />}
+				<form className={`${classes["container--vertical"]} ${classes.form}`} ref={formRef}>
 					<div className={classes["container--horizontal"]}>
 						<PreviewImage inputUrl={imageUrl} localImage={localImage} inputRef={imageUrlInputRef} />
 						<div>
 							<div className={classes["container--vertical"]}>
 								<InputAndSuggestions<TitleSuggests>
-									id="source"
+									id="title"
 									attribute={{ type: "text" }}
 									label="Title"
-									name="source"
+									name="title"
 									onSuggestClick={onTitleClick}
 									inputRef={titleInputRef}
 									apiUrl={(title) => `/api/book-search/${title}`}
@@ -90,6 +95,7 @@ const CreateQuoteForm = ({ onSubmitForm, onSaveDraft, onCancel }: Props) => {
 											</>
 										);
 									}}
+									error={errorField.title}
 								/>
 								<Input
 									id="author"
@@ -97,6 +103,7 @@ const CreateQuoteForm = ({ onSubmitForm, onSaveDraft, onCancel }: Props) => {
 									label="Author"
 									name="author"
 									ref={authorInputRef}
+									error={errorField.author}
 								/>
 								<Input
 									id="genre"
@@ -104,6 +111,7 @@ const CreateQuoteForm = ({ onSubmitForm, onSaveDraft, onCancel }: Props) => {
 									label="Genre"
 									name="genre"
 									ref={genreInputRef}
+									error={errorField.genre}
 								/>
 								<div className={classes["container--horizontal"]}>
 									<Input
@@ -137,7 +145,7 @@ const CreateQuoteForm = ({ onSubmitForm, onSaveDraft, onCancel }: Props) => {
 						</div>
 					</div>
 
-					<QuoteTextInput quoteRef={quoteRef} />
+					<QuoteTextInput quoteRef={quoteRef} error={errorField.quote} />
 
 					<div className={classes.controls}>
 						<Button onClick={onCancel} outline>
