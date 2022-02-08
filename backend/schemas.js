@@ -43,4 +43,24 @@ const collectionSchema = Joi.object({
 	isPrivate: Joi.boolean(),
 });
 
-export { userSchema, collectionSchema };
+const quoteSchema = Joi.object({
+	quote: Joi.string().required().messages({
+		"string.base": `Quote should include text`,
+		"string.empty": `Quote cannot be empty`,
+	}),
+	author: Joi.string().required().messages({
+		"string.base": `Author should include text`,
+		"string.empty": `Author cannot be empty`,
+	}),
+	imageUrl: Joi.string().uri().allow(null, ""),
+	title: Joi.string().required().messages({
+		"string.base": `Title should include text`,
+		"string.empty": `Title cannot be empty`,
+	}),
+	genre: Joi.string().required().messages({
+		"string.base": `Genre should include text`,
+		"string.empty": `Genre cannot be empty`,
+	}),
+});
+
+export { userSchema, collectionSchema, quoteSchema };

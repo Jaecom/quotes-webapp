@@ -1,11 +1,10 @@
-import { collectionSchema, userSchema } from "../schemas.js";
+import { collectionSchema, userSchema, quoteSchema } from "../schemas.js";
 import { SchemaError } from "../utils/CustomErrors.js";
 
 const returnValidateErrorObject = (joiError) => {
 	const msg = joiError.details.map((el) => {
 		return { path: el.path[0], message: el.message };
 	});
-	console.log(msg);
 	return msg;
 };
 
@@ -31,5 +30,17 @@ const validateCollection = (req, res, next) => {
 	}
 };
 
-export { validateUser, validateCollection };
+const validateQuote = (req, res, next) => {
+	if (!req.file) throw new SchemaError("need to upload a image", 400);
 
+	const { error } = quoteSchema.validate(req.body, { abortEarly: false });
+
+	if (error) {
+		const msg = returnValidateErrorObject(error);
+		throw new SchemaError(msg, 400);
+	} else {
+		next();
+	}
+};
+
+export { validateUser, validateCollection, validateQuote, returnValidateErrorObject };
