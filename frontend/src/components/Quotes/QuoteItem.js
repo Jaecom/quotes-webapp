@@ -33,9 +33,9 @@ const QuoteItem = (props) => {
 			</Link>
 
 			<div className={`${classes.details}`}>
-				<div className={classes.source}>
-					<Link className="heading-4--bold" to={`/title/${quote.source}`}>
-						{quote.source}
+				<div className={classes.title}>
+					<Link className="heading-4--bold" to={`/title/${quote.title}`}>
+						{quote.title}
 					</Link>
 					<Link className="heading-5" to={`/authors/${quote.author.authorObject}`}>
 						{quote.author.name}
