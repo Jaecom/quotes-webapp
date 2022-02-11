@@ -19,7 +19,7 @@ const QuoteDetail = (props) => {
 				</div>
 
 				<div className={classes["image-container"]}>
-					<img className={classes.image} src={quote.image} alt={"quote"} />
+					<img className={classes.image} src={quote.image.medium} alt={"quote"} />
 					<h2 className={`${classes.source} heading-2--cap`}>{quote.title}</h2>
 				</div>
 

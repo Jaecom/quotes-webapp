@@ -1,23 +1,25 @@
+type ObjectId = string;
+
 interface collection {
-	_id: string;
+	_id: ObjectId;
 	name: string;
 	description: string;
-	quotes: objectID[]; //objectIds
+	quotes: ObjectId[]; //objectIds
 	isPrivate: boolean;
 }
 
 interface user {
-	id: string;
+	id: ObjectId;
 	email: string;
 	username: string;
 	hash: string;
-	likedQuotes: string[]; //objectId Array
-	collections: string[]; //objectId Array
+	likedQuotes: ObjectId[]; //objectId Array
+	collections: ObjectId[]; //objectId Array
 }
 
 interface author {
-	id: string;
-	quotes: string[]; //objectId Array
+	id: ObjectId;
+	quotes: ObjectId[]; //objectId Array
 	works: {};
 	info: {
 		name: string;
@@ -25,7 +27,8 @@ interface author {
 }
 
 interface quote {
-	id: string;
+	id: ObjectId;
+	quoteRaw: string;
 	quoteFull: string;
 	quoteShort: string;
 	author: {
@@ -33,14 +36,17 @@ interface quote {
 		authorObject: string; //objectId
 	};
 	source: string;
-	genre: string[]; //objectId Array
-	image: string;
+	genre: ObjectId[]; //objectId Array
+	image: {
+		original: string;
+		medium: string;
+		thumbnail: string;
+	};
 	likes: {
-		users: string[]; //objectId Array
+		users: ObjectId[]; //objectId Array
 		total: number;
 	};
 	keywords: string;
 	excludeKeywords: string;
 	previewQuote: string;
-	thumbnail: string;
 }

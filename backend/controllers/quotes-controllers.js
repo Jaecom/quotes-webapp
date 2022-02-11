@@ -77,9 +77,9 @@ quoteController.likeQuote = async (req, res, next) => {
 		// push/pull quote to user quote list
 		const addUserLike = { $push: { likedQuotes: ObjectId(quoteId) } };
 		const removeUserLike = { $pull: { likedQuotes: ObjectId(quoteId) } };
-		const userBookmarkUpdate = isQuoteLiked ? removeUserLike : addUserLike;
+		const userLikeUpdate = isQuoteLiked ? removeUserLike : addUserLike;
 
-		const updatedUser = await User.findOneAndUpdate({ _id: ObjectId(userId) }, userBookmarkUpdate, {
+		const updatedUser = await User.findOneAndUpdate({ _id: ObjectId(userId) }, userLikeUpdate, {
 			session,
 		});
 
@@ -109,6 +109,31 @@ quoteController.likeQuote = async (req, res, next) => {
 	}
 
 	session.endSession();
+	res.json("OK");
+};
+
+quoteController.createQuote = async (req, res, next) => {
+	const file = req.file;
+	const { title, author, genre, quote } = req.body;
+
+	const newQuote = new Quote({
+		quoteRaw: quote,
+		author: {
+			name: author,
+		},
+		title,
+		genre: [genre],
+		image: {
+			original: file.location.original,
+			medium: file.location.medium,
+			thumbnail: file.location.thumbnail,
+		},
+	});
+
+	await newQuote.save().catch(() => {
+		return next(new HttpError("Something went wrong", 500));
+	});
+
 	res.json("OK");
 };
 

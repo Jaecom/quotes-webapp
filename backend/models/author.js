@@ -12,6 +12,7 @@ const authorSchema = new Schema(
 		quotes: {
 			type: [{ type: Schema.Types.ObjectId, ref: "Quote" }],
 			required: true,
+			default: [],
 		},
 		works: {},
 		info: {
