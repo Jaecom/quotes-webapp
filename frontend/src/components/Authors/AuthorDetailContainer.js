@@ -15,11 +15,9 @@ const AuthorDetailContainer = (props) => {
 	const { quotes } = useSelector((state) => state.quote);
 
 	useEffect(() => {
-		const url = new URL(`/api/authors/${authorId}`);
-		
 		sendRequest(
 			{
-				url,
+				url: `/api/authors/${authorId}`,
 			},
 			(data) => {
 				dispatch(setInitialQuotes({ ...data }));
