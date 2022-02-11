@@ -41,7 +41,7 @@ function App() {
 				)}
 				
 				{authCtx.isLoggedIn && (
-					<Route path="/quotes/create" exact>
+					<Route path="/create" exact>
 						<MainNavigation />
 						<CreateQuotePage />
 					</Route>
