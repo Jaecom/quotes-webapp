@@ -44,10 +44,28 @@ const collectionSchema = Joi.object({
 });
 
 const quoteSchema = Joi.object({
-	quote: Joi.string().required().messages({
-		"string.base": `Quote should include text`,
-		"string.empty": `Quote cannot be empty`,
-	}),
+	quote: Joi.string()
+		.required()
+		.custom((value, helpers) => {
+			const match = value.match(/<.*>/);
+
+			if (!match) {
+				return helpers.message("Quote must be enclosed with '<' and '>' characters");
+			}
+
+			const leftArrowCount = value.match(/</g)?.length;
+			const rightArrowCount = value.match(/>/g)?.length;
+
+			if (leftArrowCount !== 1 || rightArrowCount !== 1) {
+				return helpers.message("Cannot have more than one '<' and '>' characters");
+			}
+
+			return true;
+		})
+		.messages({
+			"string.base": `Quote should include text`,
+			"string.empty": `Quote cannot be empty`,
+		}),
 	author: Joi.string().required().messages({
 		"string.base": `Author should include text`,
 		"string.empty": `Author cannot be empty`,
