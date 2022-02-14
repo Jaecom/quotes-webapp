@@ -5,11 +5,14 @@ import classes from "./CollectionView.module.scss";
 import sprite from "../../../assets/sprite.svg";
 import CollectionViewItem from "./CollectionViewItem";
 
+interface QuoteCollection extends Omit<Collection, "quotes"> {
+	quotes: Quote[];
+}
+
 const CollectionView = (props: { onClose: () => void }) => {
 	const [sendRequest] = useHttp();
 
-	const [collection, setCollection] =
-		useState<{ quotes: { id: string; source: string; image: string }[] }>();
+	const [collection, setCollection] = useState<QuoteCollection>();
 
 	const { collectionId } = useParams<{ collectionId: string }>();
 

@@ -1,6 +1,6 @@
 import { useCallback, useMemo } from "react";
 
-const useObserver = (target: React.RefObject<HTMLElement>, callback: () => {}) => {
+const useObserver = (target: React.RefObject<HTMLElement>, callback: () => void) => {
 	const observer = useMemo(() => {
 		const ObserverCallback = (entries: any, observer: any) => {
 			for (const entry of entries) {

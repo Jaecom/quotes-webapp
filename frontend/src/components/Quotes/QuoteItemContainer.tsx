@@ -10,22 +10,26 @@ import QuoteItem from "./QuoteItem";
 import LoginModal from "../Auth/LoginModal";
 import AddToCollectionModal from "../Collections/AddToCollection/AddToCollectionModal";
 
-const QuoteItemContainer = (props) => {
+interface Props {
+	quote: Quote;
+	local?: boolean;
+}
+const QuoteItemContainer = (props: Props) => {
 	const { quote, local } = props;
 
 	const dispatch = useDispatch();
 	const { userId, isLoggedIn } = useContext(AuthContext);
 	const [sendRequest] = useHttp();
-	const [isLoginModalOpen, openLoginModal, closeLoginModal] = useModal(false);
-	const [isCollectionModalOpen, openCollectionModal, closeCollectionModal] = useModal(false);
+	const [isLoginModalOpen, openLoginModal, closeLoginModal] = useModal();
+	const [isCollectionModalOpen, openCollectionModal, closeCollectionModal] = useModal();
 
 	const isLikedGlobal = !!quote.likes.users.includes(userId);
 	const totalLikesGlobal = quote.likes.total;
 
-	const [totalLikesLocal, setTotalLikesLocal] = useState(quote.likes.total);
-	const [isLikedLocal, setIsLikedLocal] = useState(isLikedGlobal);
+	const [totalLikesLocal, setTotalLikesLocal] = useState<number>(quote.likes.total);
+	const [isLikedLocal, setIsLikedLocal] = useState<boolean>(isLikedGlobal);
 
-	const quoteLikeHandler = (quoteId) => {
+	const quoteLikeHandler = (quoteId: string) => {
 		if (!isLoggedIn) {
 			return openLoginModal();
 		}
@@ -54,7 +58,7 @@ const QuoteItemContainer = (props) => {
 		);
 	};
 
-	const onAddToCollectionModal = (event) => {
+	const onAddToCollectionModal = (event: React.MouseEvent<HTMLDivElement>) => {
 		event.preventDefault();
 
 		if (!isLoggedIn) {
@@ -68,7 +72,7 @@ const QuoteItemContainer = (props) => {
 		<>
 			{isLoginModalOpen && <LoginModal onClose={closeLoginModal} />}
 			{isCollectionModalOpen && (
-				<AddToCollectionModal quoteId={quote.id} onClose={closeCollectionModal} top />
+				<AddToCollectionModal quoteId={quote.id} onClose={closeCollectionModal} />
 			)}
 			<QuoteItem
 				quote={quote}

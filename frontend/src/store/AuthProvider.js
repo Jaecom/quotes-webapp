@@ -37,8 +37,8 @@ const AuthProvider = (props) => {
 
 	const logoutHandler = async () => {
 		setIsLoggedIn(false);
-		setUserId(null);
-		setExpiration(null);
+		setUserId("");
+		setExpiration("");
 	};
 
 	// autoLogout;

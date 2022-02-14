@@ -4,7 +4,7 @@ import classes from "./AddToCollectionItem.module.scss";
 import sprite from "../../../assets/sprite.svg";
 
 interface Props {
-	collection: collection;
+	collection: Collection;
 	quoteId: string;
 }
 

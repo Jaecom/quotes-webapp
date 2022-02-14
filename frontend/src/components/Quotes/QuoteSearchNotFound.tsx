@@ -1,5 +1,6 @@
 import classes from "./QuoteSearchNotFound.module.scss";
-const QuoteSearchNotFound = (props) => {
+
+const QuoteSearchNotFound = (props: { searchWord: string | null }) => {
 	return (
 		<div className={classes.wrapper}>
 			<div>

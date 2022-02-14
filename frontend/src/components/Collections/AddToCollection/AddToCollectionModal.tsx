@@ -17,7 +17,7 @@ enum pageType {
 }
 
 const AddToCollectionModal = ({ quoteId, onClose }: Props) => {
-	const [collections, setCollections] = useState<collection[]>([]);
+	const [collections, setCollections] = useState<Collection[]>([]);
 	const [page, setPage] = useState<pageType>(pageType.ADD_QUOTE);
 	const [isCollectionCreated, setIsCollectionCreated] = useState<boolean>(false);
 
@@ -34,7 +34,7 @@ const AddToCollectionModal = ({ quoteId, onClose }: Props) => {
 				method: "GET",
 				credentials: "include",
 			},
-			(data: collection[]) => {
+			(data: Collection[]) => {
 				setCollections(data);
 			}
 		);
@@ -74,7 +74,10 @@ const AddToCollectionModal = ({ quoteId, onClose }: Props) => {
 					/>
 				)}
 				{page === pageType.CREATE_COLLECTION && (
-					<CreateCollectionForm onAddCollection={createCollectionHandler} onCancel={openAddToPage} />
+					<CreateCollectionForm
+						onAddCollection={createCollectionHandler}
+						onCancel={openAddToPage}
+					/>
 				)}
 			</Card>
 		</Modal>

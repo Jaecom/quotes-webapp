@@ -3,8 +3,16 @@ import { Link } from "react-router-dom";
 import sprite from "../../assets/sprite.svg";
 import useLinkStateBackground from "../../hooks/useLinkStateBackground";
 
-const QuoteItem = (props) => {
-	const { quote, totalLikes, isLiked, onQuoteLike } = props;
+interface Props {
+	quote: Quote;
+	totalLikes: number;
+	isLiked: boolean;
+	onQuoteLike: (quoteId: string) => void;
+	addToCollection: (e: React.MouseEvent<HTMLDivElement>) => void;
+}
+
+const QuoteItem = (props: Props) => {
+	const { quote, totalLikes, isLiked, onQuoteLike, addToCollection } = props;
 	const linkStateBackground = useLinkStateBackground();
 
 	return (
@@ -19,7 +27,7 @@ const QuoteItem = (props) => {
 					<div className={classes.main}>
 						<div className={classes.content}>
 							<p className="paragraph--small">{quote.previewQuote}&hellip;</p>
-							<div className={classes["plus-box"]} onClick={props.addToCollection}>
+							<div className={classes["plus-box"]} onClick={addToCollection}>
 								<svg className={classes.plus}>
 									<use href={sprite + "#icon-plus"} />
 								</svg>

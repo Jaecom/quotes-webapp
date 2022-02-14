@@ -3,7 +3,12 @@ import classes from "./QuoteList.module.scss";
 import QuoteItemContainer from "./QuoteItemContainer";
 import QuoteListBanner from "./QuoteListBanner";
 
-const QuoteList = React.forwardRef((props, ref) => {
+interface Props {
+	quotes: Quote[];
+	quoteBottomRef: React.RefObject<HTMLDivElement>;
+}
+
+const QuoteList = (props: Props) => {
 	return (
 		<>
 			<div className={classes.wrapper}>
@@ -16,10 +21,10 @@ const QuoteList = React.forwardRef((props, ref) => {
 						)
 					)}
 				</div>
-				<div className={classes.bottom} ref={ref}></div>
+				<div className={classes.bottom} ref={props.quoteBottomRef} />
 			</div>
 		</>
 	);
-});
+};
 
 export default QuoteList;

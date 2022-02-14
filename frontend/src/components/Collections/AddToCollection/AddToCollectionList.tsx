@@ -3,7 +3,7 @@ import Button from "../../UI/Button";
 import AddToCollectionItem from "./AddToCollectionItem";
 
 interface Props {
-	collections: collection[];
+	collections: Collection[];
 	quoteId: string;
 	onClose: () => void;
 	openCreatePage: () => void;

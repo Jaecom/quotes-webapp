@@ -1,6 +1,6 @@
 type ObjectId = string;
 
-interface collection {
+interface Collection {
 	_id: ObjectId;
 	name: string;
 	description: string;
@@ -8,7 +8,7 @@ interface collection {
 	isPrivate: boolean;
 }
 
-interface user {
+interface User {
 	id: ObjectId;
 	email: string;
 	username: string;
@@ -17,7 +17,7 @@ interface user {
 	collections: ObjectId[]; //objectId Array
 }
 
-interface author {
+interface Author {
 	id: ObjectId;
 	quotes: ObjectId[]; //objectId Array
 	works: {};
@@ -26,16 +26,16 @@ interface author {
 	};
 }
 
-interface quote {
+interface Quote {
 	id: ObjectId;
 	quoteRaw: string;
 	quoteFull: string;
 	quoteShort: string;
 	author: {
 		name: string;
-		authorObject: string; //objectId
+		authorObject: ObjectId; //objectId
 	};
-	source: string;
+	title: string;
 	genre: ObjectId[]; //objectId Array
 	image: {
 		original: string;
@@ -49,4 +49,5 @@ interface quote {
 	keywords: string;
 	excludeKeywords: string;
 	previewQuote: string;
+	isBanner?: boolean;
 }

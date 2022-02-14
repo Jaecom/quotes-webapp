@@ -3,7 +3,7 @@ import Button from "../UI/Button";
 import { Link } from "react-router-dom";
 import useLinkStateBackground from "../../hooks/useLinkStateBackground";
 
-const QuoteListBanner = (props) => {
+const QuoteListBanner = (props: { quote: Quote }) => {
 	const { quote } = props;
 
 	const linkStateBackground = useLinkStateBackground();

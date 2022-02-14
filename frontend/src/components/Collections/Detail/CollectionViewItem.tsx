@@ -1,7 +1,7 @@
 import React from "react";
 import classes from "./CollectionViewItem.module.scss";
 
-const CollectionViewItem = (props: { quote: { source: string; image: string } }) => {
+const CollectionViewItem = (props: { quote: Quote }) => {
 	const { quote } = props;
 
 	const onClickHandler = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -11,7 +11,7 @@ const CollectionViewItem = (props: { quote: { source: string; image: string } })
 	return (
 		<div className={classes.item} onClick={onClickHandler}>
 			<div className={classes.content}>
-				<img src={quote.image} className={classes.image} alt="quote" loading="lazy" />
+				<img src={quote.image.medium} className={classes.image} alt="quote" loading="lazy" />
 			</div>
 		</div>
 	);

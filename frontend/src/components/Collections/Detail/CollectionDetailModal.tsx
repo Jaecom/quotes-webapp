@@ -1,13 +1,9 @@
-import { useHistory, RouteComponentProps } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import Modal from "../../UI/Modal";
 import CollectionView from "./CollectionView";
 
-interface backgroundHistory extends RouteComponentProps {
-	background: string;
-}
-
 const CollectionDetailModal = () => {
-	const history = useHistory<backgroundHistory>();
+	const history = useHistory();
 
 	const modalCloseHander = () => {
 		return history.push("/collections");

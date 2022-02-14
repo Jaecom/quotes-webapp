@@ -1,5 +1,5 @@
 import { useRef, useCallback, useEffect } from "react";
-import { useHistory } from "react-router-dom";
+import { RouteComponentProps, useHistory } from "react-router-dom";
 import useHttp from "../../hooks/useHttp";
 import useObserver from "../../hooks/useObserver";
 import QuoteList from "./QuoteList";
@@ -8,14 +8,18 @@ import QuoteSearchNotFound from "./QuoteSearchNotFound";
 import { useSelector, useDispatch } from "react-redux";
 import { setInitialQuotes, addNextQuotes } from "../../store/quoteSlice";
 
-const QuoteListContainer = (props) => {
-	const history = useHistory();
+interface historyType extends RouteComponentProps {
+	background: Location;
+}
+
+const QuoteListContainer = () => {
+	const history = useHistory<historyType>();
 	const searchWord = new URLSearchParams(history.location.search).get("search");
 
-	const quoteBottomRef = useRef();
+	const quoteBottomRef = useRef<HTMLDivElement>(null);
 	const [sendRequest, isLoading, error] = useHttp();
 
-	const { quotes, isLastPage, page } = useSelector((state) => state.quote);
+	const { quotes, isLastPage, page } = useSelector((state: any) => state.quote);
 	const dispatch = useDispatch();
 
 	const onScrolledBottom = useCallback(() => {
@@ -75,7 +79,9 @@ const QuoteListContainer = (props) => {
 		<>
 			{isLoading && <LoadingPopup />}
 			{error && <div>Error</div>}
-			{quotes && quotes.length !== 0 && <QuoteList quotes={quotes} ref={quoteBottomRef} />}
+			{quotes && quotes.length !== 0 && (
+				<QuoteList quotes={quotes} quoteBottomRef={quoteBottomRef} />
+			)}
 			{!isLoading && !error && (!quotes || quotes.length === 0) && (
 				<QuoteSearchNotFound searchWord={searchWord} />
 			)}
