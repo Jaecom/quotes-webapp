@@ -4,7 +4,7 @@ import classes from "./CollectionList.module.scss";
 import sprite from "../../assets/sprite.svg";
 
 import CollectionItemContainer from "./CollectionItemContainer";
-import CreateCollectionModal from "./CreateCollection/CreateCollectionModal";
+import CreateCollectionModal from "./Create/CreateCollectionModal";
 import Button from "../UI/Button";
 import useModal from "../../hooks/useModal";
 

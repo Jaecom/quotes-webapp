@@ -3,7 +3,7 @@ import useHttp from "../../../hooks/useHttp";
 
 import Modal from "../../UI/Modal";
 import Card from "../../UI/Card";
-import CreateCollectionForm from "../CreateCollection/CreateCollectionForm";
+import CreateCollectionForm from "../Create/CreateCollectionForm";
 import AddToCollectionList from "./AddToCollectionList";
 
 interface Props {
