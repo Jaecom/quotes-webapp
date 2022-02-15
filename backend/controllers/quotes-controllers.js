@@ -65,7 +65,7 @@ quoteController.likeQuote = async (req, res, next) => {
 		_id: quoteId,
 		"likes.users": userId,
 	}).catch(() => {
-		next(new HttpError("Something went wrong", 500));
+		throw new HttpError("Something went wrong", 500);
 	});
 
 	//mongoose transaction
@@ -131,7 +131,7 @@ quoteController.createQuote = async (req, res, next) => {
 	});
 
 	await newQuote.save().catch(() => {
-		return next(new HttpError("Something went wrong", 500));
+		throw new HttpError("Something went wrong", 500);
 	});
 
 	res.json("OK");
