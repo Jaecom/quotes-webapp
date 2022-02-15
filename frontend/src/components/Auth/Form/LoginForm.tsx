@@ -15,11 +15,11 @@ const LoginForm = React.forwardRef<HTMLFormElement, Props>((props, ref) => {
 	return (
 		<form className={classes.form} onSubmit={props.onSubmit} ref={ref}>
 			<h2 className={`${classes.heading}`}>Login</h2>
-			<p className={classes.redirect}>	
+			<p className={classes.redirect}>
 				Don't have an account?&nbsp;
 				<Link to="/signup">Sign Up</Link>
 			</p>
-			{props.error && <ValidationError errors="Invalid username or password. Please try again." />}
+			{props.error && <ValidationError errors={props.error} />}
 			<Input
 				id="email"
 				attribute={{ type: "email" }}
