@@ -5,6 +5,7 @@ import catchAsync from "../utils/catchAsync.js";
 import { validateQuote } from "../middleware/schema-validate.js";
 import multer from "multer";
 import uploadToS3 from "../middleware/multer-s3-image-upload.js";
+import parseImageUrl from "../middleware/parse-image.js";
 
 const upload = multer();
 const quoteRoutes = express.Router();
@@ -15,6 +16,7 @@ quoteRoutes
 	.post(
 		checkAuth,
 		upload.single("imageFile"),
+		catchAsync(parseImageUrl),
 		validateQuote,
 		uploadToS3,
 		catchAsync(quoteController.createQuote)

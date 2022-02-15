@@ -31,7 +31,7 @@ const validateCollection = (req, res, next) => {
 };
 
 const validateQuote = (req, res, next) => {
-	if (!req.file) throw new SchemaError("need to upload a image", 400);
+	if (!req.file) throw new SchemaError("Need to upload an image or insert image url", 400);
 
 	const { error } = quoteSchema.validate(req.body, { abortEarly: false });
 

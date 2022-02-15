@@ -22,13 +22,6 @@ const isValidHttpUrl = (inputUrl: string) => {
 		return { isValidUrl: false, errorMessage: "Invalid url" };
 	}
 
-	if (url.host !== ("images.unsplash.com" || "images.pexels.com")) {
-		return {
-			isValidUrl: false,
-			errorMessage: "Url must come from images.unsplash.com or images.pexels.com",
-		};
-	}
-
 	return { isValidUrl: true, errorMessage: "" };
 };
 

@@ -67,10 +67,12 @@ const quoteSchema = Joi.object({
 			"string.empty": `Quote cannot be empty`,
 		}),
 	author: Joi.string().required().messages({
-		"string.base": `Author should include text`,
+		"strinag.base": `Author should include text`,
 		"string.empty": `Author cannot be empty`,
 	}),
-	imageUrl: Joi.string().uri().allow(null, ""),
+	imageUrl: Joi.string().uri().allow(null, "").messages({
+		"string.uri": `Image url is broken`,
+	}),
 	title: Joi.string().required().messages({
 		"string.base": `Title should include text`,
 		"string.empty": `Title cannot be empty`,
