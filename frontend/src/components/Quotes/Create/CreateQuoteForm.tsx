@@ -16,7 +16,7 @@ import { ErrorField, SchemaError } from "../../../hooks/useSchemaHttp";
 interface TitleSuggests {
 	title: string;
 	author: string;
-	genre: string[];
+	genres: string[];
 }
 
 interface Props {
@@ -38,6 +38,7 @@ const CreateQuoteForm = ({ onSubmitForm, onSaveDraft, onCancel, errors, errorFie
 	const genreInputRef = useRef<HTMLInputElement>(null);
 	const formRef = useRef<HTMLFormElement>(null);
 	const quoteRef = useRef<HTMLDivElement>(null);
+	const fileRef = useRef<HTMLInputElement>(null);
 
 	const findImagesHandler = (e: MouseEvent<HTMLButtonElement>) => {
 		e.preventDefault();
@@ -51,14 +52,15 @@ const CreateQuoteForm = ({ onSubmitForm, onSaveDraft, onCancel, errors, errorFie
 
 		const formData = new FormData(formRef.current);
 		formData.append("quote", quoteRef.current?.textContent ?? "");
+		console.log(formData.get("quote"));
 
 		onSubmitForm(formData);
 	};
 
-	const onTitleClick = (object: any) => {
-		titleInputRef.current!.value = object.title;
-		authorInputRef.current!.value = object.author;
-		genreInputRef.current!.value = object.genres?.join(" ") ?? "";
+	const onTitleClick = (suggestions: TitleSuggests) => {
+		titleInputRef.current!.value = suggestions.title;
+		authorInputRef.current!.value = suggestions.author;
+		genreInputRef.current!.value = suggestions.genres?.join(" ") ?? "";
 	};
 
 	const onFileInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -120,9 +122,11 @@ const CreateQuoteForm = ({ onSubmitForm, onSaveDraft, onCancel, errors, errorFie
 										label="Image URL"
 										name="imageUrl"
 										onChange={(e) => {
+											fileRef.current!.value = "";
 											setImageUrl(e.target.value);
 										}}
 										ref={imageUrlInputRef}
+										error={errorField.imageUrl}
 									/>
 									<div className={classes["file-input-container"]}>
 										<label
@@ -138,6 +142,7 @@ const CreateQuoteForm = ({ onSubmitForm, onSaveDraft, onCancel, errors, errorFie
 											className={classes["file-input"]}
 											onChange={onFileInputChange}
 											accept="image/png, image/jpeg"
+											ref={fileRef}
 										/>
 									</div>
 								</div>
