@@ -128,6 +128,7 @@ quoteController.createQuote = async (req, res, next) => {
 			medium: file.location.medium,
 			thumbnail: file.location.thumbnail,
 		},
+		owner: res.locals.userId,
 	});
 
 	await newQuote.save().catch(() => {

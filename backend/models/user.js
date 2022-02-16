@@ -38,6 +38,11 @@ const userSchema = new Schema({
 			},
 		},
 	],
+	ownedQuotes: {
+		type: [{ type: Schema.Types.ObjectId, ref: "Quote" }],
+		required: true,
+		default: [],
+	},
 });
 
 const User = mongoose.model("User", userSchema);

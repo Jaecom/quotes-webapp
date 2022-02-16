@@ -1,5 +1,7 @@
 import mongoose from "mongoose";
 import Author from "../models/author.js";
+import { HttpError } from "../utils/CustomErrors.js";
+import User from "./user.js";
 const { Schema } = mongoose;
 
 const KEY_WORD_COUNT = 3;
@@ -56,6 +58,11 @@ const quoteSchema = new Schema(
 				default: 0,
 			},
 		},
+		owner: {
+			type: Schema.Types.ObjectId,
+			ref: "User",
+			required: true,
+		},
 	},
 	schemaOptions
 );
@@ -68,7 +75,7 @@ quoteSchema.pre("save", async function (next) {
 		this.author.authorObject = existingAuthor.id;
 
 		//update existing author - quotes array
-		const updatedAuthor = await Author.updateOne(
+		await Author.updateOne(
 			{ id: existingAuthor.id },
 			{ $push: { quotes: this.id } },
 			{ new: true }
@@ -80,12 +87,25 @@ quoteSchema.pre("save", async function (next) {
 	const newAuthor = new Author({
 		quotes: [this.id],
 		info: {
-			name: this.name,
+			name: this.author.name,
 		},
 	});
 
+	this.author.authorObject = newAuthor.id;
+
 	await newAuthor.save();
 	return next();
+});
+
+quoteSchema.pre("save", async function (next) {
+	const foundUser = await User.findOneAndUpdate(
+		{ id: this.owner },
+		{ $push: { ownedQuotes: this.id } }
+	);
+
+	if (foundUser) {
+		return next();
+	}
 });
 
 quoteSchema.virtual("quoteFull").get(function () {
