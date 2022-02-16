@@ -1,9 +1,11 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
 import useSchemaHttp from "../../../hooks/useSchemaHttp";
 import CreateQuoteForm from "./CreateQuoteForm";
 
 const CreateQuoteContainer = () => {
 	const [sendRequest, errors, errorfield] = useSchemaHttp();
+	const history = useHistory();
 
 	const submitFormHandler = (formData: FormData) => {
 		sendRequest(
@@ -12,9 +14,8 @@ const CreateQuoteContainer = () => {
 				method: "POST",
 				body: formData,
 			},
-			(data: any) => {
-				console.log(data);
-				console.log(errors);
+			(data) => {
+				return history.push("/");
 			}
 		);
 	};
