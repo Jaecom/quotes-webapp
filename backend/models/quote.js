@@ -32,6 +32,10 @@ const quoteSchema = new Schema(
 			require: true,
 			default: [],
 		},
+		createdDate: {
+			type: Date,
+			default: Date.now(),
+		},
 		image: {
 			original: {
 				type: String,
@@ -80,7 +84,6 @@ quoteSchema.pre("save", async function (next) {
 			{ $push: { quotes: this.id } },
 			{ new: true }
 		);
-		console.log(updatedAuthor);
 		return next();
 	}
 

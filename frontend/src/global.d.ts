@@ -50,4 +50,5 @@ interface Quote {
 	excludeKeywords: string;
 	previewQuote: string;
 	isBanner?: boolean;
+	createdDate: string;
 }
