@@ -51,6 +51,7 @@ app.use("/api/collections", collectionRoutes);
 app.use("/api/book-search", bookSearchRoutes);
 
 if (process.env.NODE_ENV === "production") {
+	const __dirname = path.resolve();
 	app.use(express.static(path.join(__dirname, "../frontend/build")));
 
 	app.get("*", (req, res) => {
