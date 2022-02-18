@@ -12,7 +12,10 @@ import bookSearchRoutes from "./routes/book-search-routes.js";
 
 const app = express();
 
-mongoose.connect("mongodb://Jaecom:27017/quoteWebsite?replicaSet=rs");
+mongoose.connect(process.env.MONGO_URL || "mongodb://Jaecom:27017/quoteWebsite?replicaSet=rs", {
+	useNewUrlParser: true,
+	useUnifiedTopology: true,
+});
 const db = mongoose.connection;
 
 db.once("open", () => {
@@ -20,6 +23,14 @@ db.once("open", () => {
 });
 
 db.on("error", console.error.bind(console, "connection error:"));
+
+if (process.env.NODE_ENV === "production") {
+	app.use(express.static(path.join(__dirname, "../frontend/build")));
+
+	app.get("*", (req, res) => {
+		res.sendFile(path.resolve(__dirname, "../frontend", "build", "index.html"));
+	});
+}
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -52,7 +63,7 @@ app.all("*", (req, res, next) => {
 
 //process all errors by sending response to frontend with statuscode & message
 app.use((error, req, res, next) => {
-	console.log(error.message);
+	console.log("error", error);
 	if (error instanceof SchemaError) {
 		return res.status(error.status || 500).json(error.messageArray || "Something went wrong");
 	}

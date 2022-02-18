@@ -1,0 +1,24 @@
+{
+	"name": "quoteswebapp",
+	"version": "1.0.0",
+	"description": "Webapp that shows quotes",
+	"main": "index.js",
+	"scripts": {
+		"build": "cd frontend && npm run build",
+		"install-client": "cd client && npm install",
+		"heroku-postbuild": "npm run install-client && npm run build",
+		"start": "cd backend && npm install && node app.js",
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/Jaecom/QuotesWebapp.git"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/Jaecom/QuotesWebapp/issues"
+	},
+	"homepage": "https://github.com/Jaecom/QuotesWebapp#readme"
+}

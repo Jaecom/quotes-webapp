@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
 import Author from "../models/author.js";
-import { HttpError } from "../utils/CustomErrors.js";
 import User from "./user.js";
 const { Schema } = mongoose;
 

@@ -13,7 +13,7 @@ const QuoteDetailContainer = () => {
 
 	const [otherQuotesByAuthor, setOtherQuotesByAuthor] = useState();
 	const [recommendQuotes, setReommmenedQuotes] = useState();
-
+	
 	useEffect(() => {
 		sendRequest({ url: `/api/quotes/${quoteId}` }, (data) => {
 			setQuote(data.quote);

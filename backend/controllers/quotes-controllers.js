@@ -131,7 +131,8 @@ quoteController.createQuote = async (req, res, next) => {
 		owner: res.locals.userId,
 	});
 
-	await newQuote.save().catch(() => {
+	await newQuote.save().catch((error) => {
+		console.log(error);
 		throw new HttpError("Something went wrong", 500);
 	});
 
