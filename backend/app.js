@@ -9,6 +9,7 @@ import userRoutes from "./routes/users-routes.js";
 import authorRoutes from "./routes/author-routes.js";
 import collectionRoutes from "./routes/collections-routes.js";
 import bookSearchRoutes from "./routes/book-search-routes.js";
+import path from "path";
 
 const app = express();
 
