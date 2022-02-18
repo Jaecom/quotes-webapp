@@ -72,7 +72,7 @@ app.use((error, req, res, next) => {
 	return res.status(error.status || 500).json(error.message || "Something went wrong");
 });
 
-const port = 5000;
+const port = process.env.PORT || 5000;
 
 app.listen(port, () => {
 	console.log(`Listening at localhost: ${port}`);
