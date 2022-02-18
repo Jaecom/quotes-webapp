@@ -40,10 +40,6 @@ app.use((req, res, next) => {
 	next();
 });
 
-app.get("/", (req, res) => {
-	res.send("Home");
-});
-
 app.use("/api/quotes", quoteRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/authors", authorRoutes);
