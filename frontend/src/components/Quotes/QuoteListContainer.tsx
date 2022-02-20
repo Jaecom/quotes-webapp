@@ -77,10 +77,9 @@ const QuoteListContainer = () => {
 
 	return (
 		<>
-			{isLoading && <LoadingPopup />}
 			{error && <div>Error</div>}
 			{quotes && quotes.length !== 0 && (
-				<QuoteList quotes={quotes} quoteBottomRef={quoteBottomRef} />
+				<QuoteList quotes={quotes} quoteBottomRef={quoteBottomRef} loading={isLoading} />
 			)}
 			{!isLoading && !error && (!quotes || quotes.length === 0) && (
 				<QuoteSearchNotFound searchWord={searchWord} />

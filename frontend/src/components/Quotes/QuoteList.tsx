@@ -2,10 +2,12 @@ import React from "react";
 import classes from "./QuoteList.module.scss";
 import QuoteItemContainer from "./QuoteItemContainer";
 import QuoteListBanner from "./QuoteListBanner";
+import Loading from "../UI/Loading/Loading";
 
 interface Props {
 	quotes: Quote[];
 	quoteBottomRef: React.RefObject<HTMLDivElement>;
+	loading: boolean;
 }
 
 const QuoteList = (props: Props) => {
@@ -22,6 +24,7 @@ const QuoteList = (props: Props) => {
 					)}
 				</div>
 				<div className={classes.bottom} ref={props.quoteBottomRef} />
+				<div className={classes.loading}>{props.loading && <Loading />}</div>
 			</div>
 		</>
 	);
