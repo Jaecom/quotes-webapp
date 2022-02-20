@@ -2,12 +2,19 @@ import { useCallback, useMemo } from "react";
 
 const useObserver = (target: React.RefObject<HTMLElement>, callback: () => void) => {
 	const observer = useMemo(() => {
+		let debounceFlag = true;
+
 		const ObserverCallback = (entries: any, observer: any) => {
-			for (const entry of entries) {
-				if (entry.isIntersecting) {
+			entries.forEach((entry: any) => {
+				if (entry.isIntersecting && debounceFlag) {
 					callback();
+
+					debounceFlag = false;
+					setTimeout(() => {
+						debounceFlag = true;
+					}, 50);
 				}
-			}
+			});
 		};
 
 		const options = {
