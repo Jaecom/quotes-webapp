@@ -24,7 +24,11 @@ const QuoteList = (props: Props) => {
 					)}
 				</div>
 				<div className={classes.bottom} ref={props.quoteBottomRef} />
-				<div className={classes.loading}>{props.loading && <Loading />}</div>
+				{props.loading && (
+					<div className={classes.loading}>
+						<Loading />
+					</div>
+				)}
 			</div>
 		</>
 	);
