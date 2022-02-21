@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { useParams } from "react-router";
 import useHttp from "../../../hooks/useHttp";
 import LoadingPopup from "../../UI/Loading/LoadingPopup";
@@ -17,15 +17,19 @@ const QuoteDetailContainer = () => {
 		sendRequest({ url: `/api/quotes/${quoteId}` }, (data) => {
 			setQuote(data.quote);
 			setReommmenedQuotes(data.recommended);
-		});
-	}, [sendRequest, quoteId]);
 
-	useEffect(() => {
-		const worksByAuthor = quote?.author.authorObject.quotes.filter(
-			(element) => element.id !== quote.id
-		);
-		setOtherQuotesByAuthor(worksByAuthor);
-	}, [quote]);
+			const worksByAuthor = data.quote?.author.authorObject.quotes.filter(
+				(element) => element.id !== quoteId
+			);
+			setOtherQuotesByAuthor(worksByAuthor);
+		});
+
+		return () => {
+			setQuote(null);
+			setReommmenedQuotes(null);
+			setOtherQuotesByAuthor(null);
+		};
+	}, [sendRequest, quoteId]);
 
 	return (
 		<>
