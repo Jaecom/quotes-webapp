@@ -1,34 +1,44 @@
 import classes from "./QuoteDetail.module.scss";
-import React from "react";
+import MoreBy from "./MoreBy";
 
 const QuoteDetail = (props) => {
-	const quote = props.quote;
+	const { quote, otherQuotesByAuthor, recommendQuotes } = props;
 
 	return (
-		<div className={classes.background}>
-			<div className={classes.content}>
-				<div className={classes.info}>
-					<h3 className="heading-4--bold">{quote.title}</h3>
-					<h3 className="heading-4">{quote.author.name}</h3>
-				</div>
+		<div className={classes.wrapper}>
+			<div className={classes.padding}>
+				<div className={classes.content}>
+					<div className={classes.info}>
+						<h3 className="heading-4--bold">{quote.title}</h3>
+						<h3 className="heading-4">{quote.author.name}</h3>
+					</div>
 
-				<div className={classes.key}>
-					<p className={`paragraph--big ${classes["quotation-mark"]}`}>&ldquo;</p>
-					<h2 className="paragraph--big">{quote.keywords}</h2>
-					<p className="paragraph--medium">{quote.excludeKeywords}</p>
-				</div>
+					<div className={classes.key}>
+						<p className={`paragraph--big ${classes["quotation-mark"]}`}>&ldquo;</p>
+						<h2 className="paragraph--big">{quote.keywords}</h2>
+						<p className="paragraph--medium">{quote.excludeKeywords}</p>
+					</div>
 
-				<div className={classes["image-container"]}>
-					<img className={classes.image} src={quote.image.medium} alt={"quote"} />
-					<h2 className={`${classes.source} heading-2--cap`}>{quote.title}</h2>
-				</div>
+					<div className={classes["image-container"]}>
+						<img className={classes.image} src={quote.image.medium} alt={"quote"} />
+						<h2 className={`${classes.source} heading-2--cap`}>{quote.title}</h2>
+					</div>
 
-				<h3 className={`${classes.label} heading-3`}>Full Quote</h3>
+					<h3 className={`${classes.label} heading-3`}>Full Quote</h3>
 
-				<div className={classes.full}>
-					<p className="paragraph--medium">{quote.quoteFull}</p>
+					<div className={classes.full}>
+						<p className="paragraph--medium">{quote.quoteFull}</p>
+					</div>
 				</div>
 			</div>
+
+			{otherQuotesByAuthor?.length > 0 && (
+				<MoreBy text={`More by ${quote?.author.name}`} quotes={otherQuotesByAuthor} />
+			)}
+
+			{recommendQuotes?.length > 0 && (
+				<MoreBy text={"You may also like..."} quotes={recommendQuotes} />
+			)}
 		</div>
 	);
 };

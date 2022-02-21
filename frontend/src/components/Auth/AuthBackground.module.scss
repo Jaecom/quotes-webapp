@@ -1,4 +1,4 @@
-@use "src/assets/styles/color" as *;
+@use "src/assets/styles/main" as *;
 
 .wrapper {
 	height: 100vh;
@@ -26,4 +26,13 @@
 	transform: translateY(-50%);
 
 	border-radius: 0.5rem;
+
+	@include respond(phone) {
+		height: 100%;
+		width: 100%;
+		inset: 0;
+		transform: none;
+		max-width: initial;
+		min-width: initial;
+	}
 }

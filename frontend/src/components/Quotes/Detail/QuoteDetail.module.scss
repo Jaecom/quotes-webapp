@@ -1,13 +1,29 @@
-@use "src/assets/styles/color.scss" as *;
+@use "src/assets/styles/main.scss" as *;
 
-.background {
-	padding: 10rem;
+.wrapper {
 	display: flex;
 	justify-content: center;
+	flex-direction: column;
+}
+
+.padding {
+	padding: 0 10rem;
+
+	@include respond(tab-land) {
+		padding: 0 5rem;
+	}
+
+	@include respond(phone) {
+		padding: 0rem 3rem;
+	}
 }
 
 .content {
+	width: 100%;
 	max-width: 55rem;
+
+	padding: 10rem 0;
+	margin: 0 auto;
 }
 
 .info {

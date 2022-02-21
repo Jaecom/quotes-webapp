@@ -1,7 +1,13 @@
+@use "src/assets/styles/main.scss" as *;
+
 .wrapper {
-	margin-top: 4rem;
 	padding: 5rem;
+	margin-top: 4rem;
 	position: relative;
+
+	@include respond(tab-port) {
+		padding: 2rem;
+	}
 }
 
 .container {

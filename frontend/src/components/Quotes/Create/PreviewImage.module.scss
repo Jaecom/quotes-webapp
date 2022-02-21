@@ -1,8 +1,11 @@
 @use "src/assets/styles/main.scss" as *;
 
 .image-preview {
-	width: 100%;
+	min-width: 15rem;
+	min-height: 15rem;
+	
 	max-height: 40rem;
+
 	border-radius: 0.5rem;
 	overflow: hidden;
 	background-color: $color-grey-light;

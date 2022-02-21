@@ -1,3 +1,5 @@
+@use "src/assets/styles/main.scss" as *;
+
 .background {
 	background-color: white;
 	z-index: 300;
@@ -8,4 +10,10 @@
 	right: 10%;
 	border-radius: 2rem 2rem 0 0;
 	overflow: auto;
+
+	@include respond(tab-port) {
+		left: 0;
+		right: 0;
+		top: 7%;
+	}
 }

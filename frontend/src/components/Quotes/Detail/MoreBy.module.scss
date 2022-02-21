@@ -2,14 +2,13 @@
 
 .wrapper {
 	background-color: $color-grey-light;
-	padding: 5rem 0;
+	padding-top: 5rem;
+	padding-bottom: 5rem;
 }
 
 .container {
-	margin: 0rem auto;
-	width: 60%;
 	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(23rem, 1fr));
+	grid-template-columns: repeat(auto-fit, minmax(27rem, 1fr));
 	grid-template-rows: min-content;
 	gap: 3rem;
 	align-content: flex-start;

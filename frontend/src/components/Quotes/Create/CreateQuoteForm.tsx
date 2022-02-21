@@ -76,11 +76,11 @@ const CreateQuoteForm = ({ onSubmitForm, onSaveDraft, onCancel, errors, errorFie
 			{isModalOpen && <Modal onClose={closeModal}></Modal>}
 			<div className={classes.wrapper}>
 				{errors && <ValidationError errors={errors} className={classes["error-box"]} />}
-				<form className={`${classes["container--vertical"]} ${classes.form}`} ref={formRef}>
-					<div className={classes["container--horizontal"]}>
+				<form className={`${classes["vertical-group"]} ${classes.form}`} ref={formRef}>
+					<div className={classes["horizontal-group"]}>
 						<PreviewImage inputUrl={imageUrl} localImage={localImage} inputRef={imageUrlInputRef} />
 						<div>
-							<div className={classes["container--vertical"]}>
+							<div className={classes["vertical-group"]}>
 								<InputAndSuggestions<TitleSuggests>
 									id="title"
 									attribute={{ type: "text" }}
@@ -115,7 +115,7 @@ const CreateQuoteForm = ({ onSubmitForm, onSaveDraft, onCancel, errors, errorFie
 									ref={genreInputRef}
 									error={errorField.genre}
 								/>
-								<div className={classes["container--horizontal"]}>
+								<div className={classes["image-input-container"]}>
 									<Input
 										id="image"
 										attribute={{ type: "text" }}

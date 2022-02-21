@@ -1,46 +1,37 @@
 @use "src/assets/styles/main.scss" as *;
 
 .wrapper {
-	height: 100vh;
 	width: 70%;
 
 	margin: 0 auto;
-	margin-top: 7rem;
 	padding: 6rem;
+	margin-top: 7rem;
+
+	@include respond(tab-port) {
+		width: 100%;
+		padding: 3rem;
+	}
 }
 
-.container--horizontal {
+.horizontal-group {
 	display: flex;
-	column-gap: 2rem;
+	gap: 2rem;
+	flex-wrap: wrap-reverse;
 
 	& > div {
 		flex: 1;
 	}
 }
 
-.container--vertical {
+.vertical-group {
 	display: flex;
 	flex-direction: column;
 	row-gap: 2rem;
 }
 
-.btn-image {
-	align-self: flex-end;
-}
-
-.text-area {
-	height: 15rem;
-	resize: none;
-}
-
-.controls {
-	width: 100%;
+.image-input-container {
 	display: flex;
-	justify-content: space-between;
-}
-
-.btn-submit {
-	margin-left: 3rem;
+	column-gap: 2rem;
 }
 
 .file-input-container {
@@ -53,6 +44,16 @@
 
 	input {
 		display: none;
+	}
+}
+
+.controls {
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+
+	.btn-submit {
+		margin-left: 1.5rem;
 	}
 }
 
