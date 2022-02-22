@@ -13,7 +13,11 @@ const useHttp = () => {
 	const [error, setError] = useState();
 
 	const sendRequest = useCallback(
-		async (requestObject: RequestObject, processData: (data: any) => void) => {
+		async (
+			requestObject: RequestObject,
+			processData: (data: any) => void,
+			onError?: (e: any) => void
+		) => {
 			try {
 				const { url, body, method, headers, credentials } = requestObject;
 				setIsLoading(true);
@@ -33,6 +37,7 @@ const useHttp = () => {
 				processData(data);
 				setIsLoading(false);
 			} catch (e: any) {
+				onError && onError(e);
 				setError(e.message);
 				setIsLoading(false);
 			}
