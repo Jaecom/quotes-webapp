@@ -7,6 +7,8 @@ import QuoteSearchNotFound from "./QuoteSearchNotFound";
 import { useSelector, useDispatch } from "react-redux";
 import { setInitialQuotes, addNextQuotes } from "../../store/quoteSlice";
 
+let scrollErrorCount = 0;
+
 interface CustomHistory extends RouteComponentProps {
 	background: Location;
 }
@@ -15,30 +17,39 @@ const QuoteListContainer = () => {
 	const history = useHistory<CustomHistory>();
 	const searchWord = new URLSearchParams(history.location.search).get("search");
 
-	const quoteBottomRef = useRef<HTMLDivElement>(null);
 	const [sendRequest, isLoading, error] = useHttp();
-
 	const { quotes, isLastPage, page } = useSelector((state: any) => state.quote);
+	const quoteBottomRef = useRef<HTMLDivElement>(null);
 	const dispatch = useDispatch();
 
-	const onScrolledBottom = useCallback(() => {
-		if (isLastPage) {
-			return;
-		}
+	const onScrolledBottom = useCallback(
+		(enableObserve, disableObserve) => {
+			if (isLastPage) return;
 
-		const urlParams = new URLSearchParams();
-		searchWord && urlParams.append("search", searchWord);
-		page && urlParams.append("page", page + 1);
+			//stop observing before data load
+			disableObserve();
 
-		sendRequest(
-			{
-				url: `/api/quotes?${urlParams}`,
-			},
-			(data) => {
-				dispatch(addNextQuotes({ ...data }));
-			}
-		);
-	}, [searchWord, page, sendRequest, isLastPage, dispatch]);
+			const urlParams = new URLSearchParams();
+			searchWord && urlParams.append("search", searchWord);
+			page && urlParams.append("page", page + 1);
+
+			sendRequest(
+				{
+					url: `/api/quotes?${urlParams}`,
+				},
+				(data) => {
+					dispatch(addNextQuotes({ ...data }));
+					//resume observing after data load
+					return enableObserve();
+				},
+				(error) => {
+					scrollErrorCount++;
+					if (scrollErrorCount < 4) return enableObserve();
+				}
+			);
+		},
+		[searchWord, page, sendRequest, isLastPage, dispatch]
+	);
 
 	const [attachObserver, detachObserver] = useObserver(quoteBottomRef, onScrolledBottom);
 
@@ -53,13 +64,14 @@ const QuoteListContainer = () => {
 	}, [attachObserver, detachObserver, quotes]);
 
 	useEffect(() => {
+		scrollErrorCount = 0;
+	}, []);
+
+	useEffect(() => {
 		const isSearchResultBackground = history.location.state?.background?.search;
-		if (isSearchResultBackground) {
-			console.log("Preventing http request");
-			//don't request new data for background
-			// when clicking quote item on search result
-			return;
-		}
+		//don't request new data for background
+		// when clicking quote item on search result
+		if (isSearchResultBackground) return;
 
 		const urlParams = new URLSearchParams();
 		searchWord && urlParams.append("search", searchWord);

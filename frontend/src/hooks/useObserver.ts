@@ -1,18 +1,19 @@
 import { useCallback, useMemo } from "react";
 
-const useObserver = (target: React.RefObject<HTMLElement>, callback: () => void) => {
+let isObserve = true;
+
+const enableObserve = () => (isObserve = true);
+const disableObserve = () => (isObserve = false);
+
+const useObserver = (
+	target: React.RefObject<HTMLElement>,
+	callback: (enableObserve: () => void, disableObserve: () => void) => void
+) => {
 	const observer = useMemo(() => {
-		let debounceFlag = true;
-
-		const ObserverCallback = (entries: any, observer: any) => {
-			entries.forEach((entry: any) => {
-				if (entry.isIntersecting && debounceFlag) {
-					callback();
-
-					debounceFlag = false;
-					setTimeout(() => {
-						debounceFlag = true;
-					}, 50);
+		const ObserverCallback: IntersectionObserverCallback = (entries, observer) => {
+			entries.forEach(async (entry) => {
+				if (entry.isIntersecting && isObserve) {
+					callback(enableObserve, disableObserve);
 				}
 			});
 		};
@@ -27,10 +28,12 @@ const useObserver = (target: React.RefObject<HTMLElement>, callback: () => void)
 	}, [callback]);
 
 	const attachObserver = useCallback(() => {
-		target?.current && observer.observe(target.current);
+		enableObserve();
+		target?.current && observer.observe(target!.current);
 	}, [observer, target]);
 
 	const detachObserver = useCallback(() => {
+		disableObserve();
 		target?.current && observer.unobserve(target.current);
 	}, [observer, target]);
 
