@@ -2,7 +2,7 @@ import classes from "./MoreBy.module.scss";
 import quoteDetailClasses from "./QuoteDetail.module.scss";
 import QuoteItemContainer from "../QuoteItemContainer";
 
-const MoreBy = (props) => {
+const MoreBy = (props: { quotes: Quote[]; text: string }) => {
 	const quotes = props.quotes;
 
 	return (

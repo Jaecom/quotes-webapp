@@ -5,21 +5,21 @@ import LoadingPopup from "../../UI/Loading/LoadingPopup";
 import QuoteDetail from "./QuoteDetail";
 
 const QuoteDetailContainer = () => {
-	const [quote, setQuote] = useState();
-	const { quoteId } = useParams();
+	const [quote, setQuote] = useState<Quote | null>();
+	const { quoteId } = useParams<{ quoteId: string }>();
 
 	const [sendRequest, isLoading, error] = useHttp();
 
-	const [otherQuotesByAuthor, setOtherQuotesByAuthor] = useState();
-	const [recommendQuotes, setReommmenedQuotes] = useState();
+	const [otherQuotesByAuthor, setOtherQuotesByAuthor] = useState<Quote[] | null>();
+	const [recommendQuotes, setReommmenedQuotes] = useState<Quote[] | null>();
 
 	useEffect(() => {
-		sendRequest({ url: `/api/quotes/${quoteId}` }, (data) => {
+		sendRequest({ url: `/api/quotes/${quoteId}` }, (data: { quote: any; recommended: Quote[] }) => {
 			setQuote(data.quote);
 			setReommmenedQuotes(data.recommended);
 
 			const worksByAuthor = data.quote?.author.authorObject.quotes.filter(
-				(element) => element.id !== quoteId
+				(quote: Quote) => quote.id !== quoteId
 			);
 			setOtherQuotesByAuthor(worksByAuthor);
 		});

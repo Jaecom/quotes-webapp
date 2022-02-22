@@ -3,17 +3,16 @@ import { RouteComponentProps, useHistory } from "react-router-dom";
 import useHttp from "../../hooks/useHttp";
 import useObserver from "../../hooks/useObserver";
 import QuoteList from "./QuoteList";
-import LoadingPopup from "../UI/Loading/LoadingPopup";
 import QuoteSearchNotFound from "./QuoteSearchNotFound";
 import { useSelector, useDispatch } from "react-redux";
 import { setInitialQuotes, addNextQuotes } from "../../store/quoteSlice";
 
-interface historyType extends RouteComponentProps {
+interface CustomHistory extends RouteComponentProps {
 	background: Location;
 }
 
 const QuoteListContainer = () => {
-	const history = useHistory<historyType>();
+	const history = useHistory<CustomHistory>();
 	const searchWord = new URLSearchParams(history.location.search).get("search");
 
 	const quoteBottomRef = useRef<HTMLDivElement>(null);

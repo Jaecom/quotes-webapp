@@ -1,7 +1,13 @@
 import classes from "./QuoteDetail.module.scss";
 import MoreBy from "./MoreBy";
 
-const QuoteDetail = (props) => {
+interface Props {
+	quote: Quote;
+	otherQuotesByAuthor: Quote[] | null | undefined;
+	recommendQuotes: Quote[] | null | undefined;
+}
+
+const QuoteDetail = (props: Props) => {
 	const { quote, otherQuotesByAuthor, recommendQuotes } = props;
 
 	return (
@@ -32,13 +38,11 @@ const QuoteDetail = (props) => {
 				</div>
 			</div>
 
-			{otherQuotesByAuthor?.length > 0 && (
+			{otherQuotesByAuthor && (
 				<MoreBy text={`More by ${quote?.author.name}`} quotes={otherQuotesByAuthor} />
 			)}
 
-			{recommendQuotes?.length > 0 && (
-				<MoreBy text={"You may also like..."} quotes={recommendQuotes} />
-			)}
+			{recommendQuotes && <MoreBy text={"You may also like..."} quotes={recommendQuotes} />}
 		</div>
 	);
 };

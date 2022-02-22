@@ -1,16 +1,22 @@
-import { useEffect, useRef } from "react";
-import { useHistory } from "react-router";
+import React, { useEffect, useRef } from "react";
+import { RouteComponentProps, useHistory } from "react-router-dom";
 import Modal from "../../UI/Modal";
 import classes from "./QuoteDetailModal.module.scss";
 
-const QuoteDetailModal = (props) => {
-	const history = useHistory();
-	const quoteModalRef = useRef();
+interface CustomHistory extends RouteComponentProps {
+	background: Location;
+}
+
+const QuoteDetailModal = (props: { children: React.ReactChildren }) => {
+	const history = useHistory<CustomHistory>();
+	const quoteModalRef = useRef<HTMLDivElement>(null);
 	console.log("QuoteDetailModal");
 
 	useEffect(() => {
 		document.body.style.overflow = "hidden";
-		return () => (document.body.style.overflow = "unset");
+		return () => {
+			document.body.style.overflow = "unset";
+		};
 	});
 
 	useEffect(() => {
