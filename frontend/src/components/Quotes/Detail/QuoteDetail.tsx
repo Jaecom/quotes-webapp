@@ -38,7 +38,7 @@ const QuoteDetail = (props: Props) => {
 				</div>
 			</div>
 
-			{otherQuotesByAuthor && (
+			{otherQuotesByAuthor && otherQuotesByAuthor.length > 0 && (
 				<MoreBy text={`More by ${quote?.author.name}`} quotes={otherQuotesByAuthor} />
 			)}
 
