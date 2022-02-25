@@ -26,7 +26,7 @@ const SearchBar = () => {
 
 	return (
 		<form className={classes.form} onSubmit={submitHandler}>
-			<div className={classes.container}>
+			<div className={classes["search-container"]}>
 				<svg className={classes.icon}>
 					<use href={sprite + "#icon-magnifying-glass"} />
 				</svg>
