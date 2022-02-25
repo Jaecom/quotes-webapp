@@ -1,0 +1,51 @@
+@use "/src/assets/styles/main.scss" as *;
+
+.container {
+	height: 100%;
+	padding: 0 2rem;
+
+	display: flex;
+	align-items: center;
+
+	z-index: 2;
+	position: relative;
+	cursor: pointer;
+}
+
+.hamburger {
+	.line {
+		height: 1.5px;
+		width: 1.8rem;
+
+		display: block;
+		background-color: $color-grey-dark;
+
+		transition: 0.4s ease;
+		transition-property: transform, background-color;
+
+		&:nth-of-type(1) {
+			margin-bottom: 0.4rem;
+		}
+
+		&:nth-of-type(3) {
+			margin-top: 0.4rem;
+		}
+	}
+
+	&--transform {
+		.line {
+			&:nth-of-type(1) {
+				transform: translateY(5.5px) rotate(135deg);
+			}
+
+			&:nth-of-type(2) {
+				background-color: transparent;
+				transform: rotate(-180deg);
+			}
+
+			&:nth-of-type(3) {
+				transform: translateY(-5.5px) rotate(-135deg);
+			}
+		}
+	}
+}

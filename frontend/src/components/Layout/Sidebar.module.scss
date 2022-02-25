@@ -1,0 +1,51 @@
+@use "/src/assets/styles/main.scss" as *;
+
+.sidebar {
+	width: 40rem;
+	height: 100vh;
+
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 2;
+
+	background-color: white;
+	box-shadow: 0 1rem 2rem rgba($color-black, 0.2);
+	transition: transform 0.3s ease;
+
+	&--show {
+		transform: translateX(0);
+	}
+
+	&--hide {
+		transform: translateX(-100%);
+	}
+
+	@include respond(phone) {
+		width: 100vw;
+	}
+}
+
+.backdrop {
+	width: 100vw;
+	height: 100vh;
+
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 1;
+
+	background: rgba($color-black, $alpha: 0.2);
+
+	&--show {
+		display: none;
+
+		@include respond(tab-port) {
+			display: block;
+		}
+	}
+
+	&--hide {
+		display: none;
+	}
+}
