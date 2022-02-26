@@ -82,6 +82,7 @@ const QuoteListContainer = () => {
 			},
 			(data) => {
 				dispatch(setInitialQuotes({ ...data }));
+				window.scrollTo(0, 0);
 			}
 		);
 	}, [sendRequest, searchWord, history, dispatch]);

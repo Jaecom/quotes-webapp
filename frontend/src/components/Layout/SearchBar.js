@@ -21,7 +21,6 @@ const SearchBar = () => {
 
 		history.push(`/?search=${searchTerm}`);
 		searchRef.current.blur();
-		window.scroll(0, 0);
 	};
 
 	return (
