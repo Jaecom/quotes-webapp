@@ -1,5 +1,5 @@
 import { useRef, useCallback, useEffect } from "react";
-import { RouteComponentProps, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import useHttp from "../../hooks/useHttp";
 import useObserver from "../../hooks/useObserver";
 import QuoteList from "./QuoteList";
@@ -9,8 +9,9 @@ import { setInitialQuotes, addNextQuotes } from "../../store/quoteSlice";
 
 let scrollErrorCount = 0;
 
-interface CustomHistory extends RouteComponentProps {
-	background: Location;
+interface CustomHistory {
+	background?: Location;
+	noLoad?: boolean;
 }
 
 const QuoteListContainer = () => {
@@ -68,9 +69,11 @@ const QuoteListContainer = () => {
 	}, []);
 
 	useEffect(() => {
+		if (history.location.state?.noLoad) return;
+
 		const isSearchResultBackground = history.location.state?.background?.search;
-		//don't request new data for background
-		// when clicking quote item on search result
+		// //don't request new data for background
+		// // when clicking quote item on search result
 		if (isSearchResultBackground) return;
 
 		const urlParams = new URLSearchParams();

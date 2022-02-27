@@ -1,10 +1,11 @@
 import React, { useEffect, useRef } from "react";
-import { RouteComponentProps, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import Modal from "../../UI/Modal";
 import classes from "./QuoteDetailModal.module.scss";
 
-interface CustomHistory extends RouteComponentProps {
-	background: Location;
+interface CustomHistory {
+	background?: Location;
+	noLoad?: boolean;
 }
 
 const QuoteDetailModal = (props: { children: React.ReactChildren }) => {
@@ -30,10 +31,12 @@ const QuoteDetailModal = (props: { children: React.ReactChildren }) => {
 	}, [history]);
 
 	const modalCloseHander = () => {
-		const background = history.location.state.background;
-
-		//return to background if present
-		return history.push(background || "/");
+		const background = history.location.state?.background;
+		if (background) {
+			return history.push(background.pathname + background.search, { noLoad: true });
+		} else {
+			return history.push("/");
+		}
 	};
 
 	return (
