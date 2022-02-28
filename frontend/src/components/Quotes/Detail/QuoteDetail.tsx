@@ -20,7 +20,6 @@ const QuoteDetail = (props: Props) => {
 					</div>
 
 					<div className={classes.key}>
-						<p className={`paragraph--big ${classes["quotation-mark"]}`}>&ldquo;</p>
 						<h2 className="paragraph--big">{quote.keywords}</h2>
 						<p className="paragraph--medium">{quote.excludeKeywords}</p>
 					</div>
