@@ -96,7 +96,7 @@ const QuoteListContainer = () => {
 		<>
 			{errorInitial && <div>Error</div>}
 			{isLoadingInit && (
-				<QuoteListPlaceHolder count={searchWord ? Math.floor(Math.random() * 10) : 20} />
+				<QuoteListPlaceHolder count={searchWord ? Math.floor(Math.random() * 10 + 1) : 20} />
 			)}
 			{quotes && quotes.length !== 0 && (
 				<QuoteList quotes={quotes} quoteBottomRef={quoteBottomRef} loading={isLoadingObs} />
