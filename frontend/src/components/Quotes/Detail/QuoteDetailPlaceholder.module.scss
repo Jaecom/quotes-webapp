@@ -1,0 +1,40 @@
+@use "/src/assets/styles/main.scss" as *;
+
+.top,
+.keyword,
+.summary,
+.image,
+.quote {
+	background-color: $color-grey-light;
+}
+
+.top {
+	height: 2rem;
+}
+
+.summary-container {
+	margin: 7rem 0;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	row-gap: 1rem;
+
+	.keyword {
+		height: 4rem;
+		width: 50%;
+	}
+
+	.summary {
+		height: 10rem;
+		width: 100%;
+	}
+}
+
+.image {
+	height: 50rem;
+}
+
+.quote {
+	margin-top: 5rem;
+	height: 50rem;
+}
