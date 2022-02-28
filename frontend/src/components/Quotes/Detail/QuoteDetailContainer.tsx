@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router";
 import useHttp from "../../../hooks/useHttp";
-import LoadingPopup from "../../UI/Loading/LoadingPopup";
 import QuoteDetail from "./QuoteDetail";
+import QuoteDetailPlaceholder from "./QuoteDetailPlaceholder";
 
 const QuoteDetailContainer = () => {
 	const [quote, setQuote] = useState<Quote | null>();
@@ -34,7 +34,7 @@ const QuoteDetailContainer = () => {
 	return (
 		<>
 			{error && <div>Error...</div>}
-			{isLoading && <LoadingPopup />}
+			{isLoading && <QuoteDetailPlaceholder />}
 			{quote && (
 				<QuoteDetail
 					quote={quote}

@@ -1,0 +1,21 @@
+@use "/src/assets/styles/color" as *;
+
+.wrapper {
+	padding-bottom: 75%;
+	border-radius: 0.5rem;
+	background-color: $color-grey-light;
+}
+
+.heading {
+	height: 1.5rem;
+	width: 50%;
+	margin-top: 1rem;
+	background-color: $color-grey-light;
+}
+
+.sub {
+	height: 1.5rem;
+	width: 80%;
+	margin-top: 0.5rem;
+	background-color: $color-grey-light;
+}

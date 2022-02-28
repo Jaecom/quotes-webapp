@@ -3,6 +3,7 @@ import classes from "./QuoteList.module.scss";
 import QuoteItemContainer from "./QuoteItemContainer";
 import QuoteListBanner from "./QuoteListBanner";
 import Loading from "../UI/Loading/Loading";
+import { QuoteItemPlaceHolders } from "./QuotePlaceHolder";
 
 interface Props {
 	quotes: Quote[];
@@ -22,6 +23,7 @@ const QuoteList = (props: Props) => {
 							<QuoteItemContainer key={quote.id} quote={quote} />
 						)
 					)}
+					{props.loading && <QuoteItemPlaceHolders count={10} />}
 				</div>
 				<div className={classes.bottom} ref={props.quoteBottomRef} />
 				{props.loading && (

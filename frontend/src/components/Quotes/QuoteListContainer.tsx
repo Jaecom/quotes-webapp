@@ -6,6 +6,7 @@ import QuoteList from "./QuoteList";
 import QuoteSearchNotFound from "./QuoteSearchNotFound";
 import { useSelector, useDispatch } from "react-redux";
 import { setInitialQuotes, addNextQuotes } from "../../store/quoteSlice";
+import { QuoteListPlaceHolder } from "./QuotePlaceHolder";
 
 let scrollErrorCount = 0;
 
@@ -18,8 +19,9 @@ const QuoteListContainer = () => {
 	const history = useHistory<CustomHistory>();
 	const searchWord = new URLSearchParams(history.location.search).get("search");
 
-	const [sendRequest, isLoading, error] = useHttp();
 	const { quotes, isLastPage, page } = useSelector((state: any) => state.quote);
+	const [sendRequestObs, isLoadingObs] = useHttp();
+	const [sendRequestInit, isLoadingInit, errorInitial] = useHttp();
 	const quoteBottomRef = useRef<HTMLDivElement>(null);
 	const dispatch = useDispatch();
 
@@ -34,7 +36,7 @@ const QuoteListContainer = () => {
 			searchWord && urlParams.append("search", searchWord);
 			page && urlParams.append("page", page + 1);
 
-			sendRequest(
+			sendRequestObs(
 				{
 					url: `/api/quotes?${urlParams}`,
 				},
@@ -49,7 +51,7 @@ const QuoteListContainer = () => {
 				}
 			);
 		},
-		[searchWord, page, sendRequest, isLastPage, dispatch]
+		[searchWord, page, sendRequestObs, isLastPage, dispatch]
 	);
 
 	const [attachObserver, detachObserver] = useObserver(quoteBottomRef, onScrolledBottom);
@@ -79,7 +81,7 @@ const QuoteListContainer = () => {
 		const urlParams = new URLSearchParams();
 		searchWord && urlParams.append("search", searchWord);
 
-		sendRequest(
+		sendRequestInit(
 			{
 				url: `/api/quotes?${urlParams}`,
 			},
@@ -88,17 +90,18 @@ const QuoteListContainer = () => {
 				if (history.action === "PUSH") window.scrollTo(0, 0);
 			}
 		);
-	}, [sendRequest, searchWord, history, dispatch]);
+	}, [sendRequestInit, searchWord, history, dispatch]);
 
 	return (
 		<>
-			{error && <div>Error</div>}
+			{errorInitial && <div>Error</div>}
+			{isLoadingInit && (
+				<QuoteListPlaceHolder count={searchWord ? Math.floor(Math.random() * 10 + 1) : 20} />
+			)}
 			{quotes && quotes.length !== 0 && (
-				<QuoteList quotes={quotes} quoteBottomRef={quoteBottomRef} loading={isLoading} />
+				<QuoteList quotes={quotes} quoteBottomRef={quoteBottomRef} loading={isLoadingObs} />
 			)}
-			{!isLoading && !error && (!quotes || quotes.length === 0) && (
-				<QuoteSearchNotFound searchWord={searchWord} />
-			)}
+			{quotes && quotes.length === 0 && <QuoteSearchNotFound searchWord={searchWord} />}
 		</>
 	);
 };
