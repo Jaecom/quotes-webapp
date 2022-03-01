@@ -5,8 +5,8 @@ const fillWithPlaceHolders = (count: number) => {
 	const arrayPlaceHolder = new Array(count).fill(0);
 	return (
 		<>
-			{arrayPlaceHolder.map(() => (
-				<PlaceHolderItem />
+			{arrayPlaceHolder.map((element, index) => (
+				<PlaceHolderItem key={index} />
 			))}
 		</>
 	);

@@ -10,26 +10,35 @@ const QUOTE_PER_LOAD = 24;
 const quoteController = {};
 
 quoteController.index = async (req, res, next) => {
-	const { search } = req.query;
 	const page = req.query.page || 1;
 	let quotes = [];
 	let isLastPage = false;
 
-	if (search) {
-		quotes = await Quote.find({ $text: { $search: search } })
-			.skip(QUOTE_PER_LOAD * (page - 1))
-			.limit(QUOTE_PER_LOAD);
-	} else {
-		quotes = await Quote.find()
-			.skip(QUOTE_PER_LOAD * (page - 1))
-			.limit(QUOTE_PER_LOAD)
-			.lean();
+	quotes = await Quote.find()
+		.skip(QUOTE_PER_LOAD * (page - 1))
+		.limit(QUOTE_PER_LOAD)
+		.lean();
 
-		const randomIndex = Math.floor(Math.random() * (quotes.length - 1));
-		quotes[randomIndex].isBanner = true;
+	const randomIndex = Math.floor(Math.random() * (quotes.length - 1));
+	quotes[randomIndex].isBanner = true;
 
-		quotes = quotes.map((element) => Quote.hydrate(element));
+	quotes = quotes.map((element) => Quote.hydrate(element));
+
+	if (quotes.length !== QUOTE_PER_LOAD) {
+		isLastPage = true;
 	}
+
+	res.json({ quotes, isLastPage });
+};
+
+quoteController.search = async (req, res) => {
+	const { q } = req.query;
+	const page = req.query.page || 1;
+	let isLastPage = false;
+
+	const quotes = await Quote.find({ $text: { $search: q } })
+		.skip(QUOTE_PER_LOAD * (page - 1))
+		.limit(QUOTE_PER_LOAD);
 
 	if (quotes.length !== QUOTE_PER_LOAD) {
 		isLastPage = true;

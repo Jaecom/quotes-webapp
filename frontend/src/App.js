@@ -18,13 +18,13 @@ import AuthorDetailPage from "./pages/AuthorDetailPage";
 import QuoteDetailPage from "./pages/QuoteDetailPage";
 import CollectionDetailModal from "./components/Collections/Detail/CollectionDetailModal";
 import CreateQuotePage from "./pages/CreateQuotePage";
+import SearchPage from "./pages/SearchPage";
 
 function App() {
 	const location = useLocation();
 	const background = location.state?.background;
 
 	const authCtx = useContext(AuthContext);
-
 	return (
 		<div className="App">
 			<Switch location={background || location}>
@@ -33,13 +33,18 @@ function App() {
 					<HomePage />
 				</Route>
 
+				<Route path="/search/quotes" exact>
+					<MainNavigation />
+					<SearchPage />
+				</Route>
+
 				{authCtx.isLoggedIn && (
 					<Route path="/collections">
 						<MainNavigation />
 						<CollectionsPage />
 					</Route>
 				)}
-				
+
 				{authCtx.isLoggedIn && (
 					<Route path="/create" exact>
 						<MainNavigation />

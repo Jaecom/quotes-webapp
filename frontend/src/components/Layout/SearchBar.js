@@ -1,25 +1,24 @@
 import classes from "./SearchBar.module.scss";
 import { useEffect, useRef } from "react";
-import { useLocation } from "react-router";
 import { useHistory } from "react-router-dom";
 import sprite from "../../assets/sprite.svg";
 
 const SearchBar = () => {
 	const searchRef = useRef();
 	const history = useHistory();
-	const { search } = useLocation();
-	const searchWord = new URLSearchParams(search).get("search");
 
 	useEffect(() => {
 		//fill searchbar with searchword
-		searchRef.current.value = searchWord;
-	}, [searchWord, history]);
+		searchRef.current.value = new URLSearchParams(history.location.search).get("q") || "";
+	}, [history.location]);
 
 	const submitHandler = (event) => {
 		event.preventDefault();
 		const searchTerm = searchRef.current.value;
 
-		history.push(`/?search=${searchTerm}`);
+		if (!searchTerm) return;
+
+		history.push(`/search/quotes?q=${searchTerm}`);
 		searchRef.current.blur();
 	};
 
