@@ -9,6 +9,7 @@ import userRoutes from "./routes/users-routes.js";
 import authorRoutes from "./routes/author-routes.js";
 import collectionRoutes from "./routes/collections-routes.js";
 import bookSearchRoutes from "./routes/book-search-routes.js";
+import searchRoutes from "./routes/search-routes.js";
 import path from "path";
 
 const app = express();
@@ -41,6 +42,7 @@ app.use((req, res, next) => {
 });
 
 app.use("/api/quotes", quoteRoutes);
+app.use("/api/search", searchRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/authors", authorRoutes);
 app.use("/api/collections", collectionRoutes);
