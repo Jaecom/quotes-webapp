@@ -1,9 +1,9 @@
-import QuoteListContainer from "../components/Quotes/QuoteListContainer";
+import HomeContainer from "../components/Quotes/HomeContainer";
 
 const MainPage = () => {
 	return (
 		<>
-			<QuoteListContainer />
+			<HomeContainer />
 		</>
 	);
 };
