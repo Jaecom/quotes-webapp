@@ -59,7 +59,7 @@ const AddToCollectionModal = ({ quoteId, onClose }: Props) => {
 				)}
 				{page === pageType.CREATE_COLLECTION && (
 					<CreateCollectionForm
-						onAddCollection={createCollectionHandler}
+						onCreateCollection={createCollectionHandler}
 						onCancel={openAddToPage}
 					/>
 				)}

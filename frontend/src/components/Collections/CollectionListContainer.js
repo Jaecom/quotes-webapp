@@ -17,13 +17,11 @@ const CollectionListContainer = () => {
 
 	return (
 		<>
-			{collections && (
-				<CollectionList
-					collections={collections}
-					onAddCollection={addCollectionHandler}
-					closeAfterCreate={closeAfterCreate}
-				/>
-			)}
+			<CollectionList
+				collections={collections}
+				onCreateCollection={createCollectionHandler}
+				closeAfterCreate={closeAfterCreate}
+			/>
 		</>
 	);
 };

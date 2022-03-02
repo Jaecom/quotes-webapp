@@ -20,7 +20,7 @@ const CollectionList = (props) => {
 	return (
 		<>
 			{isModalOpen && (
-				<CreateCollectionModal onAddCollection={props.onAddCollection} onClose={closeModal} />
+				<CreateCollectionModal onCreateCollection={props.onCreateCollection} onClose={closeModal} />
 			)}
 
 			<div className={classes.wrapper}>
