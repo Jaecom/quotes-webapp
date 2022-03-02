@@ -14,6 +14,19 @@ userController.isLoggedIn = (req, res, next) => {
 	res.json({ userId, expirationDate });
 };
 
+userController.getBasicData = async (req, res) => {
+	const { userId } = res.locals;
+
+	const user = await User.findById(userId).catch((error) => {
+		throw new HttpError("Invalid token", 400);
+	});
+
+	const { collections, ownedQuotes, likedQuotes } = user;
+	const basicUserData = { collections, ownedQuotes, likedQuotes };
+
+	res.json({ basicUserData });
+};
+
 userController.logout = (req, res, next) => {
 	res.clearCookie("token");
 	res.clearCookie("isLoggedIn");
@@ -97,7 +110,10 @@ userController.login = async (req, res, next) => {
 	res.cookie("userId", existingUser.id);
 	res.cookie("expirationDate", expirationDate);
 
-	res.json({ userId: existingUser.id, token, expirationDate });
+	const { collections, ownedQuotes, likedQuotes } = existingUser;
+	const basicUserData = { collections, ownedQuotes, likedQuotes };
+
+	res.json({ userId: existingUser.id, token, expirationDate, basicUserData });
 };
 
 export default userController;
