@@ -3,6 +3,7 @@ import express from "express";
 import mongoose from "mongoose";
 import { HttpError, SchemaError } from "./utils/CustomErrors.js";
 import cookieParser from "cookie-parser";
+import helmet from "helmet";
 
 import quoteRoutes from "./routes/quotes-routes.js";
 import userRoutes from "./routes/users-routes.js";
@@ -11,6 +12,7 @@ import collectionRoutes from "./routes/collections-routes.js";
 import bookSearchRoutes from "./routes/book-search-routes.js";
 import searchRoutes from "./routes/search-routes.js";
 import path from "path";
+import https from "https";
 
 const app = express();
 
@@ -40,6 +42,8 @@ app.use((req, res, next) => {
 	res.setHeader("Access-Control-Allow-Methods", "GET, POST, PATCH, DELETE");
 	next();
 });
+
+app.use(helmet());
 
 app.use("/api/quotes", quoteRoutes);
 app.use("/api/search", searchRoutes);
