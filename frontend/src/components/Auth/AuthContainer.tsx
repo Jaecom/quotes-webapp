@@ -31,7 +31,7 @@ const AuthContainer = (props: Props) => {
 				},
 			},
 			(data) => {
-				authCtx.login(data.token, data.expirationDate, data.userId);
+				authCtx.login(data.expirationDate, data.userId, data?.basicUserData);
 
 				if (history.location.pathname !== `/${flag}`) {
 					console.log("reloading");

@@ -1,30 +1,19 @@
-import { useEffect, useState } from "react";
-import useHttp from "../../hooks/useHttp";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addCollection } from "../../store/userSlice";
 import CollectionList from "./CollectionList";
 
 const CollectionListContainer = () => {
-	const [sendRequest] = useHttp();
-	const [collections, setCollections] = useState([]);
+	const { collections } = useSelector((state) => state.user);
 	const [closeAfterCreate, setCloseAfterCreate] = useState(false);
+	const dispatch = useDispatch();
 
-	const addCollectionHandler = (data) => {
-		setCollections((state) => state.concat(data));
+	const createCollectionHandler = (data) => {
+		console.log(data);
+		dispatch(addCollection(data));
 		//trigger rerender collectionList to close modal
 		setCloseAfterCreate((state) => !state);
 	};
-
-	useEffect(() => {
-		sendRequest(
-			{
-				url: "/api/collections",
-				method: "GET",
-				credentials: "include",
-			},
-			(data) => {
-				setCollections(data);
-			}
-		);
-	}, [sendRequest]);
 
 	return (
 		<>

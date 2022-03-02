@@ -1,10 +1,11 @@
 import { useCallback, useEffect, useState } from "react";
-import useHttp from "../../../hooks/useHttp";
 
 import Modal from "../../UI/Modal";
 import Card from "../../UI/Card";
 import CreateCollectionForm from "../Create/CreateCollectionForm";
 import AddToCollectionList from "./AddToCollectionList";
+import { useDispatch, useSelector } from "react-redux";
+import { addCollection } from "../../../store/userSlice";
 
 interface Props {
 	quoteId: string;
@@ -17,28 +18,10 @@ enum pageType {
 }
 
 const AddToCollectionModal = ({ quoteId, onClose }: Props) => {
-	const [collections, setCollections] = useState<Collection[]>([]);
 	const [page, setPage] = useState<pageType>(pageType.ADD_QUOTE);
 	const [isCollectionCreated, setIsCollectionCreated] = useState<boolean>(false);
-
-	const [sendRequest] = useHttp();
-
-	useEffect(() => {
-		if (page === pageType.CREATE_COLLECTION) {
-			return;
-		}
-
-		sendRequest(
-			{
-				url: "/api/collections",
-				method: "GET",
-				credentials: "include",
-			},
-			(data: Collection[]) => {
-				setCollections(data);
-			}
-		);
-	}, [sendRequest, page]);
+	const { collections } = useSelector((state: any) => state.user);
+	const dispatch = useDispatch();
 
 	const openCreatePage = () => {
 		setPage(pageType.CREATE_COLLECTION);
@@ -48,7 +31,8 @@ const AddToCollectionModal = ({ quoteId, onClose }: Props) => {
 		setPage(pageType.ADD_QUOTE);
 	}, []);
 
-	const createCollectionHandler = () => {
+	const createCollectionHandler = (data: Collection) => {
+		dispatch(addCollection(data));
 		setIsCollectionCreated(true);
 	};
 
