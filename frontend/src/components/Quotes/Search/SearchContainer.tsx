@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import useHttp from "../../../hooks/useHttp";
-import { clearQuotes, setInitialQuotes } from "../../../store/quoteSlice";
+import { setInitialQuotes } from "../../../store/quoteSlice";
 import QuoteListContainer from "../QuoteListContainer";
 import { QuoteListPlaceHolder } from "../QuotePlaceHolder";
 import QuoteSearchNotFound from "./QuoteSearchNotFound";
