@@ -18,7 +18,7 @@
 		background-color: $color-primary;
 		color: $color-white;
 
-		.notification {
+		.checkmark {
 			visibility: visible;
 			transform: translateX(0);
 		}
@@ -29,13 +29,30 @@
 	}
 }
 
+.loading--add {
+	color: $color-white;
+	background-color: rgba($color-primary, 1);
+
+	.lock {
+		fill: $color-white;
+	}
+}
+
+.loading--remove {
+	background-color: rgba($color-primary, 0.4);
+
+	.checkmark {
+		visibility: hidden;
+	}
+}
+
 .content {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
 }
 
-.heading {
+.heading-container {
 	display: flex;
 	align-items: baseline;
 }
@@ -45,31 +62,31 @@
 	font-size: 1.6rem;
 }
 
-.description {
-	margin-top: 0.5rem;
-}
-
-.notification {
-	visibility: hidden;
-	text-align: center;
-
-	display: flex;
-
-	color: $color-white;
-	transition: transform 0.3s ease;
-	transform: translateX(60%);
-}
-
-.checkmark {
-	width: 1.5rem;
-	height: 1.5rem;
-	fill: $color-white;
-	margin-right: 2px;
-}
-
 .lock {
 	width: 1.2rem;
 	height: 1.2rem;
 	fill: rgba($color-black, 0.6);
 	margin-left: 0.5rem;
+}
+
+.description {
+	margin-top: 0.5rem;
+}
+
+.notification {
+	text-align: center;
+	display: flex;
+	color: $color-white;
+}
+
+.checkmark {
+	width: 1.5rem;
+	height: 1.5rem;
+	visibility: hidden;
+
+	fill: $color-white;
+	margin-right: 2px;
+
+	transform: translateX(1rem);
+	transition: transform 0.2s ease;
 }

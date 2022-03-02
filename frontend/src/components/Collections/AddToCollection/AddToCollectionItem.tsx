@@ -15,13 +15,16 @@ const AddToCollectionItem = ({ collection, quoteId }: Props) => {
 	const [isQuoteIncluded, setisQuoteIncluded] = useState<boolean>(
 		collection.quotes.includes(quoteId)
 	);
-	const [sendRequest] = useHttp();
+	const [sendRequest, isLoading] = useHttp();
 
 	useEffect(() => {
 		setisQuoteIncluded(collection.quotes.includes(quoteId));
 	}, [collection, quoteId]);
 
 	const addToCollectionHandler = () => {
+		//prevent stacking requests
+		if (isLoading) return;
+
 		const method = isQuoteIncluded ? "DELETE" : "POST";
 
 		sendRequest(
@@ -44,15 +47,29 @@ const AddToCollectionItem = ({ collection, quoteId }: Props) => {
 		);
 	};
 
+	const loadingClass = isLoading
+		? isQuoteIncluded
+			? classes["loading--remove"]
+			: classes["loading--add"]
+		: "";
+
+	const loadingText = isLoading
+		? isQuoteIncluded
+			? "Removing..."
+			: "Adding..."
+		: isQuoteIncluded
+		? "Added"
+		: "";
+
 	return (
 		<li
-			className={`${classes.item} ${isQuoteIncluded && classes["item--included"]}`}
+			className={`${classes.item} ${isQuoteIncluded && classes["item--included"]} ${loadingClass}`}
 			key={collection._id}
 			onClick={addToCollectionHandler}
 		>
 			<div className={classes.content}>
 				<div>
-					<div className={classes.heading}>
+					<div className={classes["heading-container"]}>
 						<h3 className={`${classes.name}`}>{collection.name}</h3>
 						{collection.isPrivate && (
 							<svg className={classes.lock}>
@@ -68,7 +85,7 @@ const AddToCollectionItem = ({ collection, quoteId }: Props) => {
 					<svg className={classes.checkmark}>
 						<use href={sprite + "#icon-check"} />
 					</svg>
-					<p>Added</p>
+					<p>{loadingText}</p>
 				</div>
 			</div>
 		</li>
