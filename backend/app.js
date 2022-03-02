@@ -12,7 +12,6 @@ import collectionRoutes from "./routes/collections-routes.js";
 import bookSearchRoutes from "./routes/book-search-routes.js";
 import searchRoutes from "./routes/search-routes.js";
 import path from "path";
-import https from "https";
 
 const app = express();
 
@@ -43,7 +42,21 @@ app.use((req, res, next) => {
 	next();
 });
 
-app.use(helmet());
+app.use(
+	helmet.contentSecurityPolicy({
+		directives: {
+			imgSrc: [
+				"'self'",
+				"blob:",
+				"data:",
+				"https://quotewebsite-resized.s3.ap-northeast-2.amazonaws.com/",
+				"https://quotewebsite.s3.ap-northeast-2.amazonaws.com/",
+				"https://images.unsplash.com/",
+				"https://images.pexels.com/",
+			],
+		},
+	})
+);
 
 app.use("/api/quotes", quoteRoutes);
 app.use("/api/search", searchRoutes);
