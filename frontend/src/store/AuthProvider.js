@@ -1,5 +1,8 @@
 import AuthContext from "./auth-context";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
+import useHttp from "../hooks/useHttp";
+import { useDispatch } from "react-redux";
+import { loadUserData, clearUserData } from "./userSlice";
 
 let logoutTimer;
 
@@ -28,18 +31,37 @@ const AuthProvider = (props) => {
 	const [isLoggedIn, setIsLoggedIn] = useState(initialCookies?.isLoggedIn ?? false);
 	const [userId, setUserId] = useState(initialCookies?.userId);
 	const [expiration, setExpiration] = useState(initialCookies?.expirationDate);
+	const [sendRequest] = useHttp();
+	const dispatch = useDispatch();
 
-	const loginHandler = (token, expiration, userId) => {
+	const loginHandler = (expiration, userId, basicUserData) => {
 		setIsLoggedIn(true);
 		setUserId(userId);
 		setExpiration(expiration);
+		dispatch(loadUserData(basicUserData));
 	};
 
-	const logoutHandler = async () => {
+	const logoutHandler = useCallback(async () => {
 		setIsLoggedIn(false);
 		setUserId("");
 		setExpiration("");
-	};
+		dispatch(clearUserData());
+	}, [dispatch]);
+
+	//load user data if already signed in
+	useEffect(() => {
+		if (!isTokenPresent) return;
+
+		sendRequest(
+			{
+				url: "/api/users/getBasicData",
+				credentials: "include",
+			},
+			(data) => {
+				dispatch(loadUserData(data.basicUserData));
+			}
+		);
+	}, [sendRequest, dispatch]);
 
 	// autoLogout;
 	useEffect(() => {
@@ -53,7 +75,7 @@ const AuthProvider = (props) => {
 		} else {
 			clearTimeout(logoutTimer);
 		}
-	}, [isLoggedIn, expiration]);
+	}, [isLoggedIn, expiration, logoutHandler]);
 
 	//if any of required cookies are missing & token present, logout
 	useEffect(() => {
@@ -71,7 +93,7 @@ const AuthProvider = (props) => {
 			requestLogout();
 			logoutHandler();
 		}
-	}, []);
+	}, [logoutHandler]);
 
 	return (
 		<AuthContext.Provider

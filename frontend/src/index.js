@@ -14,11 +14,11 @@ window.history.replaceState({}, null);
 ReactDOM.render(
 	<React.StrictMode>
 		<BrowserRouter>
-			<AuthProvider>
-				<Provider store={store}>
+			<Provider store={store}>
+				<AuthProvider>
 					<App />
-				</Provider>
-			</AuthProvider>
+				</AuthProvider>
+			</Provider>
 		</BrowserRouter>
 	</React.StrictMode>,
 	document.getElementById("root")

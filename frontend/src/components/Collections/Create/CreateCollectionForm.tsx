@@ -9,10 +9,10 @@ import useSchemaHttp from "../../../hooks/useSchemaHttp";
 
 interface Props {
 	onCancel: () => void;
-	onAddCollection: (data: any) => void;
+	onCreateCollection: (data: Collection) => void;
 }
 
-const CreateCollectionForm = ({ onCancel, onAddCollection }: Props) => {
+const CreateCollectionForm = ({ onCancel, onCreateCollection }: Props) => {
 	const formRef = useRef<HTMLFormElement>(null);
 	const [sendRequest, schemaErrors, errorField] = useSchemaHttp();
 
@@ -30,8 +30,8 @@ const CreateCollectionForm = ({ onCancel, onAddCollection }: Props) => {
 					"Content-Type": "application/x-www-form-urlencoded",
 				},
 			},
-			(data) => {
-				return onAddCollection(data);
+			(data: Collection) => {
+				return onCreateCollection(data);
 			}
 		);
 	};

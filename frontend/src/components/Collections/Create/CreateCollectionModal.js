@@ -6,7 +6,7 @@ const CreateCollectionModal = (props) => {
 	return (
 		<Modal onClose={props.onClose} center>
 			<Card>
-				<CreateCollectionForm onCancel={props.onClose} onAddCollection={props.onAddCollection} />
+				<CreateCollectionForm onCancel={props.onClose} onCreateCollection={props.onCreateCollection} />
 			</Card>
 		</Modal>
 	);

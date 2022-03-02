@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import useHttp from "../../../hooks/useHttp";
 import classes from "./AddToCollectionItem.module.scss";
 import sprite from "../../../assets/sprite.svg";
+import { useDispatch } from "react-redux";
+import { addQuoteToCollection, removeQuoteFromCollection } from "../../../store/userSlice";
 
 interface Props {
 	collection: Collection;
@@ -9,6 +11,7 @@ interface Props {
 }
 
 const AddToCollectionItem = ({ collection, quoteId }: Props) => {
+	const dispatch = useDispatch();
 	const [isQuoteIncluded, setisQuoteIncluded] = useState<boolean>(
 		collection.quotes.includes(quoteId)
 	);
@@ -31,6 +34,12 @@ const AddToCollectionItem = ({ collection, quoteId }: Props) => {
 			},
 			() => {
 				setisQuoteIncluded((state) => !state);
+
+				dispatch(
+					method === "DELETE"
+						? removeQuoteFromCollection({ quoteId, collectionId: collection._id })
+						: addQuoteToCollection({ quoteId, collectionId: collection._id })
+				);
 			}
 		);
 	};

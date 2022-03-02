@@ -46,13 +46,14 @@ collectionController.createCollection = async (req, res, next) => {
 	}
 
 	const newCollection = { name, description, quotes: [], isPrivate };
-	user.collections.push(newCollection);
+	const userCollections = user.collections;
+	userCollections.push(newCollection);
 
 	await user.save().catch(() => {
 		throw new HttpError("Creating collection failed. Please try again later.", 500);
 	});
 
-	res.json(newCollection);
+	res.json(userCollections[userCollections.length - 1]);
 };
 
 collectionController.addQuoteToCollection = async (req, res, next) => {

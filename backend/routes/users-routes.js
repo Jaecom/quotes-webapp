@@ -7,6 +7,7 @@ import catchAsync from "../utils/catchAsync.js";
 const userRoutes = express.Router();
 
 userRoutes.get("/isLoggedIn", checkAuth, userController.isLoggedIn);
+userRoutes.get("/getBasicData", checkAuth, catchAsync(userController.getBasicData));
 
 userRoutes.post("/logout", checkAuth, userController.logout);
 
