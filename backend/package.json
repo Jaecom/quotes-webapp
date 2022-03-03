@@ -6,8 +6,8 @@
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
 		"start": "tsc-watch --onSuccess \"node dist/app.js\"",
-		"build": "./node_modules/typescript/bin/tsc",
-		"postinstall": "npm run build"
+		"tsc":"tsc",
+		"postinstall": "npm run tsc"
 	},
 	"keywords": [],
 	"author": "",
