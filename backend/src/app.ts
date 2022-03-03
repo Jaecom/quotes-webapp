@@ -1,5 +1,5 @@
 import "./utils/envconfig.js";
-import express from "express";
+import express, { ErrorRequestHandler } from "express";
 import mongoose from "mongoose";
 import { HttpError, SchemaError } from "./utils/CustomErrors.js";
 import cookieParser from "cookie-parser";
@@ -16,10 +16,7 @@ import path from "path";
 
 const app = express();
 
-mongoose.connect(process.env.MONGO_URL || "mongodb://Jaecom:27017/quoteWebsite?replicaSet=rs", {
-	useNewUrlParser: true,
-	useUnifiedTopology: true,
-});
+mongoose.connect(process.env.MONGO_URL || "mongodb://Jaecom:27017/quoteWebsite?replicaSet=rs");
 const db = mongoose.connection;
 
 db.once("open", () => {
@@ -41,11 +38,10 @@ app.use(
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-
 app.use(cookieParser());
 
 app.use((req, res, next) => {
-	res.setHeader("Access-Control-Allow-Credentials", true);
+	res.setHeader("Access-Control-Allow-Credentials", "true");
 	res.setHeader(
 		"Access-Control-Allow-Headers",
 		"Origin, X-Requested-With, Content-Type, Accept, Authorization"
@@ -79,7 +75,7 @@ app.use("/api/book-search", bookSearchRoutes);
 
 if (process.env.NODE_ENV === "production") {
 	const __dirname = path.resolve();
-	app.use(express.static(path.join(__dirname, "../frontend/build")));
+	app.use(express.static(path.join(__dirname, "../../frontend/build")));
 
 	app.get("*", (req, res) => {
 		res.sendFile(path.resolve(__dirname, "../frontend", "build", "index.html"));
@@ -91,14 +87,16 @@ app.all("*", (req, res, next) => {
 });
 
 //process all errors by sending response to frontend with statuscode & message
-app.use((error, req, res, next) => {
+const handleError: ErrorRequestHandler = (error, req, res, next) => {
 	console.log("error", error);
 	if (error instanceof SchemaError) {
 		return res.status(error.status || 500).json(error.messageArray || "Something went wrong");
 	}
 
 	return res.status(error.status || 500).json(error.message || "Something went wrong");
-});
+};
+
+app.use(handleError);
 
 const port = process.env.PORT || 5000;
 
