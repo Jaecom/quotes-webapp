@@ -49,12 +49,10 @@ const QuoteItem = (props: Props) => {
 						{quote.author.name}
 					</Link>
 				</div>
-				<div className={classes.extra}>
-					<div onClick={onQuoteLike.bind(null, quote.id)}>
-						<svg className={`${classes.bookmark} ${isLiked && classes["bookmark--filled"]}`}>
-							<use href={sprite + "#icon-bookmark"} />
-						</svg>
-					</div>
+				<div className={classes.extra} onClick={onQuoteLike.bind(null, quote.id)}>
+					<svg className={`${classes.bookmark} ${isLiked && classes["bookmark--filled"]}`}>
+						<use href={sprite + "#icon-bookmark"} />
+					</svg>
 					<div className="heading-5">{totalLikes}</div>
 				</div>
 			</div>

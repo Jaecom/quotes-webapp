@@ -27,11 +27,12 @@ const QuoteItemContainer = (props: Props) => {
 	const [totalLikes, setTotalLikes] = useState<number>(quote.likes.total);
 
 	const quoteLikeHandler = (quoteId: string) => {
-		if (!isLoggedIn) {
-			return openLoginModal();
-		}
+		if (!isLoggedIn) return openLoginModal();
 
 		if (isLoading) return;
+
+		//update UI first
+		isLiked ? dispatch(dislikeQuote({ quoteId })) : dispatch(likeQuote({ quoteId }));
 
 		sendRequest(
 			{
@@ -44,13 +45,12 @@ const QuoteItemContainer = (props: Props) => {
 				credentials: "include",
 			},
 			(data) => {
-				if (isLiked) {
-					dispatch(dislikeQuote({ quoteId }));
-					setTotalLikes((likes) => likes - 1);
-				} else {
-					dispatch(likeQuote({ quoteId }));
-					setTotalLikes((likes) => likes + 1);
-				}
+				//update total likes after request success
+				isLiked ? setTotalLikes((likes) => likes - 1) : setTotalLikes((likes) => likes + 1);
+			},
+			(error) => {
+				//revert back
+				!isLiked ? dispatch(dislikeQuote({ quoteId })) : dispatch(likeQuote({ quoteId }));
 			}
 		);
 	};
@@ -58,9 +58,7 @@ const QuoteItemContainer = (props: Props) => {
 	const onAddToCollectionModal = (event: React.MouseEvent<HTMLDivElement>) => {
 		event.preventDefault();
 
-		if (!isLoggedIn) {
-			return openLoginModal();
-		}
+		if (!isLoggedIn) return openLoginModal();
 
 		return openCollectionModal();
 	};
