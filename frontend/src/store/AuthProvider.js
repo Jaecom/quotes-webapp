@@ -16,7 +16,7 @@ const getCookies = () => {
 };
 
 const doesTokenExist = () => {
-	document.cookie = "token=-1";
+	document.cookie = "token=-1; path=/;";
 	const cookies = getCookies();
 	if (cookies.token === "-1") {
 		return false;
@@ -24,7 +24,6 @@ const doesTokenExist = () => {
 	return true;
 };
 
-const initialCookies = getCookies();
 const isTokenPresent = doesTokenExist();
 
 const AuthProvider = (props) => {
