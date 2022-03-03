@@ -1,10 +1,10 @@
 import React, { useContext, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import AuthContext from "../../store/auth-context";
 import useHttp from "../../hooks/useHttp";
 import useModal from "../../hooks/useModal";
-import { likeQuote, dislikeQuote } from "../../store/quoteSlice";
+import { likeQuote, dislikeQuote } from "../../store/userSlice";
 
 import QuoteItem from "./QuoteItem";
 import LoginModal from "../Auth/LoginModal";
@@ -12,27 +12,26 @@ import AddToCollectionModal from "../Collections/AddToCollection/AddToCollection
 
 interface Props {
 	quote: Quote;
-	local?: boolean;
 }
 const QuoteItemContainer = (props: Props) => {
-	const { quote, local } = props;
-
+	const { quote } = props;
+	const { isLoggedIn } = useContext(AuthContext);
+	const { likedQuotes } = useSelector((state: any) => state.user);
 	const dispatch = useDispatch();
-	const { userId, isLoggedIn } = useContext(AuthContext);
-	const [sendRequest] = useHttp();
+
+	const [sendRequest, isLoading] = useHttp();
 	const [isLoginModalOpen, openLoginModal, closeLoginModal] = useModal();
 	const [isCollectionModalOpen, openCollectionModal, closeCollectionModal] = useModal();
 
-	const isLikedGlobal = !!quote.likes.users.includes(userId);
-	const totalLikesGlobal = quote.likes.total;
-
-	const [totalLikesLocal, setTotalLikesLocal] = useState<number>(quote.likes.total);
-	const [isLikedLocal, setIsLikedLocal] = useState<boolean>(isLikedGlobal);
+	const isLiked = likedQuotes.includes(quote.id);
+	const [totalLikes, setTotalLikes] = useState<number>(quote.likes.total);
 
 	const quoteLikeHandler = (quoteId: string) => {
 		if (!isLoggedIn) {
 			return openLoginModal();
 		}
+
+		if (isLoading) return;
 
 		sendRequest(
 			{
@@ -45,14 +44,12 @@ const QuoteItemContainer = (props: Props) => {
 				credentials: "include",
 			},
 			(data) => {
-				if (isLikedLocal) {
-					setIsLikedLocal(false);
-					setTotalLikesLocal((likes) => likes - 1);
-					dispatch(dislikeQuote({ quoteId, userId }));
+				if (isLiked) {
+					dispatch(dislikeQuote({ quoteId }));
+					setTotalLikes((likes) => likes - 1);
 				} else {
-					setIsLikedLocal(true);
-					setTotalLikesLocal((likes) => likes + 1);
-					dispatch(likeQuote({ quoteId, userId }));
+					dispatch(likeQuote({ quoteId }));
+					setTotalLikes((likes) => likes + 1);
 				}
 			}
 		);
@@ -77,8 +74,8 @@ const QuoteItemContainer = (props: Props) => {
 			<QuoteItem
 				quote={quote}
 				onQuoteLike={quoteLikeHandler}
-				totalLikes={local ? totalLikesLocal : totalLikesGlobal}
-				isLiked={local ? isLikedLocal : isLikedGlobal}
+				totalLikes={totalLikes}
+				isLiked={isLiked}
 				addToCollection={onAddToCollectionModal}
 			/>
 		</>

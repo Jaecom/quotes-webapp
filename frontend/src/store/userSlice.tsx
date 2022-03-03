@@ -41,6 +41,14 @@ export const userSlice = createSlice({
 				foundCollection.quotes = foundCollection?.quotes.filter((quote) => quote !== quoteId);
 			}
 		},
+		likeQuote: (state, action) => {
+			const { quoteId } = action.payload;
+			state.likedQuotes.push(quoteId);
+		},
+		dislikeQuote: (state, action) => {
+			const { quoteId } = action.payload;
+			state.likedQuotes = state.likedQuotes.filter((quote) => quote !== quoteId);
+		},
 	},
 });
 
@@ -50,5 +58,7 @@ export const {
 	addQuoteToCollection,
 	removeQuoteFromCollection,
 	clearUserData,
+	likeQuote,
+	dislikeQuote,
 } = userSlice.actions;
 export default userSlice.reducer;
