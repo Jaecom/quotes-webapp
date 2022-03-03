@@ -28,18 +28,21 @@ const initialCookies = getCookies();
 const isTokenPresent = doesTokenExist();
 
 const AuthProvider = (props) => {
-	const [isLoggedIn, setIsLoggedIn] = useState(initialCookies?.isLoggedIn ?? false);
-	const [userId, setUserId] = useState(initialCookies?.userId);
-	const [expiration, setExpiration] = useState(initialCookies?.expirationDate);
+	const [isLoggedIn, setIsLoggedIn] = useState(isTokenPresent ?? false);
+	const [userId, setUserId] = useState(null);
+	const [expiration, setExpiration] = useState(null);
 	const [sendRequest] = useHttp();
 	const dispatch = useDispatch();
 
-	const loginHandler = (expiration, userId, basicUserData) => {
-		setIsLoggedIn(true);
-		setUserId(userId);
-		setExpiration(expiration);
-		dispatch(loadUserData(basicUserData));
-	};
+	const loginHandler = useCallback(
+		(expiration, userId, basicUserData) => {
+			setIsLoggedIn(true);
+			setUserId(userId);
+			setExpiration(expiration);
+			dispatch(loadUserData(basicUserData));
+		},
+		[dispatch]
+	);
 
 	const logoutHandler = useCallback(async () => {
 		setIsLoggedIn(false);
@@ -47,6 +50,18 @@ const AuthProvider = (props) => {
 		setExpiration("");
 		dispatch(clearUserData());
 	}, [dispatch]);
+
+	const requestLogout = useCallback(async () => {
+		sendRequest(
+			{
+				url: "/api/users/logout",
+				method: "POST",
+			},
+			() => {
+				logoutHandler();
+			}
+		);
+	}, [sendRequest, logoutHandler]);
 
 	//load user data if already signed in
 	useEffect(() => {
@@ -58,10 +73,14 @@ const AuthProvider = (props) => {
 				credentials: "include",
 			},
 			(data) => {
-				dispatch(loadUserData(data.basicUserData));
+				loginHandler(data.expirationDate, data.userId, data.basicUserData);
+			},
+			(error) => {
+				//invalid token
+				requestLogout();
 			}
 		);
-	}, [sendRequest, dispatch]);
+	}, [sendRequest, dispatch, requestLogout, logoutHandler, loginHandler]);
 
 	// autoLogout;
 	useEffect(() => {
@@ -70,34 +89,16 @@ const AuthProvider = (props) => {
 			const expirationTimeMili = expiration * 1000;
 			const remaingTimeMili = expirationTimeMili - currentTimeMili;
 			logoutTimer = setTimeout(() => {
-				logoutHandler();
+				requestLogout();
 			}, remaingTimeMili);
 		} else {
 			clearTimeout(logoutTimer);
 		}
-	}, [isLoggedIn, expiration, logoutHandler]);
-
-	//if any of required cookies are missing & token present, logout
-	useEffect(() => {
-		const requestLogout = async () => {
-			await fetch("/api/users/logout", {
-				method: "POST",
-				credentials: "include",
-			});
-		};
-
-		if (
-			(!initialCookies.isLoggedIn || !initialCookies.expirationDate || !initialCookies.userId) &&
-			isTokenPresent
-		) {
-			requestLogout();
-			logoutHandler();
-		}
-	}, [logoutHandler]);
+	}, [isLoggedIn, expiration, logoutHandler, requestLogout]);
 
 	return (
 		<AuthContext.Provider
-			value={{ login: loginHandler, logout: logoutHandler, isLoggedIn, userId }}
+			value={{ login: loginHandler, logout: requestLogout, isLoggedIn, userId }}
 		>
 			{props.children}
 		</AuthContext.Provider>

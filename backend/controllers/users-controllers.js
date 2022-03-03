@@ -8,14 +8,8 @@ const SALT_ROUNDS = 10;
 const TOKEN_EXPIRATION = "10 day";
 const userController = {};
 
-userController.isLoggedIn = (req, res, next) => {
-	const { token } = req.cookies;
-	const { userId, exp: expirationDate } = jwt.decode(token);
-	res.json({ userId, expirationDate });
-};
-
 userController.getBasicData = async (req, res) => {
-	const { userId } = res.locals;
+	const { userId, expirationDate } = res.locals;
 
 	const user = await User.findById(userId).catch((error) => {
 		throw new HttpError("Invalid token", 400);
@@ -24,14 +18,11 @@ userController.getBasicData = async (req, res) => {
 	const { collections, ownedQuotes, likedQuotes } = user;
 	const basicUserData = { collections, ownedQuotes, likedQuotes };
 
-	res.json({ basicUserData });
+	res.json({ basicUserData, userId, expirationDate });
 };
 
 userController.logout = (req, res, next) => {
 	res.clearCookie("token");
-	res.clearCookie("isLoggedIn");
-	res.clearCookie("expirationDate");
-	res.clearCookie("userId");
 	res.json("success");
 };
 
@@ -67,10 +58,7 @@ userController.signin = async (req, res, next) => {
 
 	const expirationDate = jwt.decode(token).exp;
 
-	res.cookie("token", token, { httpOnly: true });
-	res.cookie("isLoggedIn", true);
-	res.cookie("userId", newUser.id);
-	res.cookie("expirationDate", expirationDate);
+	res.cookie("token", token, { secure: true, httpOnly: true, sameSite: "strict" });
 
 	res.json({ userId: newUser.id, token, expirationDate });
 };
@@ -105,10 +93,7 @@ userController.login = async (req, res, next) => {
 
 	const expirationDate = jwt.decode(token).exp;
 
-	res.cookie("token", token, { httpOnly: true });
-	res.cookie("isLoggedIn", true);
-	res.cookie("userId", existingUser.id);
-	res.cookie("expirationDate", expirationDate);
+	res.cookie("token", token, { secure: true, httpOnly: true, sameSite: "strict" });
 
 	const { collections, ownedQuotes, likedQuotes } = existingUser;
 	const basicUserData = { collections, ownedQuotes, likedQuotes };

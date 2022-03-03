@@ -8,6 +8,7 @@ const checkAuth = (req, res, next) => {
 
 		if (result) {
 			res.locals.userId = result.userId;
+			res.locals.expirationDate = result.exp;
 			next();
 		}
 	} catch (e) {
