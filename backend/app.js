@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 import { HttpError, SchemaError } from "./utils/CustomErrors.js";
 import cookieParser from "cookie-parser";
 import helmet from "helmet";
+import compression from "compression";
 
 import quoteRoutes from "./routes/quotes-routes.js";
 import userRoutes from "./routes/users-routes.js";
@@ -26,6 +27,17 @@ db.once("open", () => {
 });
 
 db.on("error", console.error.bind(console, "connection error:"));
+
+app.use(
+	compression({
+		filter: (req, res) => {
+			if (req.headers["x-no-compression"]) {
+				return false;
+			}
+			return compression.filter(req, res);
+		},
+	})
+);
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
