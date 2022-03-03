@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addCollection } from "../../store/userSlice";
+import { createCollection } from "../../store/userSlice";
 import CollectionList from "./CollectionList";
 
 const CollectionListContainer = () => {
@@ -10,7 +10,7 @@ const CollectionListContainer = () => {
 
 	const createCollectionHandler = (data) => {
 		console.log(data);
-		dispatch(addCollection(data));
+		dispatch(createCollection(data));
 		//trigger rerender collectionList to close modal
 		setCloseAfterCreate((state) => !state);
 	};

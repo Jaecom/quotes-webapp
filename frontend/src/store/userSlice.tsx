@@ -1,12 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-interface InitialState {
-	likedQuotes: Quote[];
-	ownedQuotes: Quote[];
+interface UserData {
+	likedQuotes: ObjectId[];
+	ownedQuotes: ObjectId[];
 	collections: Collection[];
 }
 
-const initialState: InitialState = {
+const initialState: UserData = {
 	likedQuotes: [],
 	ownedQuotes: [],
 	collections: [],
@@ -16,45 +16,51 @@ export const userSlice = createSlice({
 	name: "quote",
 	initialState,
 	reducers: {
-		loadUserData: (state, action) => {
+		loadUserData: (state, action: { payload: UserData }) => {
 			const userData = action.payload;
 			return userData;
 		},
 		clearUserData: (state, action) => {
 			return initialState;
 		},
-		addCollection: (state, action) => {
+		createCollection: (state, action: { payload: Collection }) => {
 			const newCollection = action.payload;
 			state.collections.push(newCollection);
 		},
-		addQuoteToCollection: (state, action) => {
+		addQuoteToCollection: (
+			state,
+			action: { payload: { quoteId: string; collectionId: string } }
+		) => {
 			const { quoteId, collectionId } = action.payload;
 			state.collections.find((collection) => collection._id === collectionId)?.quotes.push(quoteId);
 		},
-		removeQuoteFromCollection: (state, action) => {
+		removeQuoteFromCollection: (
+			state,
+			action: { payload: { quoteId: string; collectionId: string } }
+		) => {
 			const { quoteId, collectionId } = action.payload;
 			const foundCollection = state.collections.find(
 				(collection) => collection._id === collectionId
 			);
 
 			if (foundCollection) {
-				foundCollection.quotes = foundCollection?.quotes.filter((quote) => quote !== quoteId);
+				foundCollection.quotes = foundCollection?.quotes.filter((id) => id !== quoteId);
 			}
 		},
-		likeQuote: (state, action) => {
+		likeQuote: (state, action: { payload: { quoteId: string } }) => {
 			const { quoteId } = action.payload;
 			state.likedQuotes.push(quoteId);
 		},
-		dislikeQuote: (state, action) => {
+		dislikeQuote: (state, action: { payload: { quoteId: string } }) => {
 			const { quoteId } = action.payload;
-			state.likedQuotes = state.likedQuotes.filter((quote) => quote !== quoteId);
+			state.likedQuotes = state.likedQuotes.filter((id) => id !== quoteId);
 		},
 	},
 });
 
 export const {
 	loadUserData,
-	addCollection,
+	createCollection,
 	addQuoteToCollection,
 	removeQuoteFromCollection,
 	clearUserData,

@@ -5,7 +5,7 @@ import Card from "../../UI/Card";
 import CreateCollectionForm from "../Create/CreateCollectionForm";
 import AddToCollectionList from "./AddToCollectionList";
 import { useDispatch, useSelector } from "react-redux";
-import { addCollection } from "../../../store/userSlice";
+import { createCollection } from "../../../store/userSlice";
 
 interface Props {
 	quoteId: string;
@@ -32,7 +32,7 @@ const AddToCollectionModal = ({ quoteId, onClose }: Props) => {
 	}, []);
 
 	const createCollectionHandler = (data: Collection) => {
-		dispatch(addCollection(data));
+		dispatch(createCollection(data));
 		setIsCollectionCreated(true);
 	};
 
