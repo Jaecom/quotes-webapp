@@ -24,6 +24,6 @@ quoteRoutes
 
 quoteRoutes.get("/:quoteId", catchAsync(quoteController.getQuote));
 
-quoteRoutes.patch("/:quoteId/toggleLike", checkAuth, catchAsync(quoteController.likeQuote));
+quoteRoutes.patch("/:quoteId/toggleLike", checkAuth, catchAsync(quoteController.toggleLike));
 
 export default quoteRoutes;
