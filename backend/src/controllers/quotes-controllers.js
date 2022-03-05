@@ -49,7 +49,11 @@ quoteController.search = async (req, res) => {
 
 quoteController.getQuote = async (req, res) => {
 	const { quoteId } = req.params;
-	const quote = await Quote.findById(quoteId).populate({
+	const quote = await Quote.findByIdAndUpdate(
+		quoteId,
+		{ $inc: { views: 1 } },
+		{ new: true }
+	).populate({
 		path: "author.authorObject",
 		model: Author,
 		populate: {
