@@ -15,14 +15,13 @@ quoteController.index = async (req, res, next) => {
 	let isLastPage = false;
 
 	quotes = await Quote.find()
+		.lean()
+		.sort({ views: -1, "likes.total": -1, dateCreated: -1 })
 		.skip(QUOTE_PER_LOAD * (page - 1))
-		.limit(QUOTE_PER_LOAD)
-		.lean();
+		.limit(QUOTE_PER_LOAD);
 
 	const randomIndex = Math.floor(Math.random() * (quotes.length - 1));
 	quotes[randomIndex].isBanner = true;
-
-	quotes = quotes.map((element) => Quote.hydrate(element));
 
 	if (quotes.length !== QUOTE_PER_LOAD) {
 		isLastPage = true;
@@ -37,6 +36,8 @@ quoteController.search = async (req, res) => {
 	let isLastPage = false;
 
 	const quotes = await Quote.find({ $text: { $search: q } })
+		.lean()
+		.sort({ views: -1, "likes.total": -1, dateCreated: -1 })
 		.skip(QUOTE_PER_LOAD * (page - 1))
 		.limit(QUOTE_PER_LOAD);
 
@@ -49,27 +50,25 @@ quoteController.search = async (req, res) => {
 
 quoteController.getQuote = async (req, res) => {
 	const { quoteId } = req.params;
-	const quote = await Quote.findByIdAndUpdate(
-		quoteId,
-		{ $inc: { views: 1 } },
-		{ new: true }
-	).populate({
-		path: "author.authorObject",
-		model: Author,
-		populate: {
-			path: "quotes",
-			model: Quote,
-		},
-	});
 
-	const recommended = await Quote.aggregate([{ $sample: { size: 3 } }]).then((docs) =>
-		docs.map((doc) => Quote.hydrate(doc))
-	);
+	const [quote, recommended] = await Promise.all([
+		Quote.findByIdAndUpdate(quoteId, { $inc: { views: 1 } }, { new: true })
+			.lean()
+			.populate({
+				path: "author.authorObject",
+				model: Author,
+				populate: {
+					path: "quotes",
+					model: Quote,
+				},
+			}),
+		Quote.aggregate([{ $sample: { size: 3 } }]),
+	]);
 
 	res.json({ quote, recommended });
 };
 
-quoteController.likeQuote = async (req, res, next) => {
+quoteController.toggleLike = async (req, res, next) => {
 	const { quoteId } = req.body;
 	const userId = res.locals.userId;
 
@@ -151,6 +150,7 @@ quoteController.createQuote = async (req, res, next) => {
 		throw new HttpError("Something went wrong", 500);
 	});
 
+	console.log(newQuote);
 	res.json("OK");
 };
 
