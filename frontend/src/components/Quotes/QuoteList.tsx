@@ -18,9 +18,9 @@ const QuoteList = (props: Props) => {
 				<div className={classes.container}>
 					{props.quotes?.map((quote) =>
 						quote.isBanner ? (
-							<QuoteListBanner key={quote.id} quote={quote} />
+							<QuoteListBanner key={quote._id} quote={quote} />
 						) : (
-							<QuoteItemContainer key={quote.id} quote={quote} />
+							<QuoteItemContainer key={quote._id} quote={quote} />
 						)
 					)}
 					{props.loading && <QuoteItemPlaceHolders count={10} />}

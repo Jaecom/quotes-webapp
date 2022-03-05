@@ -14,9 +14,13 @@ const schemaOptions = {
 
 const quoteSchema = new Schema(
 	{
-		quoteRaw: {
-			type: String,
-			required: true,
+		text: {
+			raw: String,
+			full: String,
+			short: String,
+			keywords: String,
+			noKeywords: String,
+			preview: String,
 		},
 		author: {
 			authorObject: { type: Schema.Types.ObjectId, ref: "Author" },
@@ -75,6 +79,15 @@ const quoteSchema = new Schema(
 );
 
 quoteSchema.pre("save", async function (next) {
+	this.text.full = this.text.raw.replace(/<|>/g, "");
+	this.text.short = this.text.raw.match(/(?<=<).*(?=>)/);
+	this.text.preview = this.text.short.split(" ").slice(0, PREVIEW_WORD_COUNT).join(" ");
+	this.text.keywords = this.text.short.split(" ").slice(0, KEY_WORD_COUNT).join(" ");
+	this.text.noKeywords = this.text.short.split(" ").slice(KEY_WORD_COUNT).join(" ");
+	next();
+});
+
+quoteSchema.pre("save", async function (next) {
 	const existingAuthor = await Author.findOne({ info: { name: this.author.name } });
 
 	if (existingAuthor) {
@@ -112,28 +125,6 @@ quoteSchema.pre("save", async function (next) {
 	if (foundUser) {
 		return next();
 	}
-});
-
-quoteSchema.virtual("quoteFull").get(function () {
-	return this.quoteRaw.replace(/<|>/g, "");
-});
-
-quoteSchema.virtual("quoteShort").get(function () {
-	const startMarkerIndex = this.quoteRaw.indexOf("<") + 1;
-	const endMarkerIndex = this.quoteRaw.indexOf(">");
-	return this.quoteRaw.slice(startMarkerIndex, endMarkerIndex);
-});
-
-quoteSchema.virtual("keywords").get(function () {
-	return this.quoteShort.split(" ").slice(0, KEY_WORD_COUNT).join(" ");
-});
-
-quoteSchema.virtual("excludeKeywords").get(function () {
-	return this.quoteShort.split(" ").slice(KEY_WORD_COUNT).join(" ");
-});
-
-quoteSchema.virtual("previewQuote").get(function () {
-	return this.quoteShort.split(" ").slice(0, PREVIEW_WORD_COUNT).join(" ");
 });
 
 quoteSchema.index({ title: "text", "author.name": "text", genre: "text" });

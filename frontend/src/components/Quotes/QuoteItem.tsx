@@ -19,14 +19,14 @@ const QuoteItem = (props: Props) => {
 		<div>
 			<Link
 				to={{
-					pathname: `/quotes/${quote.id}`,
+					pathname: `/quotes/${quote._id}`,
 					state: linkStateBackground,
 				}}
 			>
 				<div className={classes.wrapper}>
 					<div className={classes.main}>
 						<div className={classes.content}>
-							<p className="paragraph--small">{quote.previewQuote}&hellip;</p>
+							<p className="paragraph--small">{quote.text.preview}&hellip;</p>
 							<div className={classes["plus-box"]} onClick={addToCollection}>
 								<svg className={classes.plus}>
 									<use href={sprite + "#icon-plus"} />
@@ -49,7 +49,7 @@ const QuoteItem = (props: Props) => {
 						{quote.author.name}
 					</Link>
 				</div>
-				<div className={classes.extra} onClick={onQuoteLike.bind(null, quote.id)}>
+				<div className={classes.extra} onClick={onQuoteLike.bind(null, quote._id)}>
 					<svg className={`${classes.bookmark} ${isLiked && classes["bookmark--filled"]}`}>
 						<use href={sprite + "#icon-bookmark"} />
 					</svg>

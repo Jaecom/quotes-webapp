@@ -10,7 +10,7 @@ const MoreBy = (props: { quotes: Quote[]; text: string }) => {
 			<div className={classes.container}>
 				<h3 className={`${classes.header} heading-3`}>{props.text}</h3>
 				{quotes.map((quote) => (
-					<QuoteItemContainer key={quote.id} quote={quote} />
+					<QuoteItemContainer key={quote._id} quote={quote} />
 				))}
 			</div>
 		</div>

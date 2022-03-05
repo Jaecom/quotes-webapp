@@ -20,8 +20,8 @@ const QuoteDetail = (props: Props) => {
 					</div>
 
 					<div className={classes.key}>
-						<h2 className="paragraph--big">{quote.keywords}</h2>
-						<p className="paragraph--medium">{quote.excludeKeywords}</p>
+						<h2 className="paragraph--big">{quote.text.keywords}</h2>
+						<p className="paragraph--medium">{quote.text.noKeywords}</p>
 					</div>
 
 					<div className={classes["image-container"]}>
@@ -32,7 +32,7 @@ const QuoteDetail = (props: Props) => {
 					<h3 className={`${classes.label} heading-3`}>Full Quote</h3>
 
 					<div className={classes.full}>
-						<p className="paragraph--medium">{quote.quoteFull}</p>
+						<p className="paragraph--medium">{quote.text.full}</p>
 					</div>
 				</div>
 			</div>

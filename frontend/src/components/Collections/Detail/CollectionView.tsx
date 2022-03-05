@@ -60,7 +60,7 @@ const CollectionView = (props: { onClose: () => void }) => {
 			<div className={classes.view} ref={viewRef}>
 				<div className={classes["view-content"]} onWheel={onWheel}>
 					{collection?.quotes.map((quote) => (
-						<CollectionViewItem quote={quote} key={quote.id} />
+						<CollectionViewItem quote={quote} key={quote._id} />
 					))}
 				</div>
 			</div>

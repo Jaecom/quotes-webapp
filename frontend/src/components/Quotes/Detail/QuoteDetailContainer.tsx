@@ -19,7 +19,7 @@ const QuoteDetailContainer = () => {
 			setReommmenedQuotes(data.recommended);
 
 			const worksByAuthor = data.quote?.author.authorObject.quotes.filter(
-				(quote: Quote) => quote.id !== quoteId
+				(quote: Quote) => quote._id !== quoteId
 			);
 			setOtherQuotesByAuthor(worksByAuthor);
 		});

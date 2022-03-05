@@ -23,7 +23,7 @@ const QuoteItemContainer = (props: Props) => {
 	const [isLoginModalOpen, openLoginModal, closeLoginModal] = useModal();
 	const [isCollectionModalOpen, openCollectionModal, closeCollectionModal] = useModal();
 
-	const isLiked = likedQuotes.includes(quote.id);
+	const isLiked = likedQuotes.includes(quote._id);
 	const [totalLikes, setTotalLikes] = useState<number>(quote.likes.total);
 
 	const quoteLikeHandler = (quoteId: string) => {
@@ -67,7 +67,7 @@ const QuoteItemContainer = (props: Props) => {
 		<>
 			{isLoginModalOpen && <LoginModal onClose={closeLoginModal} />}
 			{isCollectionModalOpen && (
-				<AddToCollectionModal quoteId={quote.id} onClose={closeCollectionModal} />
+				<AddToCollectionModal quoteId={quote._id} onClose={closeCollectionModal} />
 			)}
 			<QuoteItem
 				quote={quote}

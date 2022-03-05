@@ -13,10 +13,10 @@ const QuoteListBanner = (props: { quote: Quote }) => {
 			<div className={classes.wrapper}>
 				<div className={classes.container}>
 					<h3 className={`heading-3 ${classes.author}`}>{quote.author.name}</h3>
-					<p className="paragraph--medium">{quote.quoteShort}</p>
+					<p className="paragraph--medium">{quote.text.short}</p>
 					<Link
 						className={classes.link}
-						to={{ pathname: `/quotes/${quote.id}`, state: linkStateBackground }}
+						to={{ pathname: `/quotes/${quote._id}`, state: linkStateBackground }}
 					>
 						<Button fill>View Quote</Button>
 					</Link>

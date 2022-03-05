@@ -27,10 +27,15 @@ interface Author {
 }
 
 interface Quote {
-	id: ObjectId;
-	quoteRaw: string;
-	quoteFull: string;
-	quoteShort: string;
+	_id: ObjectId;
+	text: {
+		raw: string;
+		full: string;
+		short: string;
+		keywords: string;
+		noKeywords: string;
+		preview: string;
+	};
 	author: {
 		name: string;
 		authorObject: ObjectId; //objectId
@@ -46,9 +51,6 @@ interface Quote {
 		users: ObjectId[]; //objectId Array
 		total: number;
 	};
-	keywords: string;
-	excludeKeywords: string;
-	previewQuote: string;
 	isBanner?: boolean;
 	createdDate: string;
 }
