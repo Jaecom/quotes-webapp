@@ -129,7 +129,7 @@ quoteController.createQuote = async (req, res, next) => {
 	const { title, author, genre, quote } = req.body;
 
 	const newQuote = new Quote({
-		quote: {
+		text: {
 			raw: quote,
 		},
 		author: {

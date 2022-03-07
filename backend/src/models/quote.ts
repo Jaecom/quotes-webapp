@@ -80,7 +80,7 @@ const quoteSchema = new Schema(
 
 quoteSchema.pre("save", async function (next) {
 	this.text.full = this.text.raw.replace(/<|>/g, "");
-	this.text.short = this.text.raw.match(/(?<=<).*(?=>)/);
+	this.text.short = this.text.raw.match(/(?<=<).*(?=>)/)[0];
 	this.text.preview = this.text.short.split(" ").slice(0, PREVIEW_WORD_COUNT).join(" ");
 	this.text.keywords = this.text.short.split(" ").slice(0, KEY_WORD_COUNT).join(" ");
 	this.text.noKeywords = this.text.short.split(" ").slice(KEY_WORD_COUNT).join(" ");
