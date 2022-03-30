@@ -13,10 +13,7 @@ $font-serif: "Libre Baskerville", serif;
 
 .heading-2 {
 	@extend %display;
-	font-size: 3rem;
-
-	letter-spacing: 0.05em;
-	line-height: 1;
+	font-size: 2rem;
 }
 
 .heading-2--cap {
@@ -66,13 +63,13 @@ $font-serif: "Libre Baskerville", serif;
 
 %paragraph {
 	font-family: $font-serif;
-	line-height: 2;
+	line-height: 2.4;
 	font-weight: 400;
 }
 
 .paragraph--big {
 	@extend %paragraph;
-	font-size: 3rem;
+	font-size: 2.8rem;
 	font-weight: 700;
 	line-height: 1.5;
 

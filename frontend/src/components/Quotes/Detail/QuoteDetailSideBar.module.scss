@@ -1,0 +1,52 @@
+@use "src/assets/styles/main.scss" as *;
+
+.control {
+	cursor: pointer;	
+
+	p {
+		text-align: center;
+		font-size: 1.2rem;
+		margin-top: 0.5rem;
+		font-weight: 600;
+		color: $color-grey-dark-2;
+	}
+
+	&:not(:last-of-type) {
+		margin-bottom: 2rem;
+	}
+}
+
+.button {
+	width: 4rem;
+	height: 4rem;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	background-color: $color-white;
+	border: solid 1px $color-grey-dark-2;
+	border-radius: 50%;
+
+	transition: background-color 0.3s ease;
+
+	&:hover {
+		background-color: $color-grey-light;
+	}
+}
+
+.liked {
+	.button {
+		border: none;
+		background-color: $color-primary;
+		svg {
+			fill: $color-white;
+		}
+	}
+}
+
+.icon {
+	width: 1.8rem;
+	height: 1.8rem;
+	fill: $color-grey-dark-2;
+}

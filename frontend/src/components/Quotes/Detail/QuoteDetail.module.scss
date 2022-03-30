@@ -1,11 +1,5 @@
 @use "src/assets/styles/main.scss" as *;
 
-.wrapper {
-	display: flex;
-	justify-content: center;
-	flex-direction: column;
-}
-
 .padding {
 	padding: 0 10rem;
 
@@ -18,66 +12,188 @@
 	}
 }
 
-.content {
+.grid {
 	width: 100%;
-	max-width: 55rem;
-
-	padding-top: 5rem;
+	display: grid;
+	grid-template-columns: minmax(3rem, 1fr) minmax(min-content, 55rem) minmax(3rem, 1fr);
+	grid-template-rows: min-content;
+	gap: 2rem;
+	position: relative;
 	padding-bottom: 10rem;
-	margin: 0 auto;
+
+	@include respond(tab-port) {
+		grid-template-columns: minmax(5rem, 1fr) minmax(min-content, 60rem) minmax(5rem, 1fr);
+		column-gap: 0;
+	}
+
+	@include respond(phone) {
+		grid-template-columns: 3rem minmax(min-content, 60rem) 3rem;
+	}
+}
+
+.top {
+	height: 10rem;
+	grid-column: 2 / 3;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 0 3rem;
+}
+
+.top-background {
+	grid-column: 1 / -1;
+	grid-row: 1/2;
+
+	position: absolute;
+	content: "";
+	width: 100%;
+	height: 100%;
+	z-index: -1;
+
+	background-color: $color-grey-light;
+}
+
+.profile {
+	display: flex;
+	align-items: center;
+
+	.profile-image {
+		width: 4.5rem;
+		height: 4.5rem;
+		overflow: hidden;
+		border-radius: 50%;
+
+		img {
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+			object-position: center;
+		}
+	}
+
+	.profile-detail {
+		margin-left: 1.5rem;
+	}
+}
+
+.follow {
+	cursor: pointer;
+	padding: 0.8rem 1.4rem;
+
+	border: solid 1px $color-grey-dark-2;
+	border-radius: 1rem;
+	
+	color:$color-grey-dark-2;
+	font-family: "Montserrat", sans-serif;
+	font-size: 1.2rem;
+	font-weight: 500;
+}
+
+.sidebar {
+	grid-column: 3 / 4;
+	grid-row: 2 / -1;
+
+	position: sticky;
+	top: 10rem;
+
+	width: min-content;
+	margin-left: 2rem;
+	margin-top: 4rem;
+
+	@include respond(tab-port) {
+		margin-left: 1rem;
+	}
+
+	@include respond(tab-port) {
+		display: none;
+	}
 }
 
 .info {
-	width: 100%;
-	display: flex;
-	justify-content: space-between;
-	margin-bottom: 5rem;
-	padding-bottom: 0.5rem;
-	border-bottom: 0.5px solid $color-grey-dark;
+	height: min-content;
+
+	grid-column: 2 / 3;
+	justify-self: flex-end;
+
+	text-align: right;
+	padding-right: 1rem;
+	border-right: solid 1px $color-black;
+	margin-top: 4rem;
+	margin-bottom: 10rem;
+
+	h3:hover {
+		cursor: pointer;
+		color: $color-primary;
+	}
 }
 
-.key {
-	margin: 7rem 0rem;
-	text-align: center;
-	padding: 1rem;
+.keyquote {
+	grid-column: 2 / 3;
+	padding-left: 3rem;
+	margin-bottom: 7rem;
+	border-left: solid 1px $color-black;
 }
 
-.image-container {
-	height: 50rem;
-	margin: 8rem 0;
-	position: relative;
-	overflow: hidden;
-	border-radius: 0.5rem;
+.keyword {
+	margin-top: 0.5rem;
+}
+
+.genre {
+	grid-column: 2/3;
+	justify-self: flex-end;
+
+	text-align: right;
+	margin-bottom: 1rem;
+	text-transform: capitalize;
+
+	h4 {
+		margin-top: 2px;
+	}
 }
 
 .image {
-	width: 100%;
-	height: 100%;
-	object-fit: cover;
+	grid-column: 2 / 3;
+	height: 50rem;
+	margin-bottom: 7rem;
+	overflow: hidden;
+
+	img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+
+	@include respond(phone) {
+		grid-column: 1 / -1;
+	}
 }
 
-.source {
-	position: absolute;
-	bottom: -1%;
-	left: 0;
-	color: rgba($color-grey-dark, 0.5);
-}
-
-.label {
-	margin-bottom: 1rem;
-	text-align: center;
-}
-
-.break {
-	height: 10rem;
-	width: 0.5px;
-	background-color: $color-grey-dark;
-	margin: 8rem auto;
-}
-
-.full {
+.full-quote {
+	grid-column: 2 / 3;
 	text-align: left;
-	margin-top: 3rem;
-	padding-left: 4rem;
-	border-left: 1px solid $color-grey-dark;
+	margin-top: -1rem;
+
+	mark {
+		background-color: rgba($color-primary, 0.2);
+	}
+}
+
+@mixin label {
+	text-align: right;
+
+	@include respond(tab-port) {
+		display: none;
+	}
+}
+
+.label-key {
+	@include label;
+	grid-column: 1 / 2;
+	text-align: right;
+}
+
+.label-full {
+	@include label;
+	grid-column: 1 / 2;
+	margin-bottom: 1rem;
 }
