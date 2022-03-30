@@ -4,10 +4,11 @@
 	"description": "Webapp that shows quotes",
 	"main": "index.js",
 	"scripts": {
-		"heroku-postbuild": "npm run install-frontend && npm run build-frontend",
+		"heroku-postbuild": "npm run install-frontend && npm run build-frontend && npm run install-backend",
 		"install-frontend": "cd frontend && npm install",
 		"build-frontend": "cd frontend && npm run build",
-		"start": "cd backend && npm install && node dist/app.js",
+		"install-backend": "cd backend && npm install",
+		"start": "node dist/app.js",
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
 	"repository": {
