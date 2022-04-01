@@ -19,6 +19,7 @@ import QuoteDetailPage from "./pages/QuoteDetailPage";
 import CollectionDetailModal from "./components/Collections/Detail/CollectionDetailModal";
 import CreateQuotePage from "./pages/CreateQuotePage";
 import SearchPage from "./pages/SearchPage";
+import Typography from "./assets/styles/Typography";
 
 function App() {
 	const location = useLocation();
@@ -28,6 +29,12 @@ function App() {
 	return (
 		<div className="App">
 			<Switch location={background || location}>
+				{process.env.NODE_ENV === "development" && (
+					<Route path="/dev">
+						<Typography />
+					</Route>
+				)}
+
 				<Route path="/" exact>
 					<MainNavigation />
 					<HomePage />
