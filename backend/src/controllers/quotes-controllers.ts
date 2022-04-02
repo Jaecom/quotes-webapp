@@ -3,13 +3,18 @@ import Author from "../models/author.js";
 import Quote from "../models/quote.js";
 import User from "../models/user.js";
 import { HttpError } from "../utils/CustomErrors.js";
+import { RequestHandler } from "express";
 
 const { ObjectId } = mongoose.Types;
 
 const QUOTE_PER_LOAD = 24;
-const quoteController = {};
 
-quoteController.index = async (req, res, next) => {
+interface Query {
+	page: number;
+	q: string;
+}
+
+const index: RequestHandler<unknown, unknown, unknown, Query> = async (req, res, next) => {
 	const page = req.query.page || 1;
 	let quotes = [];
 	let isLastPage = false;
@@ -30,7 +35,7 @@ quoteController.index = async (req, res, next) => {
 	res.json({ quotes, isLastPage });
 };
 
-quoteController.search = async (req, res) => {
+const search: RequestHandler<unknown, unknown, unknown, Query> = async (req, res) => {
 	const { q } = req.query;
 	const page = req.query.page || 1;
 	let isLastPage = false;
@@ -48,7 +53,7 @@ quoteController.search = async (req, res) => {
 	res.json({ quotes, isLastPage });
 };
 
-quoteController.getQuote = async (req, res) => {
+const getQuote: RequestHandler = async (req, res) => {
 	const { quoteId } = req.params;
 
 	const [quote, recommended] = await Promise.all([
@@ -68,7 +73,7 @@ quoteController.getQuote = async (req, res) => {
 	res.json({ quote, recommended });
 };
 
-quoteController.toggleLike = async (req, res, next) => {
+const toggleLike: RequestHandler = async (req, res, next) => {
 	const { quoteId } = req.body;
 	const userId = res.locals.userId;
 
@@ -87,32 +92,36 @@ quoteController.toggleLike = async (req, res, next) => {
 		session.startTransaction();
 
 		// push/pull quote to user quote list
-		const addUserLike = { $push: { likedQuotes: ObjectId(quoteId) } };
-		const removeUserLike = { $pull: { likedQuotes: ObjectId(quoteId) } };
+		const addUserLike = { $push: { likedQuotes: new ObjectId(quoteId) } };
+		const removeUserLike = { $pull: { likedQuotes: new ObjectId(quoteId) } };
 		const userLikeUpdate = isQuoteLiked ? removeUserLike : addUserLike;
 
-		const updatedUser = await User.findOneAndUpdate({ _id: ObjectId(userId) }, userLikeUpdate, {
+		const updatedUser = await User.findOneAndUpdate({ _id: new ObjectId(userId) }, userLikeUpdate, {
 			session,
 		});
 
 		// push/pull user to quote user like list
 		const addUserToQuote = {
 			$push: {
-				"likes.users": ObjectId(userId),
+				"likes.users": new ObjectId(userId),
 			},
 			$inc: { "likes.total": 1 },
 		};
 
 		const removeUserFromQuote = {
-			$pull: { "likes.users": ObjectId(userId) },
+			$pull: { "likes.users": new ObjectId(userId) },
 			$inc: { "likes.total": -1 },
 		};
 
 		const updateQuoteUser = isQuoteLiked ? removeUserFromQuote : addUserToQuote;
 
-		const updatedQuote = await Quote.findOneAndUpdate({ _id: ObjectId(quoteId) }, updateQuoteUser, {
-			session,
-		});
+		const updatedQuote = await Quote.findOneAndUpdate(
+			{ _id: new ObjectId(quoteId) },
+			updateQuoteUser,
+			{
+				session,
+			}
+		);
 
 		await session.commitTransaction();
 	} catch (e) {
@@ -124,9 +133,9 @@ quoteController.toggleLike = async (req, res, next) => {
 	res.json("OK");
 };
 
-quoteController.createQuote = async (req, res, next) => {
-	const file = req.file;
+const createQuote: RequestHandler = async (req, res, next) => {
 	const { title, author, genre, quote } = req.body;
+	const location = req.file!.location;
 
 	const newQuote = new Quote({
 		text: {
@@ -138,14 +147,14 @@ quoteController.createQuote = async (req, res, next) => {
 		title,
 		genre: [genre],
 		image: {
-			original: file.location.original,
-			medium: file.location.medium,
-			thumbnail: file.location.thumbnail,
+			original: location.original,
+			medium: location.medium,
+			thumbnail: location.thumbnail,
 		},
 		owner: res.locals.userId,
 	});
 
-	await newQuote.save().catch((error) => {
+	await newQuote.save().catch((error: mongoose.Error) => {
 		console.log(error);
 		throw new HttpError("Something went wrong", 500);
 	});
@@ -154,4 +163,4 @@ quoteController.createQuote = async (req, res, next) => {
 	res.json("OK");
 };
 
-export default quoteController;
+export default { index, search, getQuote, toggleLike, createQuote };

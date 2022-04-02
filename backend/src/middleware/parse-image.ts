@@ -1,7 +1,8 @@
-import fetch from "node-fetch";
 import { SchemaError } from "../utils/CustomErrors.js";
+import { RequestHandler } from "express";
+import fetch from "node-fetch";
 
-const getBuffer = async (url) => {
+const getBuffer = async (url: string) => {
 	try {
 		const response = await fetch(url);
 		const arrayBuffer = await response.arrayBuffer();
@@ -12,11 +13,12 @@ const getBuffer = async (url) => {
 	}
 };
 
-const parseImageUrl = async (req, res, next) => {
+const parseImageUrl: RequestHandler = async (req, res, next) => {
 	const { imageUrl } = req.body;
 
 	if (imageUrl) {
 		const buffer = await getBuffer(imageUrl);
+		//@ts-ignore
 		req.file = {
 			originalname: Date.now().toString() + "_image.jpg",
 			mimetype: "image/jpeg",

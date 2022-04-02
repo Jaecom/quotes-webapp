@@ -1,20 +1,33 @@
+import { RequestHandler } from "express";
 import fetch from "node-fetch";
 
-const bookSearchController = {};
+interface BookData {
+	items: [
+		{
+			volumeInfo: {
+				title?: string;
+				authors?: string[];
+				publishedDate?: string;
+				imageLinks?: string;
+				categories?: string;
+			};
+		}
+	];
+}
 
-bookSearchController.searchTitle = async (req, res, next) => {
+const searchTitle: RequestHandler = async (req, res, next) => {
 	const { query } = req.params;
 
 	const baseUrl = new URL("https://www.googleapis.com/books/v1/volumes");
 	baseUrl.searchParams.append("q", `intitle:${query}`);
-	baseUrl.searchParams.append("maxResults", 4);
+	baseUrl.searchParams.append("maxResults", "4");
 	baseUrl.searchParams.append("bookType", "books");
 	baseUrl.searchParams.append(
 		"fields",
 		"items(volumeInfo/title, volumeInfo/authors, volumeInfo/imageLinks, volumeInfo/categories, volumeInfo/publishedDate)"
 	);
 	const response = await fetch(baseUrl.toString());
-	const data = await response.json();
+	const data = (await response.json()) as BookData;
 
 	if (!data.items) {
 		return res.json([]);
@@ -38,4 +51,4 @@ bookSearchController.searchTitle = async (req, res, next) => {
 	res.json(cleanup);
 };
 
-export default bookSearchController;
+export default { searchTitle };

@@ -1,10 +1,15 @@
 import jwt from "jsonwebtoken";
 import { HttpError } from "../utils/CustomErrors.js";
+import { RequestHandler } from "express";
 
-const checkAuth = (req, res, next) => {
+interface TokenPayload extends jwt.JwtPayload {
+	userId: string;
+}
+
+const checkAuth: RequestHandler = (req, res, next) => {
 	try {
 		const { token } = req.cookies;
-		const result = jwt.verify(token, process.env.JWT_SECRET);
+		const result = jwt.verify(token, process.env.JWT_SECRET || "") as TokenPayload;
 
 		if (result) {
 			res.locals.userId = result.userId;

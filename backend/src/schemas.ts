@@ -50,14 +50,14 @@ const quoteSchema = Joi.object({
 			const match = value.match(/<.*>/);
 
 			if (!match) {
-				return helpers.message("Quote must be enclosed with '<' and '>' characters");
+				return helpers.message({custom: "Quote must be enclosed with '<' and '>' characters"});
 			}
 
 			const leftArrowCount = value.match(/</g)?.length;
 			const rightArrowCount = value.match(/>/g)?.length;
 
 			if (leftArrowCount !== 1 || rightArrowCount !== 1) {
-				return helpers.message("Cannot have more than one '<' and '>' characters");
+				return helpers.message({custom: "Cannot have more than one '<' and '>' characters"});
 			}
 
 			return true;

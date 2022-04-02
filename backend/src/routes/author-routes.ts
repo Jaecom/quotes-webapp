@@ -4,8 +4,6 @@ import catchAsync from "../utils/catchAsync.js";
 
 const authorRoutes = express.Router();
 
-authorRoutes.get("/", catchAsync(authorController.index));
-
 authorRoutes.get("/:authorId", catchAsync(authorController.getAuthorQuotes));
 
 export default authorRoutes;

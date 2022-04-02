@@ -1,8 +1,8 @@
 import User from "../models/user.js";
 import { HttpError, SchemaError } from "../utils/CustomErrors.js";
-const collectionController = {};
+import { RequestHandler } from "express";
 
-collectionController.index = async (req, res, next) => {
+const index: RequestHandler = async (req, res, next) => {
 	const { userId } = res.locals;
 
 	const user = await User.findById(userId).catch(() => {
@@ -12,7 +12,7 @@ collectionController.index = async (req, res, next) => {
 	res.json(user.collections);
 };
 
-collectionController.getCollection = async (req, res, next) => {
+const getCollection: RequestHandler = async (req, res, next) => {
 	const { userId } = res.locals;
 	const { collectionId } = req.params;
 
@@ -30,13 +30,13 @@ collectionController.getCollection = async (req, res, next) => {
 	res.json(foundCollection);
 };
 
-collectionController.createCollection = async (req, res, next) => {
+const createCollection: RequestHandler = async (req, res, next) => {
 	const { userId } = res.locals;
 	const { name, description, isPrivate } = req.body;
 
 	const user = await User.findById(userId);
 
-	const isDupliateName = user.collections.some((element) => element.name === name);
+	const isDupliateName = user.collections.some((element: any) => element.name === name);
 
 	if (isDupliateName) {
 		throw new SchemaError(
@@ -56,7 +56,7 @@ collectionController.createCollection = async (req, res, next) => {
 	res.json(userCollections[userCollections.length - 1]);
 };
 
-collectionController.addQuoteToCollection = async (req, res, next) => {
+const addQuoteToCollection: RequestHandler = async (req, res, next) => {
 	const { userId } = res.locals;
 	const { collectionId } = req.params;
 	const { quoteId } = req.body;
@@ -78,7 +78,7 @@ collectionController.addQuoteToCollection = async (req, res, next) => {
 	res.json("Adding success");
 };
 
-collectionController.removeQuoteFromCollection = async (req, res, next) => {
+const removeQuoteFromCollection: RequestHandler = async (req, res, next) => {
 	const { userId } = res.locals;
 	const { collectionId } = req.params;
 	const { quoteId } = req.body;
@@ -100,4 +100,10 @@ collectionController.removeQuoteFromCollection = async (req, res, next) => {
 	res.json("Removing success");
 };
 
-export default collectionController;
+export default {
+	getCollection,
+	index,
+	createCollection,
+	addQuoteToCollection,
+	removeQuoteFromCollection,
+};

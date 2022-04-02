@@ -1,13 +1,13 @@
 import Quote from "../models/quote.js";
+import { RequestHandler } from "express";
 const authorController = {};
 
-authorController.index = (req, res, next) => {};
+// authorController.index = (req, res, next) => {};
 
-authorController.getAuthorQuotes = async (req, res, next) => {
-	console.log(req.params);
+const getAuthorQuotes: RequestHandler = async (req, res, next) => {
 	const { authorId } = req.params;
 	const quotes = await Quote.find({ "author.authorObject": authorId });
 	res.json({ quotes });
 };
 
-export default authorController;
+export default { getAuthorQuotes };

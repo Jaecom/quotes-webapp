@@ -2,7 +2,7 @@ import multer from "multer";
 import AWS from "aws-sdk";
 import { quoteSchema } from "../schemas.js";
 import { SchemaError } from "../utils/CustomErrors.js";
-import { returnValidateErrorObject } from "../middleware/schema-validate.js";
+import { returnValidateErrorObject } from "./schema-validate.js";
 import path from "path";
 
 const s3 = new AWS.S3({
@@ -28,7 +28,7 @@ S3Storage.prototype._handleFile = function _handleFile(req, file, cb) {
 		// fieldname: 'imageFile',
 		// originalname: 'Screenshot 2021-06-02 215458.jpg',
 		// encoding: '7bit',
-		// mimetype: 'image/jpeg'
+		// mimetype: 'image/jpeg'w
 
 		const AWSparams = {
 			Bucket: process.env.AWS_S3_BUCKET,

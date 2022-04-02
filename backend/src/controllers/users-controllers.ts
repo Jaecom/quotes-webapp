@@ -2,13 +2,13 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import User from "../models/user.js";
 import { HttpError } from "../utils/CustomErrors.js";
+import { RequestHandler } from "express";
 
 const SALT_ROUNDS = 10;
 
 const TOKEN_EXPIRATION = "10 day";
-const userController = {};
 
-userController.getBasicData = async (req, res) => {
+const getBasicData: RequestHandler = async (req, res) => {
 	const { userId, expirationDate } = res.locals;
 
 	const user = await User.findById(userId).catch((error) => {
@@ -21,12 +21,12 @@ userController.getBasicData = async (req, res) => {
 	res.json({ basicUserData, userId, expirationDate });
 };
 
-userController.logout = (req, res, next) => {
+const logout: RequestHandler = (req, res, next) => {
 	res.clearCookie("token");
 	res.json("success");
 };
 
-userController.signin = async (req, res, next) => {
+const signin: RequestHandler = async (req, res, next) => {
 	const { name, password, email, username } = req.body;
 
 	const existingUser = await User.findOne({ email: email }).catch(() => {
@@ -49,21 +49,21 @@ userController.signin = async (req, res, next) => {
 
 	let token;
 	try {
-		token = jwt.sign({ userId: newUser.id }, process.env.JWT_SECRET, {
+		token = jwt.sign({ userId: newUser.id }, process.env.JWT_SECRET ?? "", {
 			expiresIn: TOKEN_EXPIRATION,
 		});
 	} catch {
 		throw new HttpError("Cannot create token. Please try again", 500);
 	}
 
-	const expirationDate = jwt.decode(token).exp;
+	const { exp: expirationDate } = jwt.decode(token) as jwt.JwtPayload;
 
 	res.cookie("token", token, { secure: true, httpOnly: true, sameSite: "strict" });
 
 	res.json({ userId: newUser.id, token, expirationDate });
 };
 
-userController.login = async (req, res, next) => {
+const login: RequestHandler = async (req, res, next) => {
 	const { email, password } = req.body;
 
 	const existingUser = await User.findOne({ email: email }).catch(() => {
@@ -84,14 +84,14 @@ userController.login = async (req, res, next) => {
 
 	let token;
 	try {
-		token = jwt.sign({ userId: existingUser.id }, process.env.JWT_SECRET, {
+		token = jwt.sign({ userId: existingUser.id }, process.env.JWT_SECRET ?? "", {
 			expiresIn: TOKEN_EXPIRATION,
 		});
 	} catch {
 		throw new HttpError("Cannot create token. Please try again", 500);
 	}
 
-	const expirationDate = jwt.decode(token).exp;
+	const { exp: expirationDate } = jwt.decode(token) as jwt.JwtPayload;
 
 	res.cookie("token", token, { secure: true, httpOnly: true, sameSite: "strict" });
 
@@ -101,4 +101,4 @@ userController.login = async (req, res, next) => {
 	res.json({ userId: existingUser.id, token, expirationDate, basicUserData });
 };
 
-export default userController;
+export default { getBasicData, logout, signin, login };

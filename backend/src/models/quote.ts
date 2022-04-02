@@ -79,6 +79,7 @@ const quoteSchema = new Schema(
 );
 
 quoteSchema.pre("save", async function (next) {
+	console.log(this.text.raw);
 	this.text.full = this.text.raw.replace(/<|>/g, "");
 	this.text.short = this.text.raw.match(/(?<=<).*(?=>)/)[0];
 	this.text.preview = this.text.short.split(" ").slice(0, PREVIEW_WORD_COUNT).join(" ");
