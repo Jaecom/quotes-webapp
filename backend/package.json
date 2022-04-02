@@ -2,13 +2,14 @@
 	"name": "backend",
 	"version": "1.0.0",
 	"description": "",
-	"main": "index.js",
+	"main": "src/app.ts",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
 		"tsc": "tsc",
 		"postinstall": "npm run tsc",
-		"dev:nodemon": "nodemon --watch dist dist/app.js",
-		"dev:tsc": "tsc-watch"
+		"dev": "concurrently \"tsc -w\" \"nodemon dist/app.js\"",
+		"dev:tsc": "tsc -w",
+		"dev:nodemon": "nodemon dist/app.js"
 	},
 	"keywords": [],
 	"author": "",
@@ -33,7 +34,7 @@
 	},
 	"type": "module",
 	"devDependencies": {
-		"nodemon": "^2.0.15",
-		"tsc-watch": "^4.6.0"
+		"concurrently": "^7.0.0",
+		"nodemon": "^2.0.15"
 	}
 }
