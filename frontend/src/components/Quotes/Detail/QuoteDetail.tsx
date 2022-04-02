@@ -47,8 +47,8 @@ const QuoteDetail = (props: Props) => {
 				</div>
 
 				<div className={classes.info}>
-					<h3 className="heading-4--bold">{quote.title}</h3>
-					<h3 className="heading-4">{quote.author.name}</h3>
+					<h4 className="heading-4--bold">{quote.title}</h4>
+					<h4 className="heading-4">{quote.author.name}</h4>
 				</div>
 
 				<h3 className={`${classes["label-key"]} heading-3`}>Key&nbsp;Quote</h3>

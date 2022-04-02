@@ -121,7 +121,7 @@
 	margin-top: 4rem;
 	margin-bottom: 10rem;
 
-	h3:hover {
+	h4:hover {
 		cursor: pointer;
 		color: $color-primary;
 	}
@@ -129,9 +129,14 @@
 
 .keyquote {
 	grid-column: 2 / 3;
-	padding-left: 3rem;
 	margin-bottom: 7rem;
+
+	padding-left: 3rem;
 	border-left: solid 1px $color-black;
+
+	@include respond(phone) {
+		padding-left: 2rem;
+	}
 }
 
 .keyword {
