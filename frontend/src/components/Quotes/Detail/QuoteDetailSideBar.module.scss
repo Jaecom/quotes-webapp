@@ -1,18 +1,45 @@
 @use "src/assets/styles/main.scss" as *;
 
-.control {
-	cursor: pointer;	
+.control.mobile {
+	display: none;
 
-	p {
+	&:not(:last-of-type) {
+		margin-bottom: 0;
+	}
+
+	label {
+		display: none;
+	}
+
+	.button {
+		width: 3.5rem;
+		height: 3.5rem;
+	}
+
+	.icon {
+		width: 1.5rem;
+		height: 1.5rem;
+	}
+
+	@include respond(tab-port) {
+		display: block;
+	}
+}
+
+.control {
+	cursor: pointer;
+
+	&:not(:last-of-type) {
+		margin-bottom: 2rem;
+	}
+
+	label {
+		display: block;
 		text-align: center;
 		font-size: 1.2rem;
 		margin-top: 0.5rem;
 		font-weight: 600;
 		color: $color-grey-dark-2;
-	}
-
-	&:not(:last-of-type) {
-		margin-bottom: 2rem;
 	}
 }
 
@@ -33,20 +60,21 @@
 	&:hover {
 		background-color: $color-grey-light;
 	}
+
+	svg {
+		width: 1.8rem;
+		height: 1.8rem;
+		fill: $color-grey-dark-2;
+	}
 }
 
 .liked {
 	.button {
 		border: none;
 		background-color: $color-primary;
+
 		svg {
 			fill: $color-white;
 		}
 	}
-}
-
-.icon {
-	width: 1.8rem;
-	height: 1.8rem;
-	fill: $color-grey-dark-2;
 }

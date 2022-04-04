@@ -34,12 +34,19 @@ const QuoteDetail = (props: Props) => {
 							<p className="heading-5">2 quotes | 5 collections</p>
 						</div>
 					</div>
-					<div className={classes.follow}>Follow</div>
+					<div className={classes.control}>
+						<QuoteDetailSideBar
+							onQuoteLike={onQuoteLike}
+							onQuoteSave={onQuoteSave}
+							isLiked={isLiked}
+							mobile
+						/>
+						<div className={classes.follow}>Follow</div>
+					</div>
 				</div>
 
 				<div className={classes.sidebar}>
 					<QuoteDetailSideBar
-						quoteId={quote._id}
 						onQuoteLike={onQuoteLike}
 						onQuoteSave={onQuoteSave}
 						isLiked={isLiked}

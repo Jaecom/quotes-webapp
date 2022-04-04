@@ -1,34 +1,39 @@
 import classes from "./QuoteDetailSideBar.module.scss";
-import sprite from "../../../assets/sprite.svg";  
+import sprite from "../../../assets/sprite.svg";
 
 interface Props {
-	quoteId: String;
 	onQuoteLike: () => void;
 	onQuoteSave: () => void;
 	isLiked: boolean;
+	mobile?: boolean;
 }
 
-const QuoteDetailToolbar = ({ quoteId, onQuoteLike, onQuoteSave, isLiked }: Props) => {
+const QuoteDetailToolbar = ({ onQuoteLike, onQuoteSave, isLiked, mobile }: Props) => {
 	return (
-		<div>
-			<div className={`${classes.control} ${isLiked ? classes.liked : ""}`} onClick={onQuoteLike}>
+		<>
+			<div
+				className={`${classes.control} ${mobile ? classes.mobile : ""}  ${
+					isLiked ? classes.liked : ""
+				} `}
+				onClick={onQuoteLike}
+			>
 				<div className={classes.button}>
-					<svg className={classes.icon}>
+					<svg>
 						<use href={sprite + "#icon-bookmark"} />
 					</svg>
 				</div>
-				<p>{isLiked ? "Liked" : "Like"}</p>
+				<label>{isLiked ? "Liked" : "Like"}</label>
 			</div>
 
-			<div className={classes.control} onClick={onQuoteSave}>
+			<div className={`${classes.control} ${mobile ? classes.mobile : ""}`} onClick={onQuoteSave}>
 				<div className={classes.button}>
-					<svg className={classes.icon}>
+					<svg>
 						<use href={sprite + "#icon-plus"} />
 					</svg>
 				</div>
-				<p>Save</p>
+				<label>Save</label>
 			</div>
-		</div>
+		</>
 	);
 };
 
