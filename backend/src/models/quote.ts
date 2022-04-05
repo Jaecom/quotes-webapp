@@ -79,7 +79,6 @@ const quoteSchema = new Schema(
 );
 
 quoteSchema.pre("save", async function (next) {
-	console.log(this.text.raw);
 	this.text.full = this.text.raw.replace(/<|>/g, "");
 	this.text.short = this.text.raw.match(/(?<=<).*(?=>)/)[0];
 	this.text.preview = this.text.short.split(" ").slice(0, PREVIEW_WORD_COUNT).join(" ");
@@ -118,14 +117,12 @@ quoteSchema.pre("save", async function (next) {
 });
 
 quoteSchema.pre("save", async function (next) {
-	const foundUser = await User.findOneAndUpdate(
-		{ id: this.owner },
+	const updatedUser = await User.updateOne(
+		{ _id: this.owner },
 		{ $push: { ownedQuotes: this.id } }
 	);
 
-	if (foundUser) {
-		return next();
-	}
+	return next();
 });
 
 quoteSchema.index({ title: "text", "author.name": "text", genre: "text" });
