@@ -5,9 +5,11 @@ import { RequestHandler } from "express";
 const index: RequestHandler = async (req, res, next) => {
 	const { userId } = res.locals;
 
-	const user = await User.findById(userId).catch(() => {
+	const user = await User.findById(userId);
+
+	if (!user) {
 		throw new HttpError("Getting user info failed. Please try again", 500);
-	});
+	}
 
 	res.json(user.collections);
 };
@@ -35,6 +37,10 @@ const createCollection: RequestHandler = async (req, res, next) => {
 	const { name, description, isPrivate } = req.body;
 
 	const user = await User.findById(userId);
+
+	if (!user) {
+		throw new HttpError("Cannot find user", 400);
+	}
 
 	const isDupliateName = user.collections.some((element: any) => element.name === name);
 

@@ -11,12 +11,17 @@ const TOKEN_EXPIRATION = "10 day";
 const getBasicData: RequestHandler = async (req, res) => {
 	const { userId, expirationDate } = res.locals;
 
-	const user = await User.findById(userId).catch((error) => {
-		throw new HttpError("Invalid token", 400);
-	});
+	const user = await User.findById(userId);
 
-	const { collections, ownedQuotes, likedQuotes } = user;
-	const basicUserData = { collections, ownedQuotes, likedQuotes };
+	if (!user) {
+		throw new HttpError("Invalid Token", 400);
+	}
+
+	const basicUserData = {
+		collections: user.collections,
+		ownedQuotes: user.ownedQuotes,
+		likedQuotes: user.likedQuotes,
+	};
 
 	res.json({ basicUserData, userId, expirationDate });
 };
