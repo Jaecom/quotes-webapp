@@ -9,9 +9,10 @@ import { useSelector, useDispatch } from "react-redux";
 import { likeQuote, dislikeQuote } from "../../../store/userSlice";
 import AuthContext from "../../../store/auth-context";
 import LoginModal from "../../Auth/LoginModal";
+import type { OwnerPopulatedQuote, Quote } from "data-type";
 
 const QuoteDetailContainer = () => {
-	const [quote, setQuote] = useState<Quote | null>();
+	const [quote, setQuote] = useState<OwnerPopulatedQuote | null>();
 	const { quoteId } = useParams<{ quoteId: string }>();
 
 	const dispatch = useDispatch();

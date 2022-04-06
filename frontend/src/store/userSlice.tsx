@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import type { Collection, ObjectId } from "data-type";
 
 interface UserData {
 	likedQuotes: ObjectId[];

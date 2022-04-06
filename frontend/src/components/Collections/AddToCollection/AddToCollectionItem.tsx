@@ -4,6 +4,7 @@ import classes from "./AddToCollectionItem.module.scss";
 import sprite from "../../../assets/sprite.svg";
 import { useDispatch } from "react-redux";
 import { addQuoteToCollection, removeQuoteFromCollection } from "../../../store/userSlice";
+import type { Collection } from "data-type";
 
 interface Props {
 	collection: Collection;

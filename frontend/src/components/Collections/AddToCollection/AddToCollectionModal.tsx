@@ -6,6 +6,7 @@ import CreateCollectionForm from "../Create/CreateCollectionForm";
 import AddToCollectionList from "./AddToCollectionList";
 import { useDispatch, useSelector } from "react-redux";
 import { createCollection } from "../../../store/userSlice";
+import type { Collection } from "data-type";
 
 interface Props {
 	quoteId: string;

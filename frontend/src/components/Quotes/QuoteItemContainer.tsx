@@ -9,6 +9,7 @@ import { likeQuote, dislikeQuote } from "../../store/userSlice";
 import QuoteItem from "./QuoteItem";
 import LoginModal from "../Auth/LoginModal";
 import AddToCollectionModal from "../Collections/AddToCollection/AddToCollectionModal";
+import type { Quote } from "data-type";
 
 interface Props {
 	quote: Quote;

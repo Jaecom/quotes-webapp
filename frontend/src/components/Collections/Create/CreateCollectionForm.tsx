@@ -6,6 +6,7 @@ import Button from "../../UI/Button";
 import React, { useRef } from "react";
 import ValidationError from "../../UI/Form/ValidationError";
 import useSchemaHttp from "../../../hooks/useSchemaHttp";
+import type { Collection } from "data-type";
 
 interface Props {
 	onCancel: () => void;

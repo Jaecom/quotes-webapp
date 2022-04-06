@@ -2,6 +2,7 @@ import classes from "./QuoteListBanner.module.scss";
 import Button from "../UI/Button";
 import { Link } from "react-router-dom";
 import useLinkStateBackground from "../../hooks/useLinkStateBackground";
+import type { Quote } from "data-type";
 
 const QuoteListBanner = (props: { quote: Quote }) => {
 	const { quote } = props;

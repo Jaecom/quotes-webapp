@@ -4,6 +4,7 @@ import QuoteItemContainer from "./QuoteItemContainer";
 import QuoteListBanner from "./QuoteListBanner";
 import Loading from "../UI/Loading/Loading";
 import { QuoteItemPlaceHolders } from "./QuotePlaceHolder";
+import type { Quote } from "data-type";
 
 interface Props {
 	quotes: Quote[];

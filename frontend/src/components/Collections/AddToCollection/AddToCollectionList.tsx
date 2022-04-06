@@ -1,6 +1,7 @@
 import classes from "./AddToCollectionList.module.scss";
 import Button from "../../UI/Button";
 import AddToCollectionItem from "./AddToCollectionItem";
+import type { Collection } from "data-type";
 
 interface Props {
 	collections: Collection[];

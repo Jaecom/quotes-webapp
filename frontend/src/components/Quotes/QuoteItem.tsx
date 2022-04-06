@@ -2,6 +2,7 @@ import classes from "./QuoteItem.module.scss";
 import { Link } from "react-router-dom";
 import sprite from "../../assets/sprite.svg";
 import useLinkStateBackground from "../../hooks/useLinkStateBackground";
+import type { Quote } from "data-type";
 
 interface Props {
 	quote: Quote;

@@ -4,6 +4,7 @@ import useHttp from "../../../hooks/useHttp";
 import classes from "./CollectionView.module.scss";
 import sprite from "../../../assets/sprite.svg";
 import CollectionViewItem from "./CollectionViewItem";
+import type { Collection, Quote } from "data-type";
 
 interface QuoteCollection extends Omit<Collection, "quotes"> {
 	quotes: Quote[];

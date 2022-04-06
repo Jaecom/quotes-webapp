@@ -1,4 +1,5 @@
 import React from "react";
+import type { Quote } from "data-type";
 import classes from "./CollectionViewItem.module.scss";
 
 const CollectionViewItem = (props: { quote: Quote }) => {

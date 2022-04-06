@@ -1,9 +1,10 @@
 import classes from "./QuoteDetail.module.scss";
 import MoreBy from "./MoreBy";
 import QuoteDetailSideBar from "./QuoteDetailSideBar";
+import type { OwnerPopulatedQuote, Quote } from "data-type";
 
 interface Props {
-	quote: Quote;
+	quote: OwnerPopulatedQuote;
 	otherQuotesByAuthor: Quote[] | null | undefined;
 	recommendQuotes: Quote[] | null | undefined;
 	onQuoteSave: () => void;
