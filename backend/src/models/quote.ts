@@ -1,6 +1,8 @@
 import mongoose from "mongoose";
 import Author from "./author.js";
 import User from "./user.js";
+import type { Quote as QuoteType } from "@frontend/src/data-type";
+
 const { Schema } = mongoose;
 
 const KEY_WORD_COUNT = 3;
@@ -127,6 +129,6 @@ quoteSchema.pre("save", async function (next) {
 
 quoteSchema.index({ title: "text", "author.name": "text", genre: "text" });
 
-const Quote = mongoose.model("Quote", quoteSchema);
+const Quote = mongoose.model<QuoteType>("Quote", quoteSchema);
 
 export default Quote;

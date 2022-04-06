@@ -1,4 +1,6 @@
 import mongoose from "mongoose";
+import type { User as UserType } from "@frontend/src/data-type";
+
 const { Schema } = mongoose;
 
 const userSchema = new Schema({
@@ -17,6 +19,10 @@ const userSchema = new Schema({
 	likedQuotes: {
 		type: [{ type: Schema.Types.ObjectId, ref: "Quote" }],
 		required: true,
+		default: [],
+	},
+	profilePicture: {
+		type: String,
 	},
 	collections: [
 		{
@@ -30,6 +36,7 @@ const userSchema = new Schema({
 			quotes: {
 				type: [{ type: Schema.Types.ObjectId, ref: "Quote" }],
 				required: true,
+				default: [],
 			},
 			isPrivate: {
 				type: Boolean,
@@ -45,6 +52,6 @@ const userSchema = new Schema({
 	},
 });
 
-const User = mongoose.model("User", userSchema);
+const User = mongoose.model<UserType>("User", userSchema);
 
 export default User;

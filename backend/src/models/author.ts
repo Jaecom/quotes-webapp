@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { Author as AuthorType } from "@frontend/src/data-type";
 const { Schema } = mongoose;
 
 const schemaOptions = {
@@ -25,6 +26,6 @@ const authorSchema = new Schema(
 	schemaOptions
 );
 
-const Author = mongoose.model("Author", authorSchema);
+const Author = mongoose.model<AuthorType>("Author", authorSchema);
 
 export default Author;
