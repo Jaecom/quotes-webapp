@@ -9,7 +9,7 @@
 		"postinstall": "npm run tsc",
 		"dev": "concurrently \"tsc -w\" \"nodemon dist/backend/src/app.js\"",
 		"dev:tsc": "tsc -w",
-		"dev:nodemon": "nodemon dist/backend/app.js"
+		"dev:nodemon": "nodemon dist/backend/src/app.js"
 	},
 	"keywords": [],
 	"author": "",
