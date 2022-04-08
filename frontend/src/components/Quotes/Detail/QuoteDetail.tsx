@@ -42,7 +42,7 @@ const QuoteDetail = (props: Props) => {
 							isLiked={isLiked}
 							mobile
 						/>
-						<div className={classes.follow}>Follow</div>
+						<div className={classes["view-profile"]}>View Profile</div>
 					</div>
 				</div>
 
