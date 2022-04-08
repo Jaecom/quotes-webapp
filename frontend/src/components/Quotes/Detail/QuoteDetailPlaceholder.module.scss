@@ -1,33 +1,37 @@
 @use "/src/assets/styles/main.scss" as *;
 
 .top,
-.keyword,
-.summary,
-.image,
-.quote {
+.content > div {
 	background-color: $color-grey-light;
+	margin-bottom: 3rem;
 }
 
 .top {
-	height: 2rem;
+	height: 10rem;
+	width: 100%;
 }
 
-.summary-container {
-	margin: 7rem 0;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	row-gap: 1rem;
+.content {
+	width: 100%;
+	max-width: 60rem;
+	margin: 0 auto;
+}
 
-	.keyword {
-		height: 4rem;
-		width: 50%;
-	}
+.title {
+	height: 5rem;
+	width: 50%;
+	margin-left: auto;
+}
 
-	.summary {
-		height: 10rem;
-		width: 100%;
-	}
+.keyquote {
+	height: 20rem;
+}
+
+.genre {
+	height: 5rem;
+	width: 20%;
+	min-width: 10rem;
+	margin-left: auto;
 }
 
 .image {
@@ -35,6 +39,5 @@
 }
 
 .quote {
-	margin-top: 5rem;
 	height: 50rem;
 }
