@@ -20,10 +20,10 @@ const index: RequestHandler<unknown, unknown, unknown, Query> = async (req, res,
 	let isLastPage = false;
 
 	quotes = await Quote.find()
-		.lean()
-		.sort({ views: -1, "likes.total": -1, dateCreated: -1 })
+		.sort({ views: -1, "likes.total": -1, dateCreated: -1, _id: 1 })
 		.skip(QUOTE_PER_LOAD * (page - 1))
-		.limit(QUOTE_PER_LOAD);
+		.limit(QUOTE_PER_LOAD)
+		.lean();
 
 	const randomIndex = Math.floor(Math.random() * (quotes.length - 1));
 	quotes[randomIndex].isBanner = true;
