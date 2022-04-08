@@ -27,11 +27,6 @@ const QuoteList = (props: Props) => {
 					{props.loading && <QuoteItemPlaceHolders count={10} />}
 				</div>
 				<div className={classes.bottom} ref={props.quoteBottomRef} />
-				{props.loading && (
-					<div className={classes.loading}>
-						<Loading />
-					</div>
-				)}
 			</div>
 		</>
 	);
