@@ -1,10 +1,12 @@
-//change flag to upload
+import dotenv from "dotenv";
+dotenv.config();
+
 const myArgs = process.argv.slice(2);
 const LOCAL_DB = myArgs[0] !== "online";
 
 import XLSX from "xlsx";
-import Quote from "../dist/models/quote.js";
-import User from "../dist/models/user.js";
+import Quote from "../dist/backend/src/models/quote.js";
+import User from "../dist/backend/src/models/user.js";
 import mongoose from "mongoose";
 import bcrypt from "bcrypt";
 
@@ -29,16 +31,22 @@ const FAKE_USERS = [
 		email: "example@gmail.com",
 		username: "AvidReader123",
 		password: "example",
+		profilePicture:
+			"https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=100&q=80",
 	},
 	{
 		email: "a@gmail.com",
 		username: "americanReader123",
 		password: "a",
+		profilePicture:
+			"https://images.unsplash.com/photo-1546961329-78bef0414d7c?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=100&q=80",
 	},
 	{
 		email: "b@gmail.com",
 		username: "ilovebooks123",
 		password: "b",
+		profilePicture:
+			"https://images.unsplash.com/photo-1619895862022-09114b41f16f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTh8fHVzZXJ8ZW58MHx8MHx8&auto=format&fit=crop&w=100&q=60",
 	},
 ];
 
@@ -47,7 +55,12 @@ const createUsers = async () => {
 
 	for (const user of FAKE_USERS) {
 		const hashedPassword = await bcrypt.hash(user.password, 10);
-		const newUser = new User({ email: user.email, username: user.username, hash: hashedPassword });
+		const newUser = new User({
+			email: user.email,
+			username: user.username,
+			hash: hashedPassword,
+			profilePicture: user.profilePicture,
+		});
 		await newUser.save();
 	}
 };
