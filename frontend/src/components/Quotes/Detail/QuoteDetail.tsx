@@ -23,16 +23,13 @@ const QuoteDetail = (props: Props) => {
 				<div className={classes.top}>
 					<div className={classes.profile}>
 						<div className={classes["profile-image"]}>
-							<img
-								src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=100&q=80"
-								alt="user"
-							/>
+							<img src={quote.owner.profilePicture} alt="user" />
 						</div>
 						<div className={classes["profile-detail"]}>
 							<p className="heading-5" style={{ fontWeight: "700" }}>
-								AvidReader123
+								{quote.owner.username}
 							</p>
-							<p className="heading-5">2 quotes | 5 collections</p>
+							<p className="heading-5">{`${quote.owner.ownedQuotes.length} quotes | ${quote.owner.collections.length} collections`}</p>
 						</div>
 					</div>
 					<div className={classes.control}>

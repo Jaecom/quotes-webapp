@@ -66,7 +66,8 @@ const getQuote: RequestHandler = async (req, res) => {
 					path: "quotes",
 					model: Quote,
 				},
-			}),
+			})
+			.populate("owner"),
 		Quote.aggregate([{ $sample: { size: 3 } }]),
 	]);
 
