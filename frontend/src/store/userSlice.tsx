@@ -5,12 +5,16 @@ interface UserData {
 	likedQuotes: ObjectId[];
 	ownedQuotes: ObjectId[];
 	collections: Collection[];
+	profilePicture: string;
+	username: string;
 }
 
 const initialState: UserData = {
 	likedQuotes: [],
 	ownedQuotes: [],
 	collections: [],
+	profilePicture: "",
+	username: ""
 };
 
 export const userSlice = createSlice({

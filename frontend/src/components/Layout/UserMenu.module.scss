@@ -1,5 +1,8 @@
+@use "/src/assets/styles/main.scss" as *;
+
 .wrapper {
 	position: relative;
+	height: 100%;
 
 	&:hover .action-wrapper {
 		visibility: visible;
@@ -10,8 +13,15 @@
 	border-radius: 50%;
 	width: 4rem;
 	height: 4rem;
-	object-position: center;
-	object-fit: cover;
+	background-color: $color-grey-light;
+	overflow: hidden;
+	
+	img {
+		width: 100%;
+		height: 100%;
+		object-position: center;
+		object-fit: cover;
+	}
 }
 
 .action-wrapper {

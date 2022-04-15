@@ -8,9 +8,10 @@ const SALT_ROUNDS = 10;
 
 const TOKEN_EXPIRATION = "10 day";
 
+
+
 const getBasicData: RequestHandler = async (req, res) => {
 	const { userId, expirationDate } = res.locals;
-
 	const user = await User.findById(userId);
 
 	if (!user) {
@@ -21,6 +22,8 @@ const getBasicData: RequestHandler = async (req, res) => {
 		collections: user.collections,
 		ownedQuotes: user.ownedQuotes,
 		likedQuotes: user.likedQuotes,
+		profilePicture: user.profilePicture,
+		username: user.username,
 	};
 
 	res.json({ basicUserData, userId, expirationDate });
@@ -100,8 +103,13 @@ const login: RequestHandler = async (req, res, next) => {
 
 	res.cookie("token", token, { secure: true, httpOnly: true, sameSite: "strict" });
 
-	const { collections, ownedQuotes, likedQuotes } = existingUser;
-	const basicUserData = { collections, ownedQuotes, likedQuotes };
+	const basicUserData = {
+		collections: existingUser.collections,
+		ownedQuotes: existingUser.ownedQuotes,
+		likedQuotes: existingUser.likedQuotes,
+		profilePicture: existingUser.profilePicture,
+		username: existingUser.username,
+	};
 
 	res.json({ userId: existingUser.id, token, expirationDate, basicUserData });
 };
