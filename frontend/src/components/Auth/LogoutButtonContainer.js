@@ -12,7 +12,7 @@ const LogoutButtonContainer = () => {
 		history.replace("/");
 	};
 
-	return <Button onClick={logoutButtonHandler}>Logout</Button>;
+	return <Button className="heading-nav" onClick={logoutButtonHandler}>Logout</Button>;
 };
 
 export default LogoutButtonContainer;

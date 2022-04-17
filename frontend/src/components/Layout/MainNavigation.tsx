@@ -20,23 +20,50 @@ const MainNavigation = () => {
 			<nav className={classes.nav}>
 				<Sidebar className={classes["show-responsive"]} onClose={closeSide} isOpen={isSideOpen} />
 
-				<Link to="/" className={classes["hide-responsive"]}>
-					<div className={`${classes.logo} heading-nav`}>Quotes</div>
-				</Link>
+				<div className={classes.core}>
+					<Hamburger
+						className={classes["show-responsive"]}
+						onOpen={openSide}
+						onClose={closeSide}
+						isOpen={isSideOpen}
+					/>
 
-				<Hamburger
-					className={classes["show-responsive"]}
-					onOpen={openSide}
-					onClose={closeSide}
-					isOpen={isSideOpen}
-				/>
+					<Link to="/">
+						<div className={classes.logo}>
+							<div className={`heading-nav`}>Quotes</div>
+						</div>
+					</Link>
 
-				<SearchBar />
-				<ul className={classes["user-controls"]}>
-					{!authCtx.isLoggedIn && (
+					<ul className={`${classes.sub} ${classes["hide-responsive"]}`}>
 						<li>
+							<Link to="/explore" className="heading-nav--bold">
+								Explore
+							</Link>
+						</li>
+
+						<li>
+							<Link to="/genres" className="heading-nav--bold">
+								Genres
+							</Link>
+						</li>
+
+						<li>
+							<Link to="/authors" className="heading-nav--bold">
+								Authors
+							</Link>
+						</li>
+					</ul>
+				</div>
+
+				<ul className={classes["user-controls"]}>
+					<li className={classes.search}>
+						<SearchBar />
+					</li>
+
+					{!authCtx.isLoggedIn && (
+						<li className={classes["hide-responsive"]}>
 							<NavLink to="/login" className="heading-nav">
-								<Button>Login</Button>
+								<Button outline>Login</Button>
 							</NavLink>
 						</li>
 					)}
@@ -50,7 +77,7 @@ const MainNavigation = () => {
 					)}
 
 					{authCtx.isLoggedIn && (
-						<li className={`heading-nav ${classes["hide-responsive"]}`}>
+						<li className={`${classes["hide-responsive"]}`}>
 							<NavLink to="/create" className="heading-nav">
 								<Button fill>Create</Button>
 							</NavLink>
@@ -58,7 +85,7 @@ const MainNavigation = () => {
 					)}
 
 					{authCtx.isLoggedIn && (
-						<li className="heading-nav">
+						<li className={classes["hide-responsive"]}>
 							<UserMenu />
 						</li>
 					)}

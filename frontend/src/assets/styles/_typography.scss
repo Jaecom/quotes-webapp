@@ -61,6 +61,11 @@ $font-serif: "Libre Baskerville", serif;
 	font-weight: 400;
 }
 
+.heading-nav--bold {
+	@extend .heading-nav;
+	font-weight: 600;
+}
+
 %paragraph {
 	font-family: $font-serif;
 	line-height: 2.4;
@@ -87,10 +92,6 @@ $font-serif: "Libre Baskerville", serif;
 .paragraph--medium {
 	@extend %paragraph;
 	font-size: 1.6rem;
-
-	@include respond(phone) {
-		font-size: 1.4rem;
-	}
 }
 
 .paragraph--small {

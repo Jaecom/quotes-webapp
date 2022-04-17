@@ -1,7 +1,7 @@
 @use "/src/assets/styles/main.scss" as *;
 
 .sidebar {
-	width: 40rem;
+	width: 27rem;
 	height: 100vh;
 
 	position: absolute;
@@ -19,10 +19,6 @@
 
 	&--hide {
 		transform: translateX(-100%);
-	}
-
-	@include respond(phone) {
-		width: 100vw;
 	}
 }
 

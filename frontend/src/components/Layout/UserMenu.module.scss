@@ -1,8 +1,10 @@
 @use "/src/assets/styles/main.scss" as *;
 
 .wrapper {
+	height: inherit;
+	display: flex;
+	align-items: center;
 	position: relative;
-	height: 100%;
 
 	&:hover .action-wrapper {
 		visibility: visible;
@@ -15,7 +17,7 @@
 	height: 4rem;
 	background-color: $color-grey-light;
 	overflow: hidden;
-	
+
 	img {
 		width: 100%;
 		height: 100%;
@@ -27,7 +29,7 @@
 .action-wrapper {
 	visibility: hidden;
 	position: absolute;
-	top: 4.5rem;
+	top: 4.8rem;
 	right: -4rem;
 }
 
@@ -42,11 +44,13 @@
 	border-radius: 1rem;
 	overflow: hidden;
 
-	.action-link,
-	button {
-		width: 100%;
-		text-align: left;
-		padding: 1.5rem 2rem;
+	li {
+		a,
+		button {
+			width: 100%;
+			text-align: left;
+			padding: 1.5rem 2rem;
+		}
 
 		&:hover {
 			background-color: rgba(black, 0.05);

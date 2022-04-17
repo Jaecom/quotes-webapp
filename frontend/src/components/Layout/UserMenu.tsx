@@ -18,22 +18,22 @@ const UserMenu = () => {
 			</div>
 			<div className={classes["action-wrapper"]}>
 				<ul className={classes["action-list"]}>
-					<li className={classes["action-item"]}>
-						<Link className={classes["action-link"]} to="/profile">
+					<li>
+						<Link className="heading-nav" to="/profile">
 							Profile
 						</Link>
 					</li>
-					<li className={classes["action-item"]}>
-						<Link className={classes["action-link"]} to="/collections">
+					<li>
+						<Link className="heading-nav" to="/collections">
 							My Collections
 						</Link>
 					</li>
-					<li className={classes["action-item"]}>
-						<Link className={classes["action-link"]} to="/settings">
+					<li>
+						<Link className="heading-nav" to="/settings">
 							Account Settings
 						</Link>
 					</li>
-					<li className={classes["action-item"]}>
+					<li>
 						<LogoutButtonContainer />
 					</li>
 				</ul>
