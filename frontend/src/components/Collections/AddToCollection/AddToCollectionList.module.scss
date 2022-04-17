@@ -5,6 +5,11 @@
 	padding: 7rem;
 	max-height: 50rem;
 	overflow: auto;
+
+	@include respond(phone) {
+		padding: 4rem;
+		min-width: 40rem;
+	}
 }
 
 .heading {
