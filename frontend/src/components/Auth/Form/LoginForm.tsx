@@ -1,6 +1,6 @@
 import classes from "./Form.module.scss";
 import Input from "../../UI/Form/Input";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import React from "react";
 import Button from "../../UI/Button";
 import ValidationError from "../../UI/Form/ValidationError";
@@ -12,12 +12,16 @@ interface Props {
 }
 
 const LoginForm = React.forwardRef<HTMLFormElement, Props>((props, ref) => {
+	const location = useLocation<{ beforeAuth?: Location }>();
+
 	return (
 		<form className={classes.form} onSubmit={props.onSubmit} ref={ref}>
 			<h2 className={`${classes.heading}`}>Login</h2>
 			<p className={classes.redirect}>
 				Don't have an account?&nbsp;
-				<Link to="/signup">Sign Up</Link>
+				<Link to={{ pathname: "/signup", state: { beforeAuth: location.state?.beforeAuth } }}>
+					Sign Up
+				</Link>
 			</p>
 			{props.error && <ValidationError errors={props.error} />}
 			<Input

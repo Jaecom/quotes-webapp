@@ -13,7 +13,7 @@ const AuthContainer = (props: Props) => {
 	const formRef = useRef<HTMLFormElement>(null);
 	const [sendRequest, error, errorField] = useSchemaHttp();
 	const authCtx = useContext(AuthContext);
-	const history = useHistory();
+	const history = useHistory<{ beforeAuth: Location }>();
 	const flag = props.login ? "login" : "signup";
 
 	const submitHandler = async (e: React.FormEvent) => {
@@ -33,11 +33,12 @@ const AuthContainer = (props: Props) => {
 			(data) => {
 				authCtx.login(data.expirationDate, data.userId, data?.basicUserData);
 
-				if (history.location.pathname !== `/${flag}`) {
-					console.log("reloading");
-					window.location.reload();
+				if (history.location.pathname === `/${flag}`) {
+					//if auth page
+					history.push(history.location.state?.beforeAuth ?? "/");
 				} else {
-					history.goBack();
+					//if auth modal
+					window.location.reload();
 				}
 			}
 		);

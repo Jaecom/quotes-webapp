@@ -1,6 +1,6 @@
 import classes from "./MainNavigation.module.scss";
 
-import { NavLink, Link } from "react-router-dom";
+import { NavLink, Link, useLocation } from "react-router-dom";
 import { useContext } from "react";
 
 import SearchBar from "./SearchBar";
@@ -13,6 +13,7 @@ import Hamburger from "./Hamburger";
 
 const MainNavigation = () => {
 	const authCtx = useContext(AuthContext);
+	const location = useLocation();
 
 	const [isSideOpen, openSide, closeSide] = useModal();
 	return (
@@ -62,7 +63,10 @@ const MainNavigation = () => {
 
 					{!authCtx.isLoggedIn && (
 						<li className={classes["hide-responsive"]}>
-							<NavLink to="/login" className="heading-nav">
+							<NavLink
+								to={{ pathname: `/login`, state: { beforeAuth: location } }}
+								className="heading-nav"
+							>
 								<Button outline>Login</Button>
 							</NavLink>
 						</li>
@@ -70,7 +74,10 @@ const MainNavigation = () => {
 
 					{!authCtx.isLoggedIn && (
 						<li className={classes["hide-responsive"]}>
-							<NavLink to="/signup" className="heading-nav">
+							<NavLink
+								to={{ pathname: `/signup`, state: { beforeAuth: location } }}
+								className="heading-nav"
+							>
 								<Button fill>Signup</Button>
 							</NavLink>
 						</li>
