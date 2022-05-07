@@ -1,7 +1,7 @@
-import SearchContainer from "../components/Quotes/Search/SearchContainer";
+import QuoteListContainer from "components/Quotes/QuoteListContainer";
 
 const SearchPage = () => {
-	return <SearchContainer />;
+	return <QuoteListContainer api="/api/search/quotes" search />;
 };
 
 export default SearchPage;

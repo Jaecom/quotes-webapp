@@ -14,7 +14,11 @@ interface Query {
 	q: string;
 }
 
-const index: RequestHandler<unknown, unknown, unknown, Query> = async (req, res, next) => {
+const index: RequestHandler<unknown, unknown, unknown, Query> = async (
+	req,
+	res,
+	next
+) => {
 	const page = req.query.page || 1;
 	let quotes = [];
 	let isLastPage = false;
@@ -28,14 +32,17 @@ const index: RequestHandler<unknown, unknown, unknown, Query> = async (req, res,
 	const randomIndex = Math.floor(Math.random() * (quotes.length - 1));
 	quotes[randomIndex].isBanner = true;
 
-	if (quotes.length !== QUOTE_PER_LOAD) {
+	if (quotes.length < QUOTE_PER_LOAD) {
 		isLastPage = true;
 	}
-
+	
 	res.json({ quotes, isLastPage });
 };
 
-const search: RequestHandler<unknown, unknown, unknown, Query> = async (req, res) => {
+const search: RequestHandler<unknown, unknown, unknown, Query> = async (
+	req,
+	res
+) => {
 	const { q } = req.query;
 	const page = req.query.page || 1;
 	let isLastPage = false;
@@ -46,7 +53,7 @@ const search: RequestHandler<unknown, unknown, unknown, Query> = async (req, res
 		.skip(QUOTE_PER_LOAD * (page - 1))
 		.limit(QUOTE_PER_LOAD);
 
-	if (quotes.length !== QUOTE_PER_LOAD) {
+	if (quotes.length < QUOTE_PER_LOAD) {
 		isLastPage = true;
 	}
 
@@ -97,9 +104,13 @@ const toggleLike: RequestHandler = async (req, res, next) => {
 		const removeUserLike = { $pull: { likedQuotes: new ObjectId(quoteId) } };
 		const userLikeUpdate = isQuoteLiked ? removeUserLike : addUserLike;
 
-		const updatedUser = await User.findOneAndUpdate({ _id: new ObjectId(userId) }, userLikeUpdate, {
-			session,
-		});
+		const updatedUser = await User.findOneAndUpdate(
+			{ _id: new ObjectId(userId) },
+			userLikeUpdate,
+			{
+				session,
+			}
+		);
 
 		// push/pull user to quote user like list
 		const addUserToQuote = {
