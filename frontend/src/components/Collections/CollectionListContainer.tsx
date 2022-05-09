@@ -1,27 +1,16 @@
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { createCollection } from "../../store/userSlice";
+import { useSelector } from "react-redux";
 import CollectionList from "./CollectionList";
-import type { Collection } from "data-type";
+import useModal from "hooks/useModal";
+import CreateCollectionModal from "./Form/CreateCollectionModal";
 
 const CollectionListContainer = () => {
 	const { collections } = useSelector((state: any) => state.user);
-	const [closeAfterCreate, setCloseAfterCreate] = useState(false);
-	const dispatch = useDispatch();
-
-	const createCollectionHandler = (data: Collection) => {
-		dispatch(createCollection(data));
-		//trigger rerender collectionList to close modal
-		setCloseAfterCreate((state) => !state);
-	};
+	const [isCreateOpen, openCreate, closeCreate] = useModal();
 
 	return (
 		<>
-			<CollectionList
-				collections={collections}
-				onCreateCollection={createCollectionHandler}
-				closeAfterCreate={closeAfterCreate}
-			/>
+			<CollectionList collections={collections} openCreate={openCreate} />
+			{isCreateOpen && <CreateCollectionModal onClose={closeCreate} />}
 		</>
 	);
 };

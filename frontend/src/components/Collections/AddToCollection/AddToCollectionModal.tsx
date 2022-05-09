@@ -1,8 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
-
 import Modal from "../../UI/Modal";
 import Card from "../../UI/Card";
-import CreateCollectionForm from "../Create/CreateCollectionForm";
+import CreateCollectionForm from "../Form/CreateCollectionContainer";
 import AddToCollectionList from "./AddToCollectionList";
 import { useDispatch, useSelector } from "react-redux";
 import { createCollection } from "../../../store/userSlice";
@@ -20,7 +19,8 @@ enum pageType {
 
 const AddToCollectionModal = ({ quoteId, onClose }: Props) => {
 	const [page, setPage] = useState<pageType>(pageType.ADD_QUOTE);
-	const [isCollectionCreated, setIsCollectionCreated] = useState<boolean>(false);
+	const [isCollectionCreated, setIsCollectionCreated] =
+		useState<boolean>(false);
 	const { collections } = useSelector((state: any) => state.user);
 	const dispatch = useDispatch();
 
@@ -59,10 +59,7 @@ const AddToCollectionModal = ({ quoteId, onClose }: Props) => {
 					/>
 				)}
 				{page === pageType.CREATE_COLLECTION && (
-					<CreateCollectionForm
-						onCreateCollection={createCollectionHandler}
-						onCancel={openAddToPage}
-					/>
+					<CreateCollectionForm onClose={openAddToPage} />
 				)}
 			</Card>
 		</Modal>

@@ -1,10 +1,9 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import classes from "./CollectionList.module.scss";
 import sprite from "../../assets/sprite.svg";
 
 import CollectionItemContainer from "./CollectionItemContainer";
-import CreateCollectionModal from "./Create/CreateCollectionModal";
 import Button from "../UI/Button";
 import useModal from "../../hooks/useModal";
 import type { Collection } from "data-type";
@@ -12,13 +11,11 @@ import OptionModal from "./OptionModal";
 
 interface Props {
 	collections: Collection[];
-	closeAfterCreate: boolean;
-	onCreateCollection: (data: Collection) => void;
+	openCreate: () => void;
 }
 
 const CollectionList = (props: Props) => {
-	const { collections, closeAfterCreate } = props;
-	const [isCreateOpen, openCreate, closeCreate] = useModal();
+	const { collections, openCreate } = props;
 	const [isOptionOpen, openOptions, closeOptions] = useModal();
 	const [modalPos, setModalPos] = useState<[number, number, string]>([
 		0,
@@ -38,11 +35,6 @@ const CollectionList = (props: Props) => {
 	const onOptionBlur = () => {
 		closeOptions();
 	};
-
-	useEffect(() => {
-		//when closeAfterCreate changes
-		closeCreate();
-	}, [closeAfterCreate, closeCreate]);
 
 	return (
 		<>
@@ -65,13 +57,6 @@ const CollectionList = (props: Props) => {
 					</svg>
 				</Button>
 			</div>
-
-			{isCreateOpen && (
-				<CreateCollectionModal
-					onCreateCollection={props.onCreateCollection}
-					onClose={closeCreate}
-				/>
-			)}
 
 			{isOptionOpen && <OptionModal position={modalPos} />}
 		</>
