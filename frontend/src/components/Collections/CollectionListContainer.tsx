@@ -2,14 +2,14 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { createCollection } from "../../store/userSlice";
 import CollectionList from "./CollectionList";
+import type { Collection } from "data-type";
 
 const CollectionListContainer = () => {
-	const { collections } = useSelector((state) => state.user);
+	const { collections } = useSelector((state: any) => state.user);
 	const [closeAfterCreate, setCloseAfterCreate] = useState(false);
 	const dispatch = useDispatch();
 
-	const createCollectionHandler = (data) => {
-		console.log(data);
+	const createCollectionHandler = (data: Collection) => {
 		dispatch(createCollection(data));
 		//trigger rerender collectionList to close modal
 		setCloseAfterCreate((state) => !state);

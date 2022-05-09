@@ -1,0 +1,32 @@
+@use "src/assets/styles/main.scss" as *;
+
+.container {
+	position: absolute;
+	z-index: 40;
+}
+
+.list {
+	box-shadow: 0 0.5rem 1rem rgba($color-black, 0.2);
+
+	li {
+		min-width: 10rem;
+		padding: 1rem 2rem;
+
+    display: flex;
+    align-items: center;
+
+		background-color: $color-grey-light;
+		cursor: pointer;
+
+		&:hover {
+			filter: brightness(95%);
+		}
+	}
+
+	svg {
+		width: 2rem;
+		height: 2rem;
+    margin-right: 0.5rem;
+    fill: $color-grey-dark-3;
+	}
+}
