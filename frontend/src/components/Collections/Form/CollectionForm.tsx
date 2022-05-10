@@ -13,15 +13,26 @@ interface Props {
 	onClose: () => void;
 	title?: string;
 	description?: string;
-	private?: boolean;
+	isPrivate?: boolean;
+	keyword: string;
 }
 
 const CollectionForm = (props: Props) => {
-	const { onSubmit, formRef, schemaErrors, errorField, onClose } = props;
+	const {
+		onSubmit,
+		formRef,
+		schemaErrors,
+		errorField,
+		onClose,
+		keyword,
+		description,
+		isPrivate,
+		title,
+	} = props;
 
 	return (
 		<form onSubmit={onSubmit} className={classes.form} ref={formRef}>
-			<h2 className={classes.heading}>Create a Collection</h2>
+			<h2 className={classes.heading}>{`${keyword} a Collection`}</h2>
 			{schemaErrors && <ValidationError errors={schemaErrors} />}
 			<Input
 				id="collectionName"
@@ -29,12 +40,14 @@ const CollectionForm = (props: Props) => {
 				label="Name"
 				name="name"
 				error={errorField?.name}
+				value={title}
 			/>
 			<Input
 				id="collectionDescription"
 				attribute={{ type: "text" }}
 				label="Description"
 				name="description"
+				value={description}
 			/>
 
 			<fieldset className={`${inputClasses.fieldset} ${classes.checkbox}`}>
@@ -43,13 +56,13 @@ const CollectionForm = (props: Props) => {
 					type="checkbox"
 					id="privateCheckbox"
 					name="isPrivate"
-					value="true"
+					value={isPrivate ? "true" : "false"}
 				/>
 			</fieldset>
 
 			<div className={classes["button-container"]}>
 				<Button type="submit" fill>
-					Create
+					{keyword}
 				</Button>
 				<Button outline onClick={onClose}>
 					Cancel

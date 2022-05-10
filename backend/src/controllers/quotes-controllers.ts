@@ -35,7 +35,7 @@ const index: RequestHandler<unknown, unknown, unknown, Query> = async (
 	if (quotes.length < QUOTE_PER_LOAD) {
 		isLastPage = true;
 	}
-	
+
 	res.json({ quotes, isLastPage });
 };
 
@@ -166,7 +166,7 @@ const createQuote: RequestHandler = async (req, res, next) => {
 		owner: res.locals.userId,
 	});
 
-	await newQuote.save().catch((error: mongoose.Error) => {
+	await newQuote.save().catch((error) => {
 		console.log(error);
 		throw new HttpError("Something went wrong", 500);
 	});

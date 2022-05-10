@@ -9,15 +9,23 @@ const collectionRoutes = express.Router();
 collectionRoutes
 	.route("/")
 	.get(checkAuth, catchAsync(collectionController.index))
-	.post(checkAuth, validateCollection, catchAsync(collectionController.createCollection));
+	.post(
+		checkAuth,
+		validateCollection,
+		catchAsync(collectionController.createCollection)
+	);
 
 collectionRoutes
 	.route("/:collectionId")
-	.get(checkAuth, catchAsync(collectionController.getCollection));
+	.get(checkAuth, catchAsync(collectionController.getCollection))
+	.patch(checkAuth, catchAsync(collectionController.editCollection));
 
 collectionRoutes
 	.route("/:collectionId/quotes")
 	.post(checkAuth, catchAsync(collectionController.addQuoteToCollection))
-	.delete(checkAuth, catchAsync(collectionController.removeQuoteFromCollection));
+	.delete(
+		checkAuth,
+		catchAsync(collectionController.removeQuoteFromCollection)
+	);
 
 export default collectionRoutes;

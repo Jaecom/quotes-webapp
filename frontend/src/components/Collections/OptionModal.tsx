@@ -4,22 +4,22 @@ import sprite from "../../assets/sprite.svg";
 
 interface Props {
 	position: [number, number, string];
+	onEditClick: (collectionID: string) => void;
 }
 
 const OptionModal = (props: Props) => {
 	const { position } = props;
 	const [posX, posY, collectionId] = position;
 
-	const editCollectionHandler = () => {
-		console.log(collectionId);
-	};
-
 	return (
 		<>
 			{ReactDOM.createPortal(
 				<div className={classes.container} style={{ left: posX, top: posY }}>
 					<ul className={classes.list}>
-						<li className="heading-nav" onMouseDown={editCollectionHandler}>
+						<li
+							className="heading-nav"
+							onMouseDown={() => props.onEditClick(collectionId)}
+						>
 							<svg>
 								<use href={sprite + "#icon-create"} />
 							</svg>

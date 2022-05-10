@@ -14,14 +14,7 @@ export interface User {
 	username: string;
 	hash: string;
 	likedQuotes: ObjectId[];
-	collections: [
-		{
-			name: string;
-			description: string;
-			quotes: ObjectId[];
-			isPrivate: boolean;
-		}
-	];
+	collections: Collection[];
 	ownedQuotes: ObjectId[];
 	profilePicture: string;
 }

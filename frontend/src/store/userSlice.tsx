@@ -14,7 +14,7 @@ const initialState: UserData = {
 	ownedQuotes: [],
 	collections: [],
 	profilePicture: "",
-	username: ""
+	username: "",
 };
 
 export const userSlice = createSlice({
@@ -32,12 +32,19 @@ export const userSlice = createSlice({
 			const newCollection = action.payload;
 			state.collections.push(newCollection);
 		},
+		editCollection: (state, action: { payload: Collection[] }) => {
+			const updatedCollection = action.payload;
+			console.log(updatedCollection);
+			state.collections = updatedCollection;
+		},
 		addQuoteToCollection: (
 			state,
 			action: { payload: { quoteId: string; collectionId: string } }
 		) => {
 			const { quoteId, collectionId } = action.payload;
-			state.collections.find((collection) => collection._id === collectionId)?.quotes.push(quoteId);
+			state.collections
+				.find((collection) => collection._id === collectionId)
+				?.quotes.push(quoteId);
 		},
 		removeQuoteFromCollection: (
 			state,
@@ -49,7 +56,9 @@ export const userSlice = createSlice({
 			);
 
 			if (foundCollection) {
-				foundCollection.quotes = foundCollection?.quotes.filter((id) => id !== quoteId);
+				foundCollection.quotes = foundCollection?.quotes.filter(
+					(id) => id !== quoteId
+				);
 			}
 		},
 		likeQuote: (state, action: { payload: { quoteId: string } }) => {
@@ -71,5 +80,6 @@ export const {
 	clearUserData,
 	likeQuote,
 	dislikeQuote,
+	editCollection,
 } = userSlice.actions;
 export default userSlice.reducer;

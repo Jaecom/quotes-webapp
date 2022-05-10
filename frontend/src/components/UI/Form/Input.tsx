@@ -11,10 +11,11 @@ export interface InputProp {
 	onBlur?: (event: React.FocusEvent<HTMLInputElement>) => void;
 	onKeyDown?: (event: React.KeyboardEvent) => void;
 	attribute?: {};
+	value?: string;
 }
 
 const Input = React.forwardRef<HTMLInputElement, InputProp>(
-	({ error, id, name, attribute, label, onChange, onFocus, onBlur, onKeyDown }, ref) => {
+	({ error, id, name, attribute, label, onChange, onFocus, onBlur, onKeyDown, value }, ref) => {
 		return (
 			<fieldset className={classes.fieldset}>
 				<label htmlFor={id}>{label}</label>
@@ -29,6 +30,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProp>(
 					onKeyDown={onKeyDown}
 					{...attribute}
 					ref={ref}
+					defaultValue={value}
 				/>
 			</fieldset>
 		);
