@@ -40,7 +40,6 @@ const getCollection: RequestHandler = async (req, res, next) => {
 const createCollection: RequestHandler = async (req, res, next) => {
 	const { userId } = res.locals;
 	const { name, description, isPrivate } = req.body;
-
 	const user = await User.findById(userId);
 
 	if (!user) {
@@ -118,6 +117,7 @@ const editCollection: RequestHandler = async (req, res, next) => {
 
 	user.collections[indexOf].name = newCollection.name;
 	user.collections[indexOf].description = newCollection.description;
+	user.collections[indexOf].isPrivate = newCollection.isPrivate ?? false;
 
 	console.log(user);
 
@@ -125,7 +125,7 @@ const editCollection: RequestHandler = async (req, res, next) => {
 		throw new HttpError("Editing collection failed. Please try again.", 500);
 	});
 
-	res.json({collection: user.collections});
+	res.json({ collection: user.collections });
 };
 
 const addQuoteToCollection: RequestHandler = async (req, res, next) => {

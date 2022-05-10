@@ -56,7 +56,8 @@ const CollectionForm = (props: Props) => {
 					type="checkbox"
 					id="privateCheckbox"
 					name="isPrivate"
-					defaultValue={isPrivate ? "true" : "false"}
+					defaultChecked={isPrivate}
+					value={"true"}
 				/>
 			</fieldset>
 

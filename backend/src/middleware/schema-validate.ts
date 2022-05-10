@@ -33,7 +33,8 @@ const validateCollection: RequestHandler = (req, res, next) => {
 };
 
 const validateQuote: RequestHandler = (req, res, next) => {
-	if (!req.file) throw new SchemaError("Need to upload an image or insert image url", 400);
+	if (!req.file)
+		throw new SchemaError("Need to upload an image or insert image url", 400);
 
 	const { error } = quoteSchema.validate(req.body, { abortEarly: false });
 
@@ -45,4 +46,9 @@ const validateQuote: RequestHandler = (req, res, next) => {
 	}
 };
 
-export { validateUser, validateCollection, validateQuote, returnValidateErrorObject };
+export {
+	validateUser,
+	validateCollection,
+	validateQuote,
+	returnValidateErrorObject,
+};
