@@ -23,10 +23,22 @@ const CollectionList = (props: Props) => {
 		0,
 		"",
 	]);
+
 	const onOptionsClickHandler = (e: React.MouseEvent, collectionId: string) => {
 		e.preventDefault();
 
-		setModalPos([e.clientX, e.clientY, collectionId]);
+		const target = e.target as Element;
+		const parentDiv = target.parentNode?.parentNode?.parentNode as Element;
+		const parentRect = parentDiv.getBoundingClientRect();
+
+		let x = parentRect.right - 40;
+		let y = parentRect.top + 55;
+
+		if (parentRect.right + 130 > window.innerWidth) {
+			x = parentRect.left + parentRect.width - 150;
+		}
+
+		setModalPos([x, y, collectionId]);
 
 		if (!isOptionOpen) {
 			openOptions();
@@ -59,7 +71,9 @@ const CollectionList = (props: Props) => {
 				</Button>
 			</div>
 
-			{isOptionOpen && <OptionModal position={modalPos} onEditClick={onEditClick}/>}
+			{isOptionOpen && (
+				<OptionModal position={modalPos} onEditClick={onEditClick} />
+			)}
 		</>
 	);
 };

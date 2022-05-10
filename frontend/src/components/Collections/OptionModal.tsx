@@ -1,6 +1,8 @@
 import classes from "./OptionModal.module.scss";
 import ReactDOM from "react-dom";
 import sprite from "../../assets/sprite.svg";
+import { useRef } from "react";
+import { useEffect } from "react";
 
 interface Props {
 	position: [number, number, string];
@@ -10,6 +12,28 @@ interface Props {
 const OptionModal = (props: Props) => {
 	const { position } = props;
 	const [posX, posY, collectionId] = position;
+
+	//disable scroll when options are open
+	useEffect(() => {
+		const disableScrolling = () => {
+			const x = window.scrollX;
+			const y = window.scrollY;
+
+			window.onscroll = function () {
+				window.scrollTo(x, y);
+			};
+		};
+
+		const enableScrolling = () => {
+			window.onscroll = function () {};
+		};
+
+		disableScrolling();
+
+		return () => {
+			enableScrolling();
+		};
+	}, []);
 
 	return (
 		<>
