@@ -40,14 +40,14 @@ const CollectionForm = (props: Props) => {
 				label="Name"
 				name="name"
 				error={errorField?.name}
-				value={title}
+				defaultValue={title}
 			/>
 			<Input
 				id="collectionDescription"
 				attribute={{ type: "text" }}
 				label="Description"
 				name="description"
-				value={description}
+				defaultValue={description}
 			/>
 
 			<fieldset className={`${inputClasses.fieldset} ${classes.checkbox}`}>
@@ -56,7 +56,7 @@ const CollectionForm = (props: Props) => {
 					type="checkbox"
 					id="privateCheckbox"
 					name="isPrivate"
-					value={isPrivate ? "true" : "false"}
+					defaultValue={isPrivate ? "true" : "false"}
 				/>
 			</fieldset>
 
