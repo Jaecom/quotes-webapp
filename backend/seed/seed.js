@@ -12,9 +12,13 @@ import bcrypt from "bcrypt";
 
 const workbook = XLSX.readFile("seed/Quotes.xlsx");
 const sheet_name_list = workbook.SheetNames;
-const quotexlData = XLSX.utils.sheet_to_json(workbook.Sheets[sheet_name_list[0]]);
+const quotexlData = XLSX.utils.sheet_to_json(
+	workbook.Sheets[sheet_name_list[0]]
+);
 
-const uri = LOCAL_DB ? "mongodb://Jaecom:27017/quoteWebsite?replicaSet=rs" : process.env.MONGO_URL;
+const uri = LOCAL_DB
+	? "mongodb://Jae:27017,Jae:27018,Jae:27019?replicaSet=rs"
+	: process.env.MONGO_URL;
 
 mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 

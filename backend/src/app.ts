@@ -16,7 +16,7 @@ import path from "path";
 
 const app = express();
 
-mongoose.connect(process.env.MONGO_URL || "mongodb://Jaecom:27017/quoteWebsite?replicaSet=rs");
+mongoose.connect(process.env.MONGO_URL || "mongodb://Jae:27017,Jae:27018,Jae:27019?replicaSet=rs");
 const db = mongoose.connection;
 
 db.once("open", () => {
