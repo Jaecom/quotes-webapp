@@ -34,7 +34,7 @@ const EditCollectionContainer = ({ onClose, collectionId }: Props) => {
 					"Content-Type": "application/x-www-form-urlencoded",
 				},
 			},
-			(data: {collection: Collection[]}) => {
+			(data: { collection: Collection[] }) => {
 				dispatch(editCollection(data.collection));
 				onClose();
 			}

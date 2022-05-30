@@ -13,10 +13,11 @@ interface Props {
 	collections: Collection[];
 	openCreate: () => void;
 	onEditClick: (collectionId: string) => void;
+	onDeleteClick: (collectionId: string) => void;
 }
 
 const CollectionList = (props: Props) => {
-	const { collections, openCreate, onEditClick } = props;
+	const { collections, openCreate, onEditClick, onDeleteClick } = props;
 	const [isOptionOpen, openOptions, closeOptions] = useModal();
 	const [modalPos, setModalPos] = useState<[number, number, string]>([
 		0,
@@ -72,7 +73,7 @@ const CollectionList = (props: Props) => {
 			</div>
 
 			{isOptionOpen && (
-				<OptionModal position={modalPos} onEditClick={onEditClick} />
+				<OptionModal position={modalPos} onEditClick={onEditClick} onDeleteClick={onDeleteClick}/>
 			)}
 		</>
 	);

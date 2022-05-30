@@ -18,7 +18,8 @@ collectionRoutes
 collectionRoutes
 	.route("/:collectionId")
 	.get(checkAuth, catchAsync(collectionController.getCollection))
-	.patch(checkAuth, catchAsync(collectionController.editCollection));
+	.patch(checkAuth, catchAsync(collectionController.editCollection))
+	.delete(checkAuth, catchAsync(collectionController.deleteCollection));
 
 collectionRoutes
 	.route("/:collectionId/quotes")

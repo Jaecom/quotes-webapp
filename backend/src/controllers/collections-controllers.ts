@@ -112,9 +112,6 @@ const editCollection: RequestHandler = async (req, res, next) => {
 		(element: Collection) => element._id!.toString() === collectionId
 	);
 
-	console.log(indexOf);
-	console.log(newCollection);
-
 	user.collections[indexOf].name = newCollection.name;
 	user.collections[indexOf].description = newCollection.description;
 	user.collections[indexOf].isPrivate = newCollection.isPrivate ?? false;
@@ -126,6 +123,27 @@ const editCollection: RequestHandler = async (req, res, next) => {
 	});
 
 	res.json({ collection: user.collections });
+};
+
+const deleteCollection: RequestHandler = async (req, res, next) => {
+	const { userId } = res.locals;
+	const { collectionId } = req.params;
+
+	const user = await User.findById(userId);
+
+	if (!user) throw new HttpError("Something went wrong. Please try again", 500);
+
+	const indexOf = user.collections.findIndex(
+		(element: Collection) => element._id!.toString() === collectionId
+	);
+
+	user.collections.splice(indexOf, 1);
+
+	await user.save().catch(() => {
+		throw new HttpError("Something went wrong. Please try again", 500);
+	});
+
+	res.json({ collections: user.collections });
 };
 
 const addQuoteToCollection: RequestHandler = async (req, res, next) => {
@@ -185,4 +203,5 @@ export default {
 	editCollection,
 	addQuoteToCollection,
 	removeQuoteFromCollection,
+	deleteCollection,
 };

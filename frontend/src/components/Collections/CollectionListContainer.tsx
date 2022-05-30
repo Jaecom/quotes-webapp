@@ -6,11 +6,13 @@ import Card from "components/UI/Card";
 import CreateCollectionForm from "./Form/CreateCollectionContainer";
 import EditCollectionContainer from "./Form/EditCollectionContainer";
 import { useState } from "react";
+import DeleteCollectionContainer from "./Form/DeleteCollectionContainer";
 
 const CollectionListContainer = () => {
 	const { collections } = useSelector((state: any) => state.user);
 	const [isCreateOpen, openCreate, closeCreate] = useModal();
 	const [isEditOpen, openEdit, closeEdit] = useModal();
+	const [isDeleteOpen, openDelete, closeDelete] = useModal();
 	const [collectionId, setCollectionId] = useState("");
 
 	const editClickHandler = (collectionId: string) => {
@@ -18,7 +20,10 @@ const CollectionListContainer = () => {
 		openEdit();
 	};
 
-	const deleteClickHandler = (collectionId: string) => {};
+	const deleteClickHandler = (collectionId: string) => {
+		setCollectionId(collectionId);
+		openDelete();
+	};
 
 	return (
 		<>
@@ -26,6 +31,7 @@ const CollectionListContainer = () => {
 				collections={collections}
 				openCreate={openCreate}
 				onEditClick={editClickHandler}
+				onDeleteClick={deleteClickHandler}
 			/>
 
 			{isCreateOpen && (
@@ -41,6 +47,17 @@ const CollectionListContainer = () => {
 					<Card>
 						<EditCollectionContainer
 							onClose={closeEdit}
+							collectionId={collectionId}
+						/>
+					</Card>
+				</Modal>
+			)}
+
+			{isDeleteOpen && (
+				<Modal onClose={closeDelete} center>
+					<Card>
+						<DeleteCollectionContainer
+							onClose={closeDelete}
 							collectionId={collectionId}
 						/>
 					</Card>

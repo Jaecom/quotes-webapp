@@ -34,7 +34,10 @@ export const userSlice = createSlice({
 		},
 		editCollection: (state, action: { payload: Collection[] }) => {
 			const updatedCollection = action.payload;
-			console.log(updatedCollection);
+			state.collections = updatedCollection;
+		},
+		deleteCollection: (state, action: { payload: Collection[] }) => {
+			const updatedCollection = action.payload;
 			state.collections = updatedCollection;
 		},
 		addQuoteToCollection: (
@@ -81,5 +84,6 @@ export const {
 	likeQuote,
 	dislikeQuote,
 	editCollection,
+	deleteCollection,
 } = userSlice.actions;
 export default userSlice.reducer;

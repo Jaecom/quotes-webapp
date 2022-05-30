@@ -1,12 +1,12 @@
 import classes from "./OptionModal.module.scss";
 import ReactDOM from "react-dom";
 import sprite from "../../assets/sprite.svg";
-import { useRef } from "react";
 import { useEffect } from "react";
 
 interface Props {
 	position: [number, number, string];
 	onEditClick: (collectionID: string) => void;
+	onDeleteClick: (collectionId: string) => void;
 }
 
 const OptionModal = (props: Props) => {
@@ -49,7 +49,10 @@ const OptionModal = (props: Props) => {
 							</svg>
 							Edit Collection
 						</li>
-						<li className="heading-nav">
+						<li
+							className="heading-nav"
+							onMouseDown={() => props.onDeleteClick(collectionId)}
+						>
 							<svg>
 								<use href={sprite + "#icon-delete"} />
 							</svg>
