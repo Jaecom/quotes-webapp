@@ -38,7 +38,7 @@ const LoginForm = React.forwardRef<HTMLFormElement, Props>((props, ref) => {
 				name="password"
 				error={!!props.error}
 			/>
-			<Button fill type="submit">
+			<Button fill>
 				Login
 			</Button>
 		</form>

@@ -62,9 +62,7 @@ const CollectionForm = (props: Props) => {
 			</fieldset>
 
 			<div className={classes["button-container"]}>
-				<Button type="submit" fill>
-					{keyword}
-				</Button>
+				<Button fill>{keyword}</Button>
 				<Button outline onClick={onClose}>
 					Cancel
 				</Button>

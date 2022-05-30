@@ -61,7 +61,7 @@ const SignupForm = React.forwardRef<HTMLFormElement, Props>((props, ref) => {
 				name="password"
 				error={errorField?.password}
 			/>
-			<Button fill type="submit">
+			<Button fill>
 				Create Account
 			</Button>
 		</form>
