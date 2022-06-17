@@ -26,7 +26,16 @@ const CollectionItem = (props: Props) => {
 			<div className={classes["grid-item"]}>
 				<div className={classes["grid-content"]}>
 					<div className={classes.container}>
-						<h3 className="heading-3">{collection.name}</h3>
+						<h3 className="heading-3">
+							{collection.name}{" "}
+							{collection.isPrivate && (
+								<span className={classes.private}>
+									<svg>
+										<use href={sprite + "#icon-lock"} />
+									</svg>
+								</span>
+							)}
+						</h3>
 						<div>
 							<div
 								className={classes.option}
