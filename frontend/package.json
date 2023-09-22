@@ -45,8 +45,9 @@
 			"last 1 safari version"
 		]
 	},
-	"proxy": "http://localhost:5000",
+	"proxy": "http://localhost:9000",
 	"devDependencies": {
+		"@babel/plugin-proposal-private-property-in-object": "^7.21.11",
 		"mini-css-extract-plugin": "2.4.5"
 	}
 }
