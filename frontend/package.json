@@ -3,6 +3,7 @@
 	"version": "0.1.0",
 	"private": true,
 	"dependencies": {
+		"@babel/plugin-proposal-private-property-in-object": "^7.21.11",
 		"@reduxjs/toolkit": "^1.7.1",
 		"@testing-library/jest-dom": "^5.16.1",
 		"@testing-library/react": "^11.2.7",
@@ -47,7 +48,6 @@
 	},
 	"proxy": "http://localhost:9000",
 	"devDependencies": {
-		"@babel/plugin-proposal-private-property-in-object": "^7.21.11",
 		"mini-css-extract-plugin": "2.4.5"
 	}
 }
